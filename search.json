@@ -1,0 +1,155 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Breaking Down Demographics",
+    "section": "",
+    "text": "Your report goes here.\n\n\nCode\n# a test code chunk",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Report</span>"
+    ]
+  },
+  {
+    "objectID": "eda/eda-member1.html",
+    "href": "eda/eda-member1.html",
+    "title": "Member 1 First Name & Last Name Initial",
+    "section": "",
+    "text": "Your exploratory data analysis of the team datasets go here.",
+    "crumbs": [
+      "EDA",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Member 1 First Name & Last Name Initial</span>"
+    ]
+  },
+  {
+    "objectID": "eda/eda-member2.html",
+    "href": "eda/eda-member2.html",
+    "title": "Member 2 First Name & Last Name Initial",
+    "section": "",
+    "text": "Your exploratory data analysis of the team datasets go here.",
+    "crumbs": [
+      "EDA",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Member 2 First Name & Last Name Initial</span>"
+    ]
+  },
+  {
+    "objectID": "eda/eda-member3.html",
+    "href": "eda/eda-member3.html",
+    "title": "Member 3 First Name & Last Name Initial",
+    "section": "",
+    "text": "Your exploratory data analysis of the team datasets go here.",
+    "crumbs": [
+      "EDA",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Member 3 First Name & Last Name Initial</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html",
+    "href": "appx/proposal.html",
+    "title": "Appendix A — Proposal",
+    "section": "",
+    "text": "Breaking Down Demographics\nTeam members: Lorenzo Gurrola, Nico Thorn, Jessica Lin",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html#project-description",
+    "href": "appx/proposal.html#project-description",
+    "title": "Appendix A — Proposal",
+    "section": "Project Description:",
+    "text": "Project Description:\nOur project aims to breakdown how demographic groups affect aspects of people’s day to day lives. By evaluating different statistics by different types of demographics, we aim to develop a better understanding of how one’s demographics can potentially affect other aspects of one’s life.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html#broad-questions",
+    "href": "appx/proposal.html#broad-questions",
+    "title": "Appendix A — Proposal",
+    "section": "Broad Questions",
+    "text": "Broad Questions\n\nAre there relationships between certain demographics and job statistics (e.g. income, occupation, hours, etc.)?\nIs a person’s location related to there demographics, and has this distribution changed overtime?",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html#inspiration",
+    "href": "appx/proposal.html#inspiration",
+    "title": "Appendix A — Proposal",
+    "section": "Inspiration",
+    "text": "Inspiration\nAll of us had different types of inspiration for this project, including: our own demographics, wide spread use of demographics in everyday life, etc.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html#potential-dataset",
+    "href": "appx/proposal.html#potential-dataset",
+    "title": "Appendix A — Proposal",
+    "section": "Potential Dataset",
+    "text": "Potential Dataset\nThe US Census could be a good potential data set since it collects demographics as well as other types of information for analysis.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html#rough-implenation-plan",
+    "href": "appx/proposal.html#rough-implenation-plan",
+    "title": "Appendix A — Proposal",
+    "section": "Rough Implenation Plan",
+    "text": "Rough Implenation Plan\n\nMilestone 2\nAll group members will listen to an article, listen to a podcast, or watch a video about effective teamwork then summarize it in the corresponding sheet in their progress tracker.\n\n\nMilestone 3\nAll group members will meet and work collaboratively on reading through and evaluating a case study.\n\n\nMilestone 4\nEach member will perform an exploratory data analysis (EDA) on one of the project dataset and add the results into their respective Quarto file\n\n\nMilestone 5\nFindings will be divided equally among the group members and each member will be responsible for presenting their share of the findings.\n\n\nMilestone 6\nDifferent graphs annd parts of the datastory will be divided amoungst the group members equally. Each person will be responsible for their section and reviewing another member’s section.\n\n\nMilestone 7\nEach member will submit their repository.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/case-study.html",
+    "href": "appx/case-study.html",
+    "title": "Appendix B — Case Study",
+    "section": "",
+    "text": "Your case study go here.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "wa/wa-member1.html",
+    "href": "wa/wa-member1.html",
+    "title": "Appendix C — Member 1 First Name & Last Name Initial",
+    "section": "",
+    "text": "Work area to try code",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Member 1 First Name & Last Name Initial</span>"
+    ]
+  },
+  {
+    "objectID": "wa/wa-member2.html",
+    "href": "wa/wa-member2.html",
+    "title": "Appendix D — Member 2 First Name & Last Name Initial",
+    "section": "",
+    "text": "Work area to try code",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Member 2 First Name & Last Name Initial</span>"
+    ]
+  },
+  {
+    "objectID": "wa/wa-member3.html",
+    "href": "wa/wa-member3.html",
+    "title": "Appendix E — Member 3 First Name & Last Name Initial",
+    "section": "",
+    "text": "Work area to try code",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Member 3 First Name & Last Name Initial</span>"
+    ]
+  }
+]
