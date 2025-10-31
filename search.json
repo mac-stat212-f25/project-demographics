@@ -113,7 +113,7 @@
     "href": "appx/case-study.html",
     "title": "Appendix B — Case Study",
     "section": "",
-    "text": "Your case study go here.",
+    "text": "We decided to look at https://pudding.cool/2017/01/making-it-big/ for our case study.\nVisualization Overview:\nWhat we like:\n\nInteractive Visualization at the beginning makes it easier to visualize the concept that it is hard to make it big and the chances of big success are slim.\nTimeline for individual bands make it easy to see, just how long and the normal progression it takes to “make it big”.\nProvides the reader a chance to look at their own favorite bands. Provides a timeline for all bands in the dataset organized by alphabetical order.\nConsistent color palette is used through out the visualizations add a sense of cohesiveness.\nAdditional annotations are in the visualizations to make points clearer.",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
