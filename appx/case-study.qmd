@@ -2,4 +2,18 @@
 title: "Case Study"
 ---
 
-Your case study go here.
+We decided to look at https://pudding.cool/2017/01/making-it-big/ for our case study.
+
+Visualization Overview:
+
+What we like:
+
+- Interactive Visualization at the beginning makes it easier to visualize the concept that it is hard to make it big and the chances of big success are slim.
+
+- Timeline for individual bands make it easy to see, just how long and the normal progression it takes to "make it big".
+
+- Provides the reader a chance to look at their own favorite bands. Provides a timeline for all bands in the dataset organized by alphabetical order.
+
+- Consistent color palette is used through out the visualizations add a sense of cohesiveness.
+
+- Additional annotations are in the visualizations to make points clearer.
