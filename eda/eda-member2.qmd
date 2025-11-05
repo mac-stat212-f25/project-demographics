@@ -3,3 +3,13 @@ title: "Member 2 First Name & Last Name Initial"
 ---
 
 Your exploratory data analysis of the team datasets go here.
+
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+df <- read_csv()
+```
+
