@@ -1,5 +1,38 @@
 ---
-title: "Member 1 First Name & Last Name Initial"
+title: "Nico T"
 ---
 
-Your exploratory data analysis of the team datasets go here.
+```{r}
+# Importing libraries and data set
+library(tidyverse)
+library(DataExplorer)
+
+demographics <- read.csv("../data/raw/data1/acs2017_county_data.csv")
+```
+
+```{r}
+head(demographics)
+```
+
+
+```{r}
+introduce(demographics)
+```
+
+
+```{r}
+plot_intro(demographics)
+```
+
+```{r}
+plot_missing(demographics)
+```
+
+```{r}
+plot_histogram(demographics)
+```
+
+```{r}
+plot_correlation(demographics)
+```
+
