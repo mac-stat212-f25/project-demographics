@@ -36,3 +36,7 @@ plot_histogram(demographics)
 plot_correlation(demographics)
 ```
 
+```{r}
+plot_scatterplot(split_columns(demographics)$continuous, by = "White", sampled_rows = 1000L)
+```
+
