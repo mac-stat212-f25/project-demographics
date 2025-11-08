@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,18 +70,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b6165e882820e9cbe81d0573c00a9ad9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-336fc07c9e36db0483797e7526239151.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-b6165e882820e9cbe81d0573c00a9ad9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9b1847abd3ec06048644e6b60dd9ba1a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-ce42c4983bbcb54e3cad6d12d9547ed8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-9b1847abd3ec06048644e6b60dd9ba1a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -319,7 +320,8 @@ cookieconsent.run({
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../assets/sidebar-logo.png" alt="Random negative space illustration" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../assets/sidebar-logo.png" alt="Random negative space illustration" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../assets/sidebar-logo.png" alt="Random negative space illustration" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Demographics</a> 
@@ -412,11 +414,22 @@ cookieconsent.run({
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#looking-at-our-variables" id="toc-looking-at-our-variables" class="nav-link active" data-scroll-target="#looking-at-our-variables">Looking at our variables</a>
+  <ul class="collapse">
+  <li><a href="#first-observations" id="toc-first-observations" class="nav-link" data-scroll-target="#first-observations">First Observations</a></li>
+  <li><a href="#missing-values" id="toc-missing-values" class="nav-link" data-scroll-target="#missing-values">Missing Values</a></li>
+  <li><a href="#looking-at-the-missing-data" id="toc-looking-at-the-missing-data" class="nav-link" data-scroll-target="#looking-at-the-missing-data">Looking at the missing data</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page-right" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../eda/eda-member1.html">EDA</a></li><li class="breadcrumb-item"><a href="../eda/eda-member1.html"><span class="chapter-title">Nico T</span></a></li></ol></nav>
@@ -426,7 +439,7 @@ cookieconsent.run({
 
 
 
-<div class="quarto-title-meta column-page-right">
+<div class="quarto-title-meta column-body">
 
     
   
@@ -441,17 +454,20 @@ cookieconsent.run({
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Importing libraries and data set</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Importing libraries and data set</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(DataExplorer)</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a>demographics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/raw/data1/acs2017_county_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4"></a>demographics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/raw/data1/acs2017_county_data.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+<section id="looking-at-our-variables" class="level1">
+<h1>Looking at our variables</h1>
+<section id="first-observations" class="level3">
+<h3 class="anchored" data-anchor-id="first-observations">First Observations</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">head</span>(demographics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">head</span>(demographics)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  CountyId   State         County TotalPop   Men  Women Hispanic White Black
@@ -490,36 +506,148 @@ cookieconsent.run({
 5    21380        83.9       11.9          4.0        0.1          4.9
 6     4290        81.4       13.6          5.0        0.0         12.1</code></pre>
 </div>
-</div>
-<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">introduce</span>(demographics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">dim</span>(demographics)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>  rows columns discrete_columns continuous_columns all_missing_columns
-1 3220      37                2                 35                   0
-  total_missing_values complete_rows total_observations memory_usage
-1                    1          3219             119140       969416</code></pre>
+<pre><code>[1] 3220   37</code></pre>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">plot_intro</span>(demographics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>demographics <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>   <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3"></a>   <span class="fu">summary</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="eda-member1_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="cell-output cell-output-stdout">
+<pre><code>    CountyId          State                    County        TotalPop       
+ Min.   : 1001   Texas   : 254   Washington County:  30   Min.   :      74  
+ 1st Qu.:19032   Georgia : 159   Jefferson County :  25   1st Qu.:   11214  
+ Median :30024   Virginia: 133   Franklin County  :  24   Median :   25848  
+ Mean   :31394   Kentucky: 120   Jackson County   :  23   Mean   :  100768  
+ 3rd Qu.:46106   Missouri: 115   Lincoln County   :  23   3rd Qu.:   66608  
+ Max.   :72153   Kansas  : 105   Madison County   :  19   Max.   :10105722  
+                 (Other) :2334   (Other)          :3076                     
+      Men              Women            Hispanic         White       
+ Min.   :     39   Min.   :     35   Min.   :  0.0   Min.   :  0.00  
+ 1st Qu.:   5646   1st Qu.:   5554   1st Qu.:  2.1   1st Qu.: 63.50  
+ Median :  12879   Median :  12994   Median :  4.1   Median : 83.60  
+ Mean   :  49588   Mean   :  51180   Mean   : 11.3   Mean   : 74.92  
+ 3rd Qu.:  33017   3rd Qu.:  33594   3rd Qu.: 10.0   3rd Qu.: 92.80  
+ Max.   :4979641   Max.   :5126081   Max.   :100.0   Max.   :100.00  
+                                                                     
+     Black            Native           Asian           Pacific        
+ Min.   : 0.000   Min.   : 0.000   Min.   : 0.000   Min.   : 0.00000  
+ 1st Qu.: 0.600   1st Qu.: 0.100   1st Qu.: 0.200   1st Qu.: 0.00000  
+ Median : 2.000   Median : 0.300   Median : 0.600   Median : 0.00000  
+ Mean   : 8.682   Mean   : 1.768   Mean   : 1.289   Mean   : 0.08342  
+ 3rd Qu.: 9.500   3rd Qu.: 0.600   3rd Qu.: 1.200   3rd Qu.: 0.10000  
+ Max.   :86.900   Max.   :90.300   Max.   :41.800   Max.   :33.70000  
+                                                                      
+ VotingAgeCitizen      Income         IncomeErr      IncomePerCap  
+ Min.   :     59   Min.   : 11680   Min.   :  262   Min.   : 5943  
+ 1st Qu.:   8442   1st Qu.: 40622   1st Qu.: 1730   1st Qu.:21568  
+ Median :  19699   Median : 47636   Median : 2587   Median :25139  
+ Mean   :  71310   Mean   : 48995   Mean   : 3139   Mean   :25657  
+ 3rd Qu.:  50366   3rd Qu.: 55476   3rd Qu.: 3802   3rd Qu.:28997  
+ Max.   :6218279   Max.   :129588   Max.   :41001   Max.   :69529  
+                                                                   
+ IncomePerCapErr    Poverty       ChildPoverty    Professional  
+ Min.   :  129   Min.   : 2.40   Min.   : 0.00   Min.   :11.40  
+ 1st Qu.:  832   1st Qu.:11.47   1st Qu.:14.90   1st Qu.:27.20  
+ Median : 1225   Median :15.40   Median :21.50   Median :30.50  
+ Mean   : 1514   Mean   :16.78   Mean   :23.04   Mean   :31.48  
+ 3rd Qu.: 1802   3rd Qu.:19.80   3rd Qu.:28.60   3rd Qu.:34.90  
+ Max.   :16145   Max.   :65.20   Max.   :83.60   Max.   :69.00  
+                                 NA's   :1                      
+    Service          Office       Construction     Production   
+ Min.   : 0.00   Min.   : 4.80   Min.   : 0.00   Min.   : 0.00  
+ 1st Qu.:15.80   1st Qu.:19.90   1st Qu.: 9.80   1st Qu.:11.50  
+ Median :17.80   Median :22.10   Median :12.10   Median :15.40  
+ Mean   :18.21   Mean   :21.88   Mean   :12.59   Mean   :15.84  
+ 3rd Qu.:20.20   3rd Qu.:23.90   3rd Qu.:14.80   3rd Qu.:19.50  
+ Max.   :46.40   Max.   :37.20   Max.   :36.40   Max.   :48.70  
+                                                                
+     Drive          Carpool          Transit            Walk       
+ Min.   : 4.60   Min.   : 0.000   Min.   : 0.000   Min.   : 0.000  
+ 1st Qu.:77.30   1st Qu.: 8.000   1st Qu.: 0.100   1st Qu.: 1.400  
+ Median :81.00   Median : 9.500   Median : 0.300   Median : 2.300  
+ Mean   :79.63   Mean   : 9.852   Mean   : 0.939   Mean   : 3.244  
+ 3rd Qu.:84.10   3rd Qu.:11.300   3rd Qu.: 0.800   3rd Qu.: 3.825  
+ Max.   :97.20   Max.   :29.300   Max.   :61.800   Max.   :59.200  
+                                                                   
+  OtherTransp       WorkAtHome      MeanCommute       Employed      
+ Min.   : 0.000   Min.   : 0.000   Min.   : 5.10   Min.   :     39  
+ 1st Qu.: 0.800   1st Qu.: 2.900   1st Qu.:19.60   1st Qu.:   4573  
+ Median : 1.300   Median : 4.100   Median :23.20   Median :  10612  
+ Mean   : 1.599   Mean   : 4.737   Mean   :23.47   Mean   :  47093  
+ 3rd Qu.: 1.900   3rd Qu.: 5.800   3rd Qu.:27.00   3rd Qu.:  28747  
+ Max.   :43.200   Max.   :33.000   Max.   :45.10   Max.   :4805817  
+                                                                    
+  PrivateWork      PublicWork     SelfEmployed      FamilyWork    
+ Min.   :31.10   Min.   : 4.40   Min.   : 0.000   Min.   :0.0000  
+ 1st Qu.:71.20   1st Qu.:12.70   1st Qu.: 5.200   1st Qu.:0.1000  
+ Median :76.10   Median :15.90   Median : 6.800   Median :0.2000  
+ Mean   :74.86   Mean   :17.09   Mean   : 7.773   Mean   :0.2788  
+ 3rd Qu.:80.20   3rd Qu.:19.90   3rd Qu.: 9.200   3rd Qu.:0.3000  
+ Max.   :88.80   Max.   :64.80   Max.   :38.000   Max.   :8.0000  
+                                                                  
+  Unemployment   
+ Min.   : 0.000  
+ 1st Qu.: 4.475  
+ Median : 6.100  
+ Mean   : 6.666  
+ 3rd Qu.: 8.000  
+ Max.   :40.900  
+                 </code></pre>
 </div>
 </div>
-</div>
+<blockquote class="blockquote">
+<p>It looks like we have 3220 counties with 37 varibles. Two are characters, and the rest are doubles or integers respectively. The race variables seem to measure the percentage of a county is said race. Some of the variables are measured in percentages while others are measured in counts.</p>
+</blockquote>
+<section id="looking-at-the-counties-with-100-percent-white-or-hispanic-populations" class="level4">
+<h4 class="anchored" data-anchor-id="looking-at-the-counties-with-100-percent-white-or-hispanic-populations">Looking at the counties with 100 percent white or hispanic populations</h4>
+<p>This seems odd because I would assume that very little communities in the united states would have homogeneous populations.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">plot_missing</span>(demographics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>demographics <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">filter</span>(White <span class="sc">==</span> <span class="dv">100</span> <span class="sc">|</span> Hispanic <span class="sc">==</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  CountyId        State                 County TotalPop   Men Women Hispanic
+1    46075 South Dakota           Jones County      740   375   365        0
+2    72019  Puerto Rico Barranquitas Municipio    29237 14398 14839      100
+  White Black Native Asian Pacific VotingAgeCitizen Income IncomeErr
+1   100     0      0     0       0              617  39432      8759
+2     0     0      0     0       0            22093  15694      1496
+  IncomePerCap IncomePerCapErr Poverty ChildPoverty Professional Service Office
+1        26526            3319    10.8          0.0         44.7     9.8   15.1
+2         7716             597    60.7         77.8         28.4    22.3   23.9
+  Construction Production Drive Carpool Transit Walk OtherTransp WorkAtHome
+1         17.2       13.3  61.6     4.5     0.0 20.4         1.9       11.6
+2         14.1       11.3  87.4     6.6     0.8  2.9         0.0        2.3
+  MeanCommute Employed PrivateWork PublicWork SelfEmployed FamilyWork
+1        14.9      430        55.3       16.3         22.6        5.8
+2        31.2     6011        65.7       25.6          8.7        0.0
+  Unemployment
+1          2.9
+2         11.7</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>These communties also report that the populations of the other groups are 0, so I am not concerned with these values.</p>
+</blockquote>
+</section>
+</section>
+<section id="missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="missing-values">Missing Values</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">plot_missing</span>(demographics)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -529,37 +657,38 @@ cookieconsent.run({
 </div>
 </div>
 </div>
+<blockquote class="blockquote">
+<p>It appears that we have 1 missing value in the child poverty variable</p>
+</blockquote>
+</section>
+<section id="looking-at-the-missing-data" class="level3">
+<h3 class="anchored" data-anchor-id="looking-at-the-missing-data">Looking at the missing data</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">plot_histogram</span>(demographics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>demographics <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(ChildPoverty))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="eda-member1_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="cell-output cell-output-stdout">
+<pre><code>  CountyId  State         County TotalPop Men Women Hispanic White Black Native
+1    15005 Hawaii Kalawao County       86  41    45      4.7  20.9     0      0
+  Asian Pacific VotingAgeCitizen Income IncomeErr IncomePerCap IncomePerCapErr
+1  29.1    33.7               84  61750     11280        46024            7959
+  Poverty ChildPoverty Professional Service Office Construction Production
+1    12.7           NA         22.2    38.1   20.6            0         19
+  Drive Carpool Transit Walk OtherTransp WorkAtHome MeanCommute Employed
+1  32.8     9.4       0 40.6        10.9        6.3         6.6       63
+  PrivateWork PublicWork SelfEmployed FamilyWork Unemployment
+1        34.9       61.9          3.2          0            0</code></pre>
 </div>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="eda-member1_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="eda-member1_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<blockquote class="blockquote">
+<p>We might want to look further into how to solve for this missing value</p>
+</blockquote>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">plot_correlation</span>(demographics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">plot_histogram</span>(demographics)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -568,11 +697,25 @@ cookieconsent.run({
 </figure>
 </div>
 </div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda-member1_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda-member1_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"White"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">plot_correlation</span>(demographics)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -581,32 +724,11 @@ cookieconsent.run({
 </figure>
 </div>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="eda-member1_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="eda-member1_files/figure-html/unnamed-chunk-8-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="eda-member1_files/figure-html/unnamed-chunk-8-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"Black"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"White"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -637,10 +759,46 @@ cookieconsent.run({
 </div>
 </div>
 </div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"Black"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda-member1_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda-member1_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda-member1_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda-member1_files/figure-html/unnamed-chunk-10-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 <!-- -->
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -707,13 +865,14 @@ cookieconsent.run({
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1111,7 +1270,7 @@ cookieconsent.run({
     }
   });
   </script>
-<nav class="page-navigation column-page-right">
+<nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
       <a href="../index.html" class="pagination-link" aria-label="Report">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Report</span></span>
@@ -1123,53 +1282,76 @@ cookieconsent.run({
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">---</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="an">title:</span><span class="co"> "Nico T"</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="co">---</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="in">```{r}</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="co"># Importing libraries and data set</span></span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-10"><a href="#cb12-10"></a><span class="fu">library</span>(DataExplorer)</span>
-<span id="cb12-11"><a href="#cb12-11"></a></span>
-<span id="cb12-12"><a href="#cb12-12"></a>demographics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/raw/data1/acs2017_county_data.csv"</span>)</span>
-<span id="cb12-13"><a href="#cb12-13"></a><span class="in">```</span></span>
-<span id="cb12-14"><a href="#cb12-14"></a></span>
-<span id="cb12-17"><a href="#cb12-17"></a><span class="in">```{r}</span></span>
-<span id="cb12-18"><a href="#cb12-18"></a><span class="fu">head</span>(demographics)</span>
-<span id="cb12-19"><a href="#cb12-19"></a><span class="in">```</span></span>
-<span id="cb12-20"><a href="#cb12-20"></a></span>
-<span id="cb12-21"><a href="#cb12-21"></a></span>
-<span id="cb12-24"><a href="#cb12-24"></a><span class="in">```{r}</span></span>
-<span id="cb12-25"><a href="#cb12-25"></a><span class="fu">introduce</span>(demographics)</span>
-<span id="cb12-26"><a href="#cb12-26"></a><span class="in">```</span></span>
-<span id="cb12-27"><a href="#cb12-27"></a></span>
-<span id="cb12-28"><a href="#cb12-28"></a></span>
-<span id="cb12-31"><a href="#cb12-31"></a><span class="in">```{r}</span></span>
-<span id="cb12-32"><a href="#cb12-32"></a><span class="fu">plot_intro</span>(demographics)</span>
-<span id="cb12-33"><a href="#cb12-33"></a><span class="in">```</span></span>
-<span id="cb12-34"><a href="#cb12-34"></a></span>
-<span id="cb12-37"><a href="#cb12-37"></a><span class="in">```{r}</span></span>
-<span id="cb12-38"><a href="#cb12-38"></a><span class="fu">plot_missing</span>(demographics)</span>
-<span id="cb12-39"><a href="#cb12-39"></a><span class="in">```</span></span>
-<span id="cb12-40"><a href="#cb12-40"></a></span>
-<span id="cb12-43"><a href="#cb12-43"></a><span class="in">```{r}</span></span>
-<span id="cb12-44"><a href="#cb12-44"></a><span class="fu">plot_histogram</span>(demographics)</span>
-<span id="cb12-45"><a href="#cb12-45"></a><span class="in">```</span></span>
-<span id="cb12-46"><a href="#cb12-46"></a></span>
-<span id="cb12-49"><a href="#cb12-49"></a><span class="in">```{r}</span></span>
-<span id="cb12-50"><a href="#cb12-50"></a><span class="fu">plot_correlation</span>(demographics)</span>
-<span id="cb12-51"><a href="#cb12-51"></a><span class="in">```</span></span>
-<span id="cb12-52"><a href="#cb12-52"></a></span>
-<span id="cb12-55"><a href="#cb12-55"></a><span class="in">```{r}</span></span>
-<span id="cb12-56"><a href="#cb12-56"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"White"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span>
-<span id="cb12-57"><a href="#cb12-57"></a><span class="in">```</span></span>
-<span id="cb12-58"><a href="#cb12-58"></a></span>
-<span id="cb12-59"><a href="#cb12-59"></a></span>
-<span id="cb12-62"><a href="#cb12-62"></a><span class="in">```{r}</span></span>
-<span id="cb12-63"><a href="#cb12-63"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"Black"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span>
-<span id="cb12-64"><a href="#cb12-64"></a><span class="in">```</span></span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">---</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="an">title:</span><span class="co"> "Nico T"</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="co">---</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="in">```{r}</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="co"># Importing libraries and data set</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="fu">library</span>(DataExplorer)</span>
+<span id="cb17-11"><a href="#cb17-11"></a>demographics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/raw/data1/acs2017_county_data.csv"</span>)</span>
+<span id="cb17-12"><a href="#cb17-12"></a><span class="in">```</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a><span class="fu"># Looking at our variables</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a><span class="fu">### First Observations</span></span>
+<span id="cb17-17"><a href="#cb17-17"></a><span class="in">```{r}</span></span>
+<span id="cb17-18"><a href="#cb17-18"></a><span class="fu">head</span>(demographics)</span>
+<span id="cb17-19"><a href="#cb17-19"></a><span class="fu">dim</span>(demographics)</span>
+<span id="cb17-20"><a href="#cb17-20"></a><span class="in">```</span></span>
+<span id="cb17-21"><a href="#cb17-21"></a></span>
+<span id="cb17-24"><a href="#cb17-24"></a><span class="in">```{r}</span></span>
+<span id="cb17-25"><a href="#cb17-25"></a>demographics <span class="sc">%&gt;%</span></span>
+<span id="cb17-26"><a href="#cb17-26"></a>   <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-27"><a href="#cb17-27"></a>   <span class="fu">summary</span>()</span>
+<span id="cb17-28"><a href="#cb17-28"></a><span class="in">```</span></span>
+<span id="cb17-29"><a href="#cb17-29"></a></span>
+<span id="cb17-30"><a href="#cb17-30"></a></span>
+<span id="cb17-31"><a href="#cb17-31"></a><span class="at">&gt; It looks like we have 3220 counties with 37 varibles. Two are characters, and the rest are doubles or integers respectively. The race variables seem to measure the percentage of a county is said race. Some of the variables are measured in percentages while others are measured in counts.</span></span>
+<span id="cb17-32"><a href="#cb17-32"></a></span>
+<span id="cb17-33"><a href="#cb17-33"></a><span class="fu">#### Looking at the counties with 100 percent white or hispanic populations</span></span>
+<span id="cb17-34"><a href="#cb17-34"></a></span>
+<span id="cb17-35"><a href="#cb17-35"></a>This seems odd because I would assume that very little communities in the united states would have homogeneous populations.</span>
+<span id="cb17-36"><a href="#cb17-36"></a></span>
+<span id="cb17-39"><a href="#cb17-39"></a><span class="in">```{r}</span></span>
+<span id="cb17-40"><a href="#cb17-40"></a>demographics <span class="sc">|&gt;</span> </span>
+<span id="cb17-41"><a href="#cb17-41"></a>  <span class="fu">filter</span>(White <span class="sc">==</span> <span class="dv">100</span> <span class="sc">|</span> Hispanic <span class="sc">==</span> <span class="dv">100</span>)</span>
+<span id="cb17-42"><a href="#cb17-42"></a><span class="in">```</span></span>
+<span id="cb17-43"><a href="#cb17-43"></a></span>
+<span id="cb17-44"><a href="#cb17-44"></a><span class="at">&gt; These communties also report that the populations of the other groups are 0, so I am not concerned with these values.</span></span>
+<span id="cb17-45"><a href="#cb17-45"></a></span>
+<span id="cb17-46"><a href="#cb17-46"></a><span class="fu">### Missing Values</span></span>
+<span id="cb17-49"><a href="#cb17-49"></a><span class="in">```{r}</span></span>
+<span id="cb17-50"><a href="#cb17-50"></a><span class="fu">plot_missing</span>(demographics)</span>
+<span id="cb17-51"><a href="#cb17-51"></a><span class="in">```</span></span>
+<span id="cb17-52"><a href="#cb17-52"></a></span>
+<span id="cb17-53"><a href="#cb17-53"></a><span class="at">&gt; It appears that we have 1 missing value in the child poverty variable</span></span>
+<span id="cb17-54"><a href="#cb17-54"></a></span>
+<span id="cb17-55"><a href="#cb17-55"></a><span class="fu">### Looking at the missing data</span></span>
+<span id="cb17-56"><a href="#cb17-56"></a></span>
+<span id="cb17-59"><a href="#cb17-59"></a><span class="in">```{r}</span></span>
+<span id="cb17-60"><a href="#cb17-60"></a>demographics <span class="sc">|&gt;</span> </span>
+<span id="cb17-61"><a href="#cb17-61"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(ChildPoverty))</span>
+<span id="cb17-62"><a href="#cb17-62"></a><span class="in">```</span></span>
+<span id="cb17-63"><a href="#cb17-63"></a></span>
+<span id="cb17-64"><a href="#cb17-64"></a><span class="at">&gt; We might want to look further into how to solve for this missing value</span></span>
+<span id="cb17-65"><a href="#cb17-65"></a></span>
+<span id="cb17-68"><a href="#cb17-68"></a><span class="in">```{r}</span></span>
+<span id="cb17-69"><a href="#cb17-69"></a><span class="fu">plot_histogram</span>(demographics)</span>
+<span id="cb17-70"><a href="#cb17-70"></a><span class="in">```</span></span>
+<span id="cb17-71"><a href="#cb17-71"></a></span>
+<span id="cb17-74"><a href="#cb17-74"></a><span class="in">```{r}</span></span>
+<span id="cb17-75"><a href="#cb17-75"></a><span class="fu">plot_correlation</span>(demographics)</span>
+<span id="cb17-76"><a href="#cb17-76"></a><span class="in">```</span></span>
+<span id="cb17-77"><a href="#cb17-77"></a></span>
+<span id="cb17-80"><a href="#cb17-80"></a><span class="in">```{r}</span></span>
+<span id="cb17-81"><a href="#cb17-81"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"White"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span>
+<span id="cb17-82"><a href="#cb17-82"></a><span class="in">```</span></span>
+<span id="cb17-83"><a href="#cb17-83"></a></span>
+<span id="cb17-84"><a href="#cb17-84"></a></span>
+<span id="cb17-87"><a href="#cb17-87"></a><span class="in">```{r}</span></span>
+<span id="cb17-88"><a href="#cb17-88"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"Black"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span>
+<span id="cb17-89"><a href="#cb17-89"></a><span class="in">```</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
