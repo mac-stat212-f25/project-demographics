@@ -75,3 +75,4 @@ plot_scatterplot(split_columns(demographics)$continuous, by = "Black", sampled_r
 
 
 > It looks like an interesting variable to explore is the employment status compared to different races. Also looking at thngs like how do people of different demographics get to work would also be an instesting thing to observe as well. Since the plots and correlation meter show that they are highly related. We can also find plenty of information to make a good data story with this information
+
