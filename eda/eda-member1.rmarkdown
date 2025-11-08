@@ -1,0 +1,72 @@
+---
+title: "Nico T"
+---
+
+```{r}
+# Importing libraries and data set
+install.packages('tidyverse')
+library(tidyverse)
+library(DataExplorer)
+demographics <- read.csv("../data/raw/data1/acs2017_county_data.csv")
+```
+# Looking at our variables
+### First Observations
+```{r}
+head(demographics)
+dim(demographics)
+```
+
+```{r}
+demographics %>%
+   mutate(across(where(is.character), as.factor)) %>% 
+   summary()
+```
+
+
+> It looks like we have 3220 counties with 37 varibles. Two are characters, and the rest are doubles or integers respectively. The race variables seem to measure the percentage of a county is said race. Some of the variables are measured in percentages while others are measured in counts.
+
+#### Looking at the counties with 100 percent white or hispanic populations
+
+This seems odd because I would assume that very little communities in the united states would have homogeneous populations.
+
+```{r}
+demographics |> 
+  filter(White == 100 | Hispanic == 100)
+```
+
+> These communties also report that the populations of the other groups are 0, so I am not concerned with these values.
+
+### Missing Values
+```{r}
+plot_missing(demographics)
+```
+
+> It appears that we have 1 missing value in the child poverty variable
+
+### Looking at the missing data
+
+```{r}
+demographics |> 
+  filter(is.na(ChildPoverty))
+```
+
+> We might want to look further into how to solve for this missing value
+
+```{r}
+plot_histogram(demographics)
+```
+
+```{r}
+plot_correlation(demographics)
+```
+
+```{r}
+plot_scatterplot(split_columns(demographics)$continuous, by = "White", sampled_rows = 1000L)
+```
+
+
+```{r}
+plot_scatterplot(split_columns(demographics)$continuous, by = "Black", sampled_rows = 1000L)
+```
+
+
