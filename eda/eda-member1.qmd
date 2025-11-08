@@ -6,7 +6,6 @@ title: "Nico T"
 # Importing libraries and data set
 library(tidyverse)
 library(DataExplorer)
-
 demographics <- read.csv("../data/raw/data1/acs2017_county_data.csv")
 ```
 # Looking at our variables
