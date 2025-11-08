@@ -425,6 +425,7 @@ cookieconsent.run({
   <li><a href="#missing-values" id="toc-missing-values" class="nav-link" data-scroll-target="#missing-values">Missing Values</a></li>
   <li><a href="#looking-at-the-missing-data" id="toc-looking-at-the-missing-data" class="nav-link" data-scroll-target="#looking-at-the-missing-data">Looking at the missing data</a></li>
   </ul></li>
+  <li><a href="#looking-at-relationships" id="toc-looking-at-relationships" class="nav-link" data-scroll-target="#looking-at-relationships">Looking at relationships</a></li>
   </ul>
 </nav>
     </div>
@@ -457,7 +458,8 @@ cookieconsent.run({
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Importing libraries and data set</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(DataExplorer)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>demographics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/raw/data1/acs2017_county_data.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>demographics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/raw/data1/acs2017_county_data.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <section id="looking-at-our-variables" class="level1">
@@ -712,6 +714,13 @@ cookieconsent.run({
 </div>
 </div>
 </div>
+<blockquote class="blockquote">
+<p>Here we can see how some groups are minorites, but what is mre interesting is to see how they look different in communities with different levels of demographics in there population.</p>
+</blockquote>
+</section>
+</section>
+<section id="looking-at-relationships" class="level1">
+<h1>Looking at relationships</h1>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -793,11 +802,13 @@ cookieconsent.run({
 </div>
 </div>
 </div>
+<blockquote class="blockquote">
+<p>It looks like an interesting variable to explore is the employment status compared to different races. Also looking at thngs like how do people of different demographics get to work would also be an instesting thing to observe as well. Since the plots and correlation meter show that they are highly related. We can also find plenty of information to make a good data story with this information</p>
+</blockquote>
 
 
 <!-- -->
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1290,67 +1301,75 @@ cookieconsent.run({
 <span id="cb17-8"><a href="#cb17-8"></a><span class="co"># Importing libraries and data set</span></span>
 <span id="cb17-9"><a href="#cb17-9"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb17-10"><a href="#cb17-10"></a><span class="fu">library</span>(DataExplorer)</span>
-<span id="cb17-11"><a href="#cb17-11"></a>demographics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/raw/data1/acs2017_county_data.csv"</span>)</span>
-<span id="cb17-12"><a href="#cb17-12"></a><span class="in">```</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a><span class="fu"># Looking at our variables</span></span>
-<span id="cb17-14"><a href="#cb17-14"></a><span class="fu">### First Observations</span></span>
-<span id="cb17-17"><a href="#cb17-17"></a><span class="in">```{r}</span></span>
-<span id="cb17-18"><a href="#cb17-18"></a><span class="fu">head</span>(demographics)</span>
-<span id="cb17-19"><a href="#cb17-19"></a><span class="fu">dim</span>(demographics)</span>
-<span id="cb17-20"><a href="#cb17-20"></a><span class="in">```</span></span>
-<span id="cb17-21"><a href="#cb17-21"></a></span>
-<span id="cb17-24"><a href="#cb17-24"></a><span class="in">```{r}</span></span>
-<span id="cb17-25"><a href="#cb17-25"></a>demographics <span class="sc">%&gt;%</span></span>
-<span id="cb17-26"><a href="#cb17-26"></a>   <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-27"><a href="#cb17-27"></a>   <span class="fu">summary</span>()</span>
-<span id="cb17-28"><a href="#cb17-28"></a><span class="in">```</span></span>
-<span id="cb17-29"><a href="#cb17-29"></a></span>
+<span id="cb17-11"><a href="#cb17-11"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb17-12"><a href="#cb17-12"></a>demographics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/raw/data1/acs2017_county_data.csv"</span>)</span>
+<span id="cb17-13"><a href="#cb17-13"></a><span class="in">```</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a><span class="fu"># Looking at our variables</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a><span class="fu">### First Observations</span></span>
+<span id="cb17-18"><a href="#cb17-18"></a><span class="in">```{r}</span></span>
+<span id="cb17-19"><a href="#cb17-19"></a><span class="fu">head</span>(demographics)</span>
+<span id="cb17-20"><a href="#cb17-20"></a><span class="fu">dim</span>(demographics)</span>
+<span id="cb17-21"><a href="#cb17-21"></a><span class="in">```</span></span>
+<span id="cb17-22"><a href="#cb17-22"></a></span>
+<span id="cb17-25"><a href="#cb17-25"></a><span class="in">```{r}</span></span>
+<span id="cb17-26"><a href="#cb17-26"></a>demographics <span class="sc">%&gt;%</span></span>
+<span id="cb17-27"><a href="#cb17-27"></a>   <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-28"><a href="#cb17-28"></a>   <span class="fu">summary</span>()</span>
+<span id="cb17-29"><a href="#cb17-29"></a><span class="in">```</span></span>
 <span id="cb17-30"><a href="#cb17-30"></a></span>
-<span id="cb17-31"><a href="#cb17-31"></a><span class="at">&gt; It looks like we have 3220 counties with 37 varibles. Two are characters, and the rest are doubles or integers respectively. The race variables seem to measure the percentage of a county is said race. Some of the variables are measured in percentages while others are measured in counts.</span></span>
-<span id="cb17-32"><a href="#cb17-32"></a></span>
-<span id="cb17-33"><a href="#cb17-33"></a><span class="fu">#### Looking at the counties with 100 percent white or hispanic populations</span></span>
-<span id="cb17-34"><a href="#cb17-34"></a></span>
-<span id="cb17-35"><a href="#cb17-35"></a>This seems odd because I would assume that very little communities in the united states would have homogeneous populations.</span>
-<span id="cb17-36"><a href="#cb17-36"></a></span>
-<span id="cb17-39"><a href="#cb17-39"></a><span class="in">```{r}</span></span>
-<span id="cb17-40"><a href="#cb17-40"></a>demographics <span class="sc">|&gt;</span> </span>
-<span id="cb17-41"><a href="#cb17-41"></a>  <span class="fu">filter</span>(White <span class="sc">==</span> <span class="dv">100</span> <span class="sc">|</span> Hispanic <span class="sc">==</span> <span class="dv">100</span>)</span>
-<span id="cb17-42"><a href="#cb17-42"></a><span class="in">```</span></span>
-<span id="cb17-43"><a href="#cb17-43"></a></span>
-<span id="cb17-44"><a href="#cb17-44"></a><span class="at">&gt; These communties also report that the populations of the other groups are 0, so I am not concerned with these values.</span></span>
-<span id="cb17-45"><a href="#cb17-45"></a></span>
-<span id="cb17-46"><a href="#cb17-46"></a><span class="fu">### Missing Values</span></span>
-<span id="cb17-49"><a href="#cb17-49"></a><span class="in">```{r}</span></span>
-<span id="cb17-50"><a href="#cb17-50"></a><span class="fu">plot_missing</span>(demographics)</span>
-<span id="cb17-51"><a href="#cb17-51"></a><span class="in">```</span></span>
-<span id="cb17-52"><a href="#cb17-52"></a></span>
-<span id="cb17-53"><a href="#cb17-53"></a><span class="at">&gt; It appears that we have 1 missing value in the child poverty variable</span></span>
-<span id="cb17-54"><a href="#cb17-54"></a></span>
-<span id="cb17-55"><a href="#cb17-55"></a><span class="fu">### Looking at the missing data</span></span>
-<span id="cb17-56"><a href="#cb17-56"></a></span>
-<span id="cb17-59"><a href="#cb17-59"></a><span class="in">```{r}</span></span>
-<span id="cb17-60"><a href="#cb17-60"></a>demographics <span class="sc">|&gt;</span> </span>
-<span id="cb17-61"><a href="#cb17-61"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(ChildPoverty))</span>
-<span id="cb17-62"><a href="#cb17-62"></a><span class="in">```</span></span>
-<span id="cb17-63"><a href="#cb17-63"></a></span>
-<span id="cb17-64"><a href="#cb17-64"></a><span class="at">&gt; We might want to look further into how to solve for this missing value</span></span>
-<span id="cb17-65"><a href="#cb17-65"></a></span>
-<span id="cb17-68"><a href="#cb17-68"></a><span class="in">```{r}</span></span>
-<span id="cb17-69"><a href="#cb17-69"></a><span class="fu">plot_histogram</span>(demographics)</span>
-<span id="cb17-70"><a href="#cb17-70"></a><span class="in">```</span></span>
-<span id="cb17-71"><a href="#cb17-71"></a></span>
-<span id="cb17-74"><a href="#cb17-74"></a><span class="in">```{r}</span></span>
-<span id="cb17-75"><a href="#cb17-75"></a><span class="fu">plot_correlation</span>(demographics)</span>
-<span id="cb17-76"><a href="#cb17-76"></a><span class="in">```</span></span>
-<span id="cb17-77"><a href="#cb17-77"></a></span>
-<span id="cb17-80"><a href="#cb17-80"></a><span class="in">```{r}</span></span>
-<span id="cb17-81"><a href="#cb17-81"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"White"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span>
-<span id="cb17-82"><a href="#cb17-82"></a><span class="in">```</span></span>
-<span id="cb17-83"><a href="#cb17-83"></a></span>
-<span id="cb17-84"><a href="#cb17-84"></a></span>
-<span id="cb17-87"><a href="#cb17-87"></a><span class="in">```{r}</span></span>
-<span id="cb17-88"><a href="#cb17-88"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"Black"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span>
-<span id="cb17-89"><a href="#cb17-89"></a><span class="in">```</span></span>
+<span id="cb17-31"><a href="#cb17-31"></a></span>
+<span id="cb17-32"><a href="#cb17-32"></a><span class="at">&gt; It looks like we have 3220 counties with 37 varibles. Two are characters, and the rest are doubles or integers respectively. The race variables seem to measure the percentage of a county is said race. Some of the variables are measured in percentages while others are measured in counts.</span></span>
+<span id="cb17-33"><a href="#cb17-33"></a></span>
+<span id="cb17-34"><a href="#cb17-34"></a><span class="fu">#### Looking at the counties with 100 percent white or hispanic populations</span></span>
+<span id="cb17-35"><a href="#cb17-35"></a></span>
+<span id="cb17-36"><a href="#cb17-36"></a>This seems odd because I would assume that very little communities in the united states would have homogeneous populations.</span>
+<span id="cb17-37"><a href="#cb17-37"></a></span>
+<span id="cb17-40"><a href="#cb17-40"></a><span class="in">```{r}</span></span>
+<span id="cb17-41"><a href="#cb17-41"></a>demographics <span class="sc">|&gt;</span> </span>
+<span id="cb17-42"><a href="#cb17-42"></a>  <span class="fu">filter</span>(White <span class="sc">==</span> <span class="dv">100</span> <span class="sc">|</span> Hispanic <span class="sc">==</span> <span class="dv">100</span>)</span>
+<span id="cb17-43"><a href="#cb17-43"></a><span class="in">```</span></span>
+<span id="cb17-44"><a href="#cb17-44"></a></span>
+<span id="cb17-45"><a href="#cb17-45"></a><span class="at">&gt; These communties also report that the populations of the other groups are 0, so I am not concerned with these values.</span></span>
+<span id="cb17-46"><a href="#cb17-46"></a></span>
+<span id="cb17-47"><a href="#cb17-47"></a><span class="fu">### Missing Values</span></span>
+<span id="cb17-50"><a href="#cb17-50"></a><span class="in">```{r}</span></span>
+<span id="cb17-51"><a href="#cb17-51"></a><span class="fu">plot_missing</span>(demographics)</span>
+<span id="cb17-52"><a href="#cb17-52"></a><span class="in">```</span></span>
+<span id="cb17-53"><a href="#cb17-53"></a></span>
+<span id="cb17-54"><a href="#cb17-54"></a><span class="at">&gt; It appears that we have 1 missing value in the child poverty variable</span></span>
+<span id="cb17-55"><a href="#cb17-55"></a></span>
+<span id="cb17-56"><a href="#cb17-56"></a><span class="fu">### Looking at the missing data</span></span>
+<span id="cb17-57"><a href="#cb17-57"></a></span>
+<span id="cb17-60"><a href="#cb17-60"></a><span class="in">```{r}</span></span>
+<span id="cb17-61"><a href="#cb17-61"></a>demographics <span class="sc">|&gt;</span> </span>
+<span id="cb17-62"><a href="#cb17-62"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(ChildPoverty))</span>
+<span id="cb17-63"><a href="#cb17-63"></a><span class="in">```</span></span>
+<span id="cb17-64"><a href="#cb17-64"></a></span>
+<span id="cb17-65"><a href="#cb17-65"></a><span class="at">&gt; We might want to look further into how to solve for this missing value</span></span>
+<span id="cb17-66"><a href="#cb17-66"></a></span>
+<span id="cb17-69"><a href="#cb17-69"></a><span class="in">```{r}</span></span>
+<span id="cb17-70"><a href="#cb17-70"></a><span class="fu">plot_histogram</span>(demographics)</span>
+<span id="cb17-71"><a href="#cb17-71"></a><span class="in">```</span></span>
+<span id="cb17-72"><a href="#cb17-72"></a></span>
+<span id="cb17-73"><a href="#cb17-73"></a><span class="at">&gt; Here we can see how some groups are minorites, but what is mre interesting is to see how they look different in communities with different levels of demographics in there population.</span></span>
+<span id="cb17-74"><a href="#cb17-74"></a></span>
+<span id="cb17-75"><a href="#cb17-75"></a><span class="fu"># Looking at relationships</span></span>
+<span id="cb17-76"><a href="#cb17-76"></a></span>
+<span id="cb17-79"><a href="#cb17-79"></a><span class="in">```{r}</span></span>
+<span id="cb17-80"><a href="#cb17-80"></a><span class="fu">plot_correlation</span>(demographics)</span>
+<span id="cb17-81"><a href="#cb17-81"></a><span class="in">```</span></span>
+<span id="cb17-82"><a href="#cb17-82"></a></span>
+<span id="cb17-85"><a href="#cb17-85"></a><span class="in">```{r}</span></span>
+<span id="cb17-86"><a href="#cb17-86"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"White"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span>
+<span id="cb17-87"><a href="#cb17-87"></a><span class="in">```</span></span>
+<span id="cb17-88"><a href="#cb17-88"></a></span>
+<span id="cb17-89"><a href="#cb17-89"></a></span>
+<span id="cb17-92"><a href="#cb17-92"></a><span class="in">```{r}</span></span>
+<span id="cb17-93"><a href="#cb17-93"></a><span class="fu">plot_scatterplot</span>(<span class="fu">split_columns</span>(demographics)<span class="sc">$</span>continuous, <span class="at">by =</span> <span class="st">"Black"</span>, <span class="at">sampled_rows =</span> <span class="dv">1000</span>L)</span>
+<span id="cb17-94"><a href="#cb17-94"></a><span class="in">```</span></span>
+<span id="cb17-95"><a href="#cb17-95"></a></span>
+<span id="cb17-96"><a href="#cb17-96"></a></span>
+<span id="cb17-97"><a href="#cb17-97"></a><span class="at">&gt; It looks like an interesting variable to explore is the employment status compared to different races. Also looking at thngs like how do people of different demographics get to work would also be an instesting thing to observe as well. Since the plots and correlation meter show that they are highly related. We can also find plenty of information to make a good data story with this information</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
