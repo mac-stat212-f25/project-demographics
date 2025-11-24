@@ -1,5 +1,106 @@
 ---
-title: "Member 1 First Name & Last Name Initial"
+title: "Nico T."
 ---
 
-Work area to try code
+```{r}
+library(tidyverse)
+demographics <- read.csv("../data/raw/data1/acs2017_county_data.csv")
+```
+
+```{r}
+demographics |> 
+  mutate(most_common_race = case_when(
+    White > Black & White > Hispanic & White >Native & White >Pacific ~ "White",
+    Black > White & Black > Hispanic & Black > Native & Black > Pacific ~ "Black",
+    Hispanic > White & Hispanic > Black & Hispanic > Native & Hispanic > Pacific ~ "Hispanic",
+    Native > White & Native > Black & Native > Hispanic & Native > Pacific ~ "Native",
+    Pacific > Black & Pacific > White & Pacific > Hispanic & Pacific > Native ~ "Pacific"
+  )) |> 
+  select(FamilyWork, SelfEmployed, PublicWork, PrivateWork, CountyId, most_common_race) |> 
+  pivot_longer(cols = c(SelfEmployed, PublicWork, PrivateWork, FamilyWork), names_to = "Employment_Category", values_to = "Percentage") |>
+  group_by(most_common_race, Employment_Category) |> 
+  summarise(average_percentage = mean(Percentage)) |> 
+  ggplot(aes(x = Employment_Category, y = average_percentage))+
+  geom_col()+
+  facet_wrap(~most_common_race) +
+  labs(title = "Average Percentage of Population that Work in Different Employment Categories", xlab = "Employment Category", ylab = "Average Percentage")+
+  theme_minimal()
+  
+```
+
+```{r}
+demographics |> 
+  mutate(most_common_race = case_when(
+    White > Black & White > Hispanic & White >Native & White >Pacific ~ "White",
+    Black > White & Black > Hispanic & Black > Native & Black > Pacific ~ "Black",
+    Hispanic > White & Hispanic > Black & Hispanic > Native & Hispanic > Pacific ~ "Hispanic",
+    Native > White & Native > Black & Native > Hispanic & Native > Pacific ~ "Native",
+    Pacific > Black & Pacific > White & Pacific > Hispanic & Pacific > Native ~ "Pacific"
+  )) |> 
+  select(Production, Construction, Office, Service, Professional, CountyId, most_common_race) |> 
+   pivot_longer(cols = c(Production, Construction, Office, Service, Professional), names_to = "Employment_Category", values_to = "Percentage") |>
+  group_by(most_common_race, Employment_Category) |>
+  summarise(average_percentage = mean(Percentage)) |>
+  ggplot(aes(x = Employment_Category, y = average_percentage))+
+  geom_col()+
+  facet_wrap(~most_common_race) +
+  labs(title = "Average Percentage of Population that Work in Different Employment Categories", xlab = "Employment Category", ylab = "Average Percentage")+
+  theme_minimal()
+```
+
+```{r}
+demographics |> 
+  mutate(most_common_race = case_when(
+    White > Black & White > Hispanic & White >Native & White >Pacific ~ "White",
+    Black > White & Black > Hispanic & Black > Native & Black > Pacific ~ "Black",
+    Hispanic > White & Hispanic > Black & Hispanic > Native & Hispanic > Pacific ~ "Hispanic",
+    Native > White & Native > Black & Native > Hispanic & Native > Pacific ~ "Native",
+    Pacific > Black & Pacific > White & Pacific > Hispanic & Pacific > Native ~ "Pacific"
+  )) |> 
+  select(Poverty, CountyId, most_common_race) |> 
+  group_by(most_common_race) |>
+  summarise(average_percentage_poverty = mean(Poverty)) |>
+  ggplot(aes(x = most_common_race, y = average_percentage_poverty))+
+  geom_col()+
+  labs(title = "Percentage of Population in Poverty")+
+  theme_minimal()
+```
+
+```{r}
+demographics |> 
+  mutate(most_common_race = case_when(
+    White > Black & White > Hispanic & White >Native & White >Pacific ~ "White",
+    Black > White & Black > Hispanic & Black > Native & Black > Pacific ~ "Black",
+    Hispanic > White & Hispanic > Black & Hispanic > Native & Hispanic > Pacific ~ "Hispanic",
+    Native > White & Native > Black & Native > Hispanic & Native > Pacific ~ "Native",
+    Pacific > Black & Pacific > White & Pacific > Hispanic & Pacific > Native ~ "Pacific"
+  )) |> 
+  select(ChildPoverty, CountyId, most_common_race) |> 
+  group_by(most_common_race) |>
+  summarise(average_percentage_Child_poverty = mean(ChildPoverty)) |>
+  ggplot(aes(x = most_common_race, y = average_percentage_Child_poverty))+
+  geom_col()+
+  labs(title = "Percentage of Child Population in Poverty")+
+  theme_minimal()
+```
+
+```{r}
+demographics |> 
+  mutate(most_common_race = case_when(
+    White > Black & White > Hispanic & White >Native & White >Pacific ~ "White",
+    Black > White & Black > Hispanic & Black > Native & Black > Pacific ~ "Black",
+    Hispanic > White & Hispanic > Black & Hispanic > Native & Hispanic > Pacific ~ "Hispanic",
+    Native > White & Native > Black & Native > Hispanic & Native > Pacific ~ "Native",
+    Pacific > Black & Pacific > White & Pacific > Hispanic & Pacific > Native ~ "Pacific"
+  )) |> 
+  select(Drive, Carpool, Transit, Walk , OtherTransp, CountyId, most_common_race) |> 
+   pivot_longer(cols = c(Drive, Carpool, Transit, Walk , OtherTransp), names_to = "Transport_Type", values_to = "Percentage") |>
+  group_by(most_common_race, Transport_Type) |>
+  summarise(average_percentage = mean(Percentage)) |>
+  ggplot(aes(x = Transport_Type, y = average_percentage))+
+  geom_col()+
+  facet_wrap(~most_common_race) +
+  labs(title = "Average Percentage of Population that get to Work Through Different Means", xlab = "Employment Category", ylab = "Average Percentage")+
+  theme_minimal()
+```
+
