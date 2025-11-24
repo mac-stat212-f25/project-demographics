@@ -2,4 +2,50 @@
 title: "Proposal"
 ---
 
-Your proposal go here.
+# Breaking Down Demographics
+
+Team members: Lorenzo Gurrola, Nico Thorn, Jessica Lin
+
+## Project Description:
+
+Our project aims to breakdown how demographic groups affect aspects of people's day to day lives. By evaluating different statistics by different types of demographics, we aim to develop a better understanding of how one's demographics can potentially affect other aspects of one's life.
+
+## Broad Questions
+
+- Are there relationships between certain demographics and job statistics (e.g. income, occupation, hours, etc.)?
+
+- Is a person's location related to there demographics, and has this distribution changed overtime?
+
+## Inspiration
+
+All of us had different types of inspiration for this project, including: our own demographics, wide spread use of demographics in everyday life, etc. 
+
+## Potential Dataset
+
+The US Census could be a good potential data set since it collects demographics as well as other types of information for analysis.
+
+## Rough Implenation Plan
+
+#### Milestone 2
+
+All group members will listen to an article, listen to a podcast, or watch a video about effective teamwork then summarize it in the corresponding sheet in their progress tracker.
+
+#### Milestone 3
+
+All group members will meet and work collaboratively on reading through and evaluating a case study.
+
+#### Milestone 4
+
+Each member will perform an exploratory data analysis (EDA) on one of the project dataset and add the results into their respective Quarto file
+
+#### Milestone 5
+
+Findings will be divided equally among the group members and each member will be responsible for presenting their share of the findings.
+
+#### Milestone 6
+
+Different graphs annd parts of the datastory will be divided amoungst the group members equally. Each person will be responsible for their section and reviewing another member's section.
+
+#### Milestone 7
+
+Each member will submit their repository.
