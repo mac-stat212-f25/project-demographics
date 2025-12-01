@@ -69,3 +69,9 @@ _freeze/
 *.log
 *.aux
 *.toc
+data/raw/nhgis0001_csv/nhgis0001_ds253_2021_state.csv
+/data/raw/nhgis0001_csv
+data/raw/nhgis0003_csv.zip
+data/raw/nhgis0003_csv/nhgis0003_ds266_2023_sd_uni.csv
+data/raw/nhgis0003_csv/nhgis0003_ds266_2023_sd_uni_codebook.txt
+data/raw/nhgis0003_csv/raw.lnk

@@ -5,6 +5,7 @@ title: "Nico T."
 ```{r}
 library(tidyverse)
 demographics <- read.csv("../data/raw/data1/acs2017_county_data.csv")
+acs_2021 <-read_csv("..\\data\\raw\\nhgis0001_csv\\nhgis0001_ds253_2021_state.csv")
 ```
 
 ```{r}
@@ -102,5 +103,15 @@ demographics |>
   facet_wrap(~most_common_race) +
   labs(title = "Average Percentage of Population that get to Work Through Different Means", xlab = "Employment Category", ylab = "Average Percentage")+
   theme_minimal()
+```
+
+```{r}
+names(acs_2021)[names(acs_2021) == 'ANK8E001'] <- 'total_population'
+names(acs_2021)[names(acs_2021) == 'ANK8E002'] <- 'total_population_male'
+names(acs_2021)[names(acs_2021) == 'ANK8E026'] <- 'total_population_female'
+names(acs_2021)[names(acs_2021) == 'ANLTE002'] <- 'white_population'
+names(acs_2021)[names(acs_2021) == 'ANLTE003'] <- 'black_or_african_american_population'
+names(acs_2021)[names(acs_2021) == 'ANLTE004'] <- 'native_american_population'
+names(acs_2021)[names(acs_2021) == 'ANLTE005'] <- 'native_american_population'
 ```
 
