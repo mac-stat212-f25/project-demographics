@@ -75,3 +75,8 @@ data/raw/nhgis0003_csv.zip
 data/raw/nhgis0003_csv/nhgis0003_ds266_2023_sd_uni.csv
 data/raw/nhgis0003_csv/nhgis0003_ds266_2023_sd_uni_codebook.txt
 data/raw/nhgis0003_csv/raw.lnk
+data/raw/cb_2018_us_county_500k.zip
+data/raw/nhgis0004_csv/nhgis0004_ds266_2023_county.csv
+data/raw/nhgis0004_csv/nhgis0004_ds266_2023_county_codebook.txt
+data/raw/nhgis0004_csv/nhgis0004_ds266_2023_sd_uni.csv
+data/raw/nhgis0004_csv/nhgis0004_ds266_2023_sd_uni_codebook.txt
