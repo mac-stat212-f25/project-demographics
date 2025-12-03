@@ -10,6 +10,11 @@ library(tidyverse)
 ```
 
 ```{r}
-# df <- read_csv()
+data <- read_csv("../data/processed/acs_2023.csv")
+```
+
+```{r}
+ggplot(data, aes(x = ))
+  
 ```
 
