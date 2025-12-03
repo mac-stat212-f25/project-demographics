@@ -163,8 +163,10 @@ names(acs_2023)[names(acs_2023) == 'AR97E029'] <- 'service_occupations'
 names(acs_2023)[names(acs_2023) == 'AR97E043'] <- 'sales_office_occupations'
 names(acs_2023)[names(acs_2023) == 'AR97E057'] <- 'naturalresources_construction_maintenance_occupations'
 names(acs_2023)[names(acs_2023) == 'AR97E071'] <- 'production_transportation_materialmoving_occupations'
-acs_2023 <- select(contains("_"))
+acs_2023 <- acs_2023 |> 
+  select(contains("_"))
 
+write.csv(acs_2023, "..\\data\\processed\\acs_2023.csv")
 ```
 
 
