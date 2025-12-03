@@ -5,7 +5,7 @@ title: "Nico T."
 ```{r}
 library(tidyverse)
 demographics <- read.csv("../data/raw/data1/acs2017_county_data.csv")
-acs_2021 <-read_csv("..\\data\\raw\\nhgis0001_csv\\nhgis0001_ds253_2021_state.csv")
+acs_2023 <-read_csv("..\\data\\raw\\nhgis0003_csv\\nhgis0003_ds266_2023_sd_uni.csv")
 ```
 
 ```{r}
@@ -106,12 +106,65 @@ demographics |>
 ```
 
 ```{r}
-names(acs_2021)[names(acs_2021) == 'ANK8E001'] <- 'total_population'
-names(acs_2021)[names(acs_2021) == 'ANK8E002'] <- 'total_population_male'
-names(acs_2021)[names(acs_2021) == 'ANK8E026'] <- 'total_population_female'
-names(acs_2021)[names(acs_2021) == 'ANLTE002'] <- 'white_population'
-names(acs_2021)[names(acs_2021) == 'ANLTE003'] <- 'black_or_african_american_population'
-names(acs_2021)[names(acs_2021) == 'ANLTE004'] <- 'native_american_population'
-names(acs_2021)[names(acs_2021) == 'ANLTE005'] <- 'native_american_population'
+names(acs_2023)[names(acs_2023) == 'ARKSE001'] <- 'total_population'
+names(acs_2023)[names(acs_2023) == 'ARKSE002'] <- 'white_population'
+names(acs_2023)[names(acs_2023) == 'ARKSE003'] <- 'black_aferican_american'
+names(acs_2023)[names(acs_2023) == 'ARKSE004'] <- 'american_indian_alaska_native'
+names(acs_2023)[names(acs_2023) == 'ARKSE005'] <- 'asian_population'
+names(acs_2023)[names(acs_2023) == 'ARKSE006'] <- 'native_hawaiian_pacific_islander'
+names(acs_2023)[names(acs_2023) == 'ARKSE007'] <- 'other_population'
+names(acs_2023)[names(acs_2023) == 'ARKSE008'] <- 'two_or_more'
+names(acs_2023)[names(acs_2023) == 'ARKSE009'] <- 'two_or_more_not_other'
+names(acs_2023)[names(acs_2023) == 'ARKSE010'] <- 'two_or_more_other'
+names(acs_2023)[names(acs_2023) == 'ART7E002'] <- 'family_household'
+names(acs_2023)[names(acs_2023) == 'ART7E003'] <- 'married_couple_family'
+names(acs_2023)[names(acs_2023) == 'ART7E004'] <- 'other_family'
+names(acs_2023)[names(acs_2023) == 'ART7E005'] <- 'other_family_male_householder'
+names(acs_2023)[names(acs_2023) == 'ART7E006'] <- 'other_family_female_householder'
+names(acs_2023)[names(acs_2023) == 'ART7E007'] <- 'nonfamily_household'
+names(acs_2023)[names(acs_2023) == 'ART7E008'] <- 'householder_living_alone'
+names(acs_2023)[names(acs_2023) == 'ART7E009'] <- 'householder_not_alone'
+names(acs_2023)[names(acs_2023) == 'ART7E001'] <- 'total_households'
+names(acs_2023)[names(acs_2023) == 'ARXXE002'] <- 'no_schooling'
+names(acs_2023)[names(acs_2023) == 'ARXXE003'] <- 'nursery_4th'
+names(acs_2023)[names(acs_2023) == 'ARXXE004'] <- '5th_6th'
+names(acs_2023)[names(acs_2023) == 'ARXXE005'] <- '7th_8th'
+names(acs_2023)[names(acs_2023) == 'ARXXE006'] <- '9th_grade'
+names(acs_2023)[names(acs_2023) == 'ARXXE007'] <- '10th_grade'
+names(acs_2023)[names(acs_2023) == 'ARXXE008'] <- '11th_grade'
+names(acs_2023)[names(acs_2023) == 'ARXXE009'] <- '12th_grade_no_diploma'
+names(acs_2023)[names(acs_2023) == 'ARXXE010'] <- 'highschool_diploma'
+names(acs_2023)[names(acs_2023) == 'ARXXE011'] <- 'GED_or_alt'
+names(acs_2023)[names(acs_2023) == 'ARXXE012'] <- 'less_year_college'
+names(acs_2023)[names(acs_2023) == 'ARXXE013'] <- 'over_year_college_no_degree'
+names(acs_2023)[names(acs_2023) == 'ARXXE014'] <- 'associates_degree'
+names(acs_2023)[names(acs_2023) == 'ARXXE015'] <- 'bachelors_degree'
+names(acs_2023)[names(acs_2023) == 'ARXXE016'] <- 'masters_degree'
+names(acs_2023)[names(acs_2023) == 'ARXXE017'] <- 'professional_school_degree'
+names(acs_2023)[names(acs_2023) == 'ARXXE018'] <- 'doctorate_degree'
+names(acs_2023)[names(acs_2023) == 'ARXXE001'] <- 'total_over_25'
+names(acs_2023)[names(acs_2023) == 'AR56E001'] <- 'aggregate_yearly_income'
+names(acs_2023)[names(acs_2023) == 'AR97E001'] <- 'total_employed'
+names(acs_2023)[names(acs_2023) == 'AR97E002'] <- 'agriculture_forestry_fishing_hunting_mining'
+names(acs_2023)[names(acs_2023) == 'AR97E003'] <- 'construction'
+names(acs_2023)[names(acs_2023) == 'AR97E004'] <- 'manufacturing'
+names(acs_2023)[names(acs_2023) == 'AR97E005'] <- 'wholesale_trade'
+names(acs_2023)[names(acs_2023) == 'AR97E006'] <- 'retail_trade'
+names(acs_2023)[names(acs_2023) == 'AR97E007'] <- 'transportation_warehousing_utilities'
+names(acs_2023)[names(acs_2023) == 'AR97E008'] <- 'information_occupation'
+names(acs_2023)[names(acs_2023) == 'AR97E009'] <- 'finance_insurance_realestate_rental_leasing'
+names(acs_2023)[names(acs_2023) == 'AR97E010'] <- 'professional_scientific_management_administrative_wastemanagement'
+names(acs_2023)[names(acs_2023) == 'AR97E011'] <- 'educational_healthcare_socialassistance'
+names(acs_2023)[names(acs_2023) == 'AR97E012'] <- 'arts_entertainment_recreation_accommodation_food'
+names(acs_2023)[names(acs_2023) == 'AR97E013'] <- 'other_services_except_public_administration'
+names(acs_2023)[names(acs_2023) == 'AR97E014'] <- 'public_administration'
+names(acs_2023)[names(acs_2023) == 'AR97E015'] <- 'management_business_science_arts_occupations'
+names(acs_2023)[names(acs_2023) == 'AR97E029'] <- 'service_occupations'
+names(acs_2023)[names(acs_2023) == 'AR97E043'] <- 'sales_office_occupations'
+names(acs_2023)[names(acs_2023) == 'AR97E057'] <- 'naturalresources_construction_maintenance_occupations'
+names(acs_2023)[names(acs_2023) == 'AR97E071'] <- 'production_transportation_materialmoving_occupations'
+acs_2023 <- select(contains("_"))
+
 ```
+
 
