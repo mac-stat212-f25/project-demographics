@@ -80,3 +80,6 @@ data/raw/nhgis0004_csv/nhgis0004_ds266_2023_county.csv
 data/raw/nhgis0004_csv/nhgis0004_ds266_2023_county_codebook.txt
 data/raw/nhgis0004_csv/nhgis0004_ds266_2023_sd_uni.csv
 data/raw/nhgis0004_csv/nhgis0004_ds266_2023_sd_uni_codebook.txt
+/data/raw/cb_2018_us_county_500k
+/data/raw/tl_2019_us_county
+/data/raw/tl_2023_us_county

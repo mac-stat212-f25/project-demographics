@@ -5,7 +5,7 @@ title: "Nico T."
 ```{r}
 library(tidyverse)
 demographics <- read.csv("../data/raw/data1/acs2017_county_data.csv")
-acs_2023 <-read_csv("..\\data\\raw\\nhgis0003_csv\\nhgis0003_ds266_2023_sd_uni.csv")
+acs_2023 <-read_csv("..\\data\\raw\\nhgis0004_csv\\nhgis0004_ds266_2023_county.csv")
 ```
 
 ```{r}
@@ -169,4 +169,109 @@ acs_2023 <- acs_2023 |>
 write.csv(acs_2023, "..\\data\\processed\\acs_2023.csv")
 ```
 
+
+```{r}
+cleaned <- read.csv("..\\data\\processed\\acs_2023.csv")
+acs_clean <- cleaned |> 
+mutate(subregion = tolower(str_remove(str_extract(NAME_E,"((([A-Za-z]?)*\\.?)* ?)*")," County"))) |>
+  mutate(region =tolower(str_remove(str_extract(NAME_E,"\\, ([A-Za-z]?)*"), ", "))) 
+```
+
+```{r}
+library(maps)
+library(mapdata)
+```
+
+```{r}
+us_counties <- map_data("county")
+us_states<- map_data("state")
+```
+
+
+```{r}
+ggplot(data=acs_counties, aes(x=long, y=lat, fill=white_population, group=group)) + 
+  geom_polygon() + 
+  guides(fill=FALSE) + 
+  theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank()) + 
+  ggtitle('U.S. Map with States') + 
+  coord_fixed(1.3)+
+  theme_minimal()
+```
+
+```{r}
+census_api_key <- readLines("census_api_key.txt")
+get_acs1 <- function(year,variables,key,include_moe = TRUE){
+  new_variables <- c()
+  if(year < 2005 | year > 2022 | year == 2020){
+  stop("year is not betwwen 2005 and 2022, or your year is  equal to 2022")
+}
+else{
+  Sys.sleep(0.5)
+    if(include_moe == FALSE){
+      for (i in seq_along(variables)){
+        if(str_detect(variables[i],"[0-9]") == TRUE){
+        new_variables[i] <- variables[i] %>% paste0("E")
+      }
+      else{
+        new_variables[i] <- variables[i]
+      }
+      }
+    }
+    else{
+      for(i in seq_along(variables)){
+        if(str_detect(variables[i],"[0-9]") == TRUE){
+          new_variables <- c(new_variables,variables[i] %>% paste0("E"))
+          new_variables <- c(new_variables, variables[i] %>% paste0("M"))
+        }
+        else{
+          new_variables <- c(new_variables, variables[i])
+        }
+      }
+    }
+    request <- request("https://api.census.gov") |> 
+    req_url_path_append("data") |> 
+    req_url_path_append(as.character(year)) |> 
+    req_url_path_append("acs") |> 
+    req_url_path_append("acs5") |> 
+    req_url_query(get = new_variables, `for` = I("county:*"), `in` = I("state:*"), key = key, .multi = "comma")
+    resp <- req_perform(request)
+    resp_json_df <- resp |> resp_body_json(simplifyVector = TRUE)
+
+# Data Cleaning
+resp_json_df <- janitor::row_to_names(resp_json_df, 1) |> # Move 1st row to Names
+  as.data.frame() |># Convert Matrix to Data Frame
+  mutate(across(starts_with('B'), as.numeric)) # Convert all variables that start with B to numeric
+return(resp_json_df)
+}
+}
+```
+
+```{r}
+library(tidycensus)
+v17 <- load_variables(2021, "acs5", cache = TRUE)
+View(v17)
+test_acs<- get_acs1(2021, c('B02001_002', 'NAME'), key = census_api_key, FALSE) |> 
+  mutate(subregion = tolower(str_remove(str_extract(NAME,"((([A-Za-z]?)*\\.?)* ?)*")," County"))) |>
+  mutate(region =tolower(str_remove(str_extract(NAME,"\\, ([A-Za-z]?)*"), ", ")))
+
+names(test_acs)[names(test_acs) == 'B02001_002E'] <- 'white_population'
+```
+
+```{r}
+acs_counties <- us_counties |> 
+  left_join(test_acs)
+```
+
+```{r}
+ggplot() + 
+  geom_polygon(data=acs_counties, aes(x=long, y=lat, fill=white_population, group=group))+
+  geom_polygon(data = us_states, aes(x=long, y = lat, group = group), color = 'white', fill = NA)+
+  guides(fill=FALSE) + 
+  theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank()) + 
+  ggtitle('U.S. Map with States') + 
+  coord_fixed(1.3)+
+  theme_minimal()
+```
 
