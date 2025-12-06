@@ -189,14 +189,13 @@ us_states<- map_data("state")
 
 
 ```{r}
-ggplot(data=acs_counties, aes(x=long, y=lat, fill=white_population, group=group)) + 
-  geom_polygon() + 
-  guides(fill=FALSE) + 
-  theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(),
-        axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank()) + 
-  ggtitle('U.S. Map with States') + 
-  coord_fixed(1.3)+
-  theme_minimal()
+# ggplot(data=acs_counties, aes(x=long, y=lat, fill=white_population, group=group)) + 
+#   geom_polygon() + 
+#   guides(fill=FALSE) + 
+#   theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(),
+#         axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank()) + 
+#   ggtitle('U.S. Map with States') + 
+#   theme_minimal()
 ```
 
 ```{r}
@@ -249,13 +248,15 @@ return(resp_json_df)
 
 ```{r}
 library(tidycensus)
+library(httr2)
 v17 <- load_variables(2021, "acs5", cache = TRUE)
 View(v17)
-test_acs<- get_acs1(2021, c('B02001_002', 'NAME'), key = census_api_key, FALSE) |> 
+test_acs<- get_acs1(2021, c('B02001_002','B02001_001', 'NAME'), key = census_api_key, FALSE) |> 
   mutate(subregion = tolower(str_remove(str_extract(NAME,"((([A-Za-z]?)*\\.?)* ?)*")," County"))) |>
   mutate(region =tolower(str_remove(str_extract(NAME,"\\, ([A-Za-z]?)*"), ", ")))
 
 names(test_acs)[names(test_acs) == 'B02001_002E'] <- 'white_population'
+
 ```
 
 ```{r}
@@ -275,3 +276,377 @@ ggplot() +
   theme_minimal()
 ```
 
+```{r}
+library(ggthemes)
+library(ggspatial)
+sanfransisco <- get_acs(
+  state = "CA",
+  county = "San Francisco",
+  geography = "tract",
+  variables = "B02001_002",
+  geometry = TRUE,
+  year = 2021
+) |>
+  mutate(white_population = case_when(
+    estimate < 1000 ~ "< 1000",
+    estimate >= 1000 & estimate < 2000 ~ "1000 to 1999",
+    estimate >= 2000 & estimate < 3000 ~ "2000 to 2999",
+    estimate >= 3000 & estimate <=4000 ~ "3000 to 4000",
+    estimate > 4000 ~ "> 4000"
+  )) |> 
+  mutate(white_population = fct_relevel(white_population, "> 4000", after = Inf))
+
+sanfransisco_city <- data.frame(lat = 37.7749, long = -122.4194, name = "San Fransisco")
+
+mesa_city <- data.frame(lat = 33.4152, long = - 111.8315, name = "Mesa")
+
+Mesa <- get_acs(
+  state = "AZ",
+  county = "Maricopa",
+  geography = "tract",
+  variables = "B02001_002",
+  geometry = TRUE,
+  year = 2021
+) |>
+  mutate(white_population = case_when(
+    estimate < 1000 ~ "< 1000",
+    estimate >= 1000 & estimate < 2000 ~ "1000 to 1999",
+    estimate >= 2000 & estimate < 3000 ~ "2000 to 2999",
+    estimate >= 3000 & estimate <=4000 ~ "3000 to 4000",
+    estimate > 4000 ~ "> 4000"
+  )) |> 
+  mutate(white_population = fct_relevel(white_population, "> 4000", after = Inf))
+
+mesa_race <- 
+  get_acs(
+  state = "AZ",
+  county = "Maricopa",
+  geography = "tract",
+  variables = c("B02001_003", "B02001_004", "B02001_005", "B02001_006","B02001_007","B02001_008"),
+  geometry = TRUE,
+  year = 2021
+) |> 
+  group_by(NAME, geometry) |> 
+  summarize(estimate = sum(estimate)) |>
+  mutate(minority_population = case_when(
+    estimate < 1000 ~ "< 1000",
+    estimate >= 1000 & estimate < 2000 ~ "1000 to 1999",
+    estimate >= 2000 & estimate < 3000 ~ "2000 to 2999",
+    estimate >= 3000 & estimate < 4000 ~ "3000 to 3999",
+    estimate >= 4000 & estimate <= 5000 ~ "4000 to 5000",
+    estimate > 5000 ~ "> 5000"
+  )) |> 
+  mutate(minority_population = fct_relevel(minority_population, "> 5000", after = Inf))
+
+sanfransisco_race <- 
+  get_acs(
+  state = "CA",
+  county = "San Francisco",
+  geography = "tract",
+  variables = c("B02001_003", "B02001_004", "B02001_005", "B02001_006","B02001_007","B02001_008"),
+  geometry = TRUE,
+  year = 2021
+) |> 
+  group_by(NAME, geometry) |> 
+  summarize(estimate = sum(estimate)) |>
+  mutate(minority_population = case_when(
+    estimate < 1000 ~ "< 1000",
+    estimate >= 1000 & estimate < 2000 ~ "1000 to 1999",
+    estimate >= 2000 & estimate < 3000 ~ "2000 to 2999",
+    estimate >= 3000 & estimate < 4000 ~ "3000 to 3999",
+    estimate >= 4000 & estimate <= 5000 ~ "4000 to 5000",
+    estimate > 5000 ~ "> 5000"
+  )) |> 
+  mutate(minority_population = fct_relevel(minority_population, "> 5000", after = Inf),
+         minority_population = fct_relevel(minority_population, "< 1000", after = 0))
+
+sanfransisco_family <- 
+  get_acs(
+  state = "CA",
+  county = "San Francisco",
+  geography = "tract",
+  variables = "B11001_007",
+  geometry = TRUE,
+  year = 2021
+) |>
+  mutate(non_family_households = case_when(
+    estimate < 250 ~ "< 250",
+    estimate >= 250 & estimate < 500 ~ "250 to 499",
+    estimate >= 500 & estimate < 750 ~ "500 to 749",
+    estimate >= 750 & estimate < 1000 ~ "750 to 999",
+    estimate >= 1000 & estimate <= 1500 ~ "1000 to 1499",
+    estimate >= 1500 & estimate <= 2000 ~ "1500 to 1999",
+    estimate > 2000 ~ "> 2000"
+  )) |> 
+  mutate(non_family_households = fct_relevel(non_family_households, "> 2000", after = Inf),
+         non_family_households = fct_relevel(non_family_households, "< 250", after = 0),
+         non_family_households = fct_relevel(non_family_households, "1000 to 1499", after = 5),
+         non_family_households = fct_relevel(non_family_households, "1500 to 1999", after = 5))
+  
+  
+
+mesa_family <- 
+  get_acs(
+  state = "AZ",
+  county = "Maricopa",
+  geography = "tract",
+  variables = "B11001_007",
+  geometry = TRUE,
+  year = 2021
+) |>
+  mutate(non_family_households = case_when(
+    estimate < 250 ~ "< 250",
+    estimate >= 250 & estimate < 500 ~ "250 to 499",
+    estimate >= 500 & estimate < 750 ~ "500 to 749",
+    estimate >= 750 & estimate < 1000 ~ "750 to 999",
+    estimate >= 1000 & estimate <= 1500 ~ "1000 to 1499",
+    estimate >= 1500 & estimate <= 2000 ~ "1500 to 1999",
+    estimate > 2000 ~ "> 2000"
+  )) |> 
+  mutate(non_family_households = fct_relevel(non_family_households, "> 2000", after = Inf),
+         non_family_households = fct_relevel(non_family_households, "< 250", after = 0),
+         non_family_households = fct_relevel(non_family_households, "1000 to 1499", after = 5),
+         non_family_households = fct_relevel(non_family_households, "1500 to 1999", after = 5))
+
+mesa_family_h <- 
+  get_acs(
+  state = "AZ",
+  county = "Maricopa",
+  geography = "tract",
+  variables = "B11001_002",
+  geometry = TRUE,
+  year = 2021
+)|>
+  mutate(family_households = case_when(
+    estimate < 250 ~ "< 250",
+    estimate >= 250 & estimate < 500 ~ "250 to 499",
+    estimate >= 500 & estimate < 750 ~ "500 to 749",
+    estimate >= 750 & estimate < 1000 ~ "750 to 999",
+    estimate >= 1000 & estimate <= 1500 ~ "1000 to 1499",
+    estimate >= 1500 & estimate <= 2000 ~ "1500 to 1999",
+    estimate > 2000 ~ "> 2000"
+  )) |> 
+  mutate(family_households = fct_relevel(family_households, "> 2000", after = Inf),
+         family_households = fct_relevel(family_households, "< 250", after = 0),
+         family_households = fct_relevel(family_households, "1000 to 1499", after = 5),
+         family_households = fct_relevel(family_households, "1500 to 1999", after = 5))
+
+sanfransisco_family_h <- 
+  get_acs(
+  state = "CA",
+  county = "San Francisco",
+  geography = "tract",
+  variables = "B11001_002",
+  geometry = TRUE,
+  year = 2021
+) |>
+  mutate(family_households = case_when(
+    estimate < 250 ~ "< 250",
+    estimate >= 250 & estimate < 500 ~ "250 to 499",
+    estimate >= 500 & estimate < 750 ~ "500 to 749",
+    estimate >= 750 & estimate < 1000 ~ "750 to 999",
+    estimate >= 1000 & estimate <= 1500 ~ "1000 to 1499",
+    estimate >= 1500 & estimate <= 2000 ~ "1500 to 1999",
+    estimate > 2000 ~ "> 2000"
+  )) |> 
+  mutate(family_households = fct_relevel(family_households, "> 2000", after = Inf),
+         family_households = fct_relevel(family_households, "< 250", after = 0),
+         family_households = fct_relevel(family_households, "1000 to 1499", after = 5),
+         family_households = fct_relevel(family_households, "1500 to 1999", after = 5))
+```
+
+```{r}
+  ggplot() + 
+  geom_sf(data = sanfransisco, aes(fill = white_population), color = NA) +
+  geom_point(data = sanfransisco_city, aes(x = long, y = lat), color = "white")+
+  geom_label(data = sanfransisco_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+  scale_fill_viridis_d(option = "D", name = "White Population") +
+  scale_x_continuous(limits = c(-122.525, -122.35), expand = c(0, 0))+
+  scale_y_continuous(limits = c(37.7, 37.84), expand = c(0,0))+
+  ggtitle("San Fransicso County White Population Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi")+
+  theme(legend.position = c(0, 0.745),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
+```
+
+```{r}
+  ggplot() + 
+  geom_sf(data = Mesa, aes(fill = white_population), color = NA) +
+  scale_fill_viridis_d(option = "D", name = "White Population") +
+  geom_point(data = mesa_city, aes(x = long, y = lat), color = "white", size = 2.5)+
+  geom_label(data = mesa_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+  ggtitle("Maricopa County White Population Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi",
+                   location = "br")+
+  theme(legend.position = c(0.76, 0.20),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
+```
+
+```{r}
+ggplot() + 
+  geom_sf(data = mesa_race, aes(fill = minority_population), color = NA) +
+  scale_fill_viridis_d(option = "D", name = "Minority Population") +
+  geom_point(data = mesa_city, aes(x = long, y = lat), color = "white", size = 2.5)+
+  geom_label(data = mesa_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = 1.35)+
+  ggtitle("Maricopa County Minority Population Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi",
+                   location = "br")+
+  theme(legend.position = c(0.76, 0.20),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
+```
+
+```{r}
+  ggplot() + 
+  geom_sf(data = sanfransisco_race, aes(fill = minority_population), color = NA) +
+  geom_point(data = sanfransisco_city, aes(x = long, y = lat), color = "white")+
+  geom_label(data = sanfransisco_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+  scale_fill_viridis_d(option = "D", name = "Minority Population") +
+  scale_x_continuous(limits = c(-122.525, -122.35), expand = c(0, 0))+
+  scale_y_continuous(limits = c(37.7, 37.84), expand = c(0,0))+
+  ggtitle("San Fransicso County Minority Population Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi")+
+  theme(legend.position = c(0, 0.745),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
+```
+
+```{r}
+ggplot() + 
+  geom_sf(data = sanfransisco_family, aes(fill = non_family_households), color = NA) +
+  geom_point(data = sanfransisco_city, aes(x = long, y = lat), color = "white")+
+  geom_label(data = sanfransisco_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+  scale_fill_viridis_d(option = "D", name = "Non-family Housholds") +
+  scale_x_continuous(limits = c(-122.525, -122.35), expand = c(0, 0))+
+  scale_y_continuous(limits = c(37.7, 37.84), expand = c(0,0))+
+  ggtitle("San Fransicso County Non-family Housholds Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi")+
+  theme(legend.position = c(0, 0.745),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
+```
+
+```{r}
+ggplot() + 
+  geom_sf(data = mesa_family, aes(fill = non_family_households), color = NA) +
+  scale_fill_viridis_d(option = "D", name = "Non-family Households") +
+  geom_point(data = mesa_city, aes(x = long, y = lat), color = "white", size = 2.5)+
+  geom_label(data = mesa_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = 1.35)+
+  ggtitle("Maricopa County Non-family Households Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi",
+                   location = "br")+
+  theme(legend.position = c(0.76, 0.20),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
+```
+
+```{r}
+ggplot() + 
+  geom_sf(data = sanfransisco_family_h, aes(fill = family_households), color = NA) +
+  geom_point(data = sanfransisco_city, aes(x = long, y = lat), color = "white")+
+  geom_label(data = sanfransisco_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+  scale_fill_viridis_d(option = "D", name = "Non-family Housholds") +
+  scale_x_continuous(limits = c(-122.525, -122.35), expand = c(0, 0))+
+  scale_y_continuous(limits = c(37.7, 37.84), expand = c(0,0))+
+  ggtitle("San Fransicso County Family Housholds Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi")+
+  theme(legend.position = c(0, 0.745),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
+```
+
+```{r}
+ggplot() + 
+  geom_sf(data = mesa_family_h, aes(fill = family_households), color = NA) +
+  scale_fill_viridis_d(option = "D", name = "Family Households") +
+  geom_point(data = mesa_city, aes(x = long, y = lat), color = "white", size = 2.5)+
+  geom_label(data = mesa_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = 1.35)+
+  ggtitle("Maricopa County Family Households Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi",
+                   location = "br")+
+  theme(legend.position = c(0.76, 0.20),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
+```
