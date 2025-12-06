@@ -7,14 +7,190 @@ Your exploratory data analysis of the team datasets go here.
 
 ```{r}
 library(tidyverse)
+library(tidycensus)
+library(ggplot2)
+library(dplyr)
 ```
 
 ```{r}
-data <- read_csv("../data/processed/acs_2023.csv")
+census_data <- read_csv("../data/processed/acs_2023.csv")
 ```
 
 ```{r}
-
-  
+sanfransisco <- get_acs(
+  state = "CA",
+  county = "San Francisco",
+  geography = "county",
+  variables = c("B02001_002", "B02001_003", "B02001_004", "B02001_005", 
+                "B02001_006", "B02001_007", "B02001_008"),
+  year = 2023
+)
 ```
+
+```{r}
+mesa <- get_acs(
+  state = "AZ",
+  county = "Maricopa",
+  geography = "county",
+  variables = c("B02001_002", "B02001_003", "B02001_004", "B02001_005", 
+                "B02001_006", "B02001_007", "B02001_008"),
+  year = 2023
+)
+```
+
+```{r}
+data <- rbind(sanfransisco, mesa)
+
+data <- data %>%
+  select(NAME, variable, estimate) %>%
+  rename("county" = "NAME",
+         "race" = "variable",
+         "population" = "estimate") %>%
+  mutate(race = case_when(
+    race == "B02001_002" ~ "White",
+    race == "B02001_003" ~ "Black",
+    race == "B02001_004" ~ "American Indian",
+    race == "B02001_005" ~ "Asian",
+    race == "B02001_006" ~ "Pacific Islander",
+    race == "B02001_007" ~ "Other",
+    race == "B02001_008" ~ "Two or more races"
+  )) %>%
+  mutate(county = case_when(
+    county == "San Francisco County, California" ~ "San Fransisco",
+    county == "Maricopa County, Arizona" ~ "Maricopa"
+  ))
+```
+
+
+```{r}
+data %>% 
+  group_by(county) %>%
+  mutate(prop = population / sum(population)) %>%
+  ggplot(aes(x = county, y = prop, fill = race)) +
+  geom_bar(stat = "identity", position = "fill") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Race Composition of Two Counties",
+       x = "County",
+       y = "Percent of Population",
+       fill = "Race Group") + 
+  scale_fill_manual(values = c(
+  "#4E79A7", # steel blue
+  "#A0CBE8", # light blue
+  "#F28E2B", # orange
+  "#FFBE7D", # light orange
+  "#59A14F", # muted green
+  "#8CD17D", # light green
+  "#B6992D"  # olive gold
+)) +
+  theme_minimal()
+```
+
+
+```{r}
+sanfransisco2 <- get_acs(
+  state = "CA",
+  county = "San Francisco",
+  geography = "county",
+  variables = c("B15003_002","B15003_003","B15003_004","B15003_005",
+                "B15003_006","B15003_007","B15003_008","B15003_009","B15003_010",
+                "B15003_011","B15003_012","B15003_013","B15003_014","B15003_015",
+                "B15003_016","B15003_017","B15003_018","B15003_019","B15003_020",
+                "B15003_021","B15003_022","B15003_023","B15003_024","B15003_025"),
+  year = 2023
+)
+```
+
+```{r}
+mesa2 <- get_acs(
+  state = "AZ",
+  county = "Maricopa",
+  geography = "county",
+  variables = c("B15003_002","B15003_003","B15003_004","B15003_005",
+                "B15003_006","B15003_007","B15003_008","B15003_009","B15003_010",
+                "B15003_011","B15003_012","B15003_013","B15003_014","B15003_015",
+                "B15003_016","B15003_017","B15003_018","B15003_019","B15003_020",
+                "B15003_021","B15003_022","B15003_023","B15003_024","B15003_025"),
+  year = 2023
+)
+```
+
+
+```{r}
+data2 <- rbind(sanfransisco2, mesa2)
+
+data2 <- data2 %>%
+  select(NAME, variable, estimate) %>%
+  rename("county" = "NAME",
+         "education" = "variable",
+         "population" = "estimate") %>%
+  mutate(education = case_when(
+    education == "B15003_002" ~ "None",
+    education == "B15003_003" ~ "Nursery",
+    education == "B15003_004" ~ "Kindergarten",
+    education == "B15003_005" ~ "Kindergarten",
+    education == "B15003_006" ~ "Kindergarten",
+    education == "B15003_007" ~ "Kindergarten",
+    education == "B15003_008" ~ "Kindergarten",
+    education == "B15003_009" ~ "Elementary",
+    education == "B15003_010" ~ "Elementary",
+    education == "B15003_011" ~ "Elementary",
+    education == "B15003_012" ~ "Elementary",
+    education == "B15003_013" ~ "Middle",
+    education == "B15003_014" ~ "Middle",
+    education == "B15003_015" ~ "Middle",
+    education == "B15003_016" ~ "Middle",
+    education == "B15003_017" ~ "Highschool (or equivalent)",
+    education == "B15003_018" ~ "GED",
+    education == "B15003_019" ~ "Some College",
+    education == "B15003_020" ~ "Some College",
+    education == "B15003_021" ~ "Associate's",
+    education == "B15003_022" ~ "Bachelor's",
+    education == "B15003_023" ~ "Master's",
+    education == "B15003_024" ~ "Professional",
+    education == "B15003_025" ~ "Doctorate"
+  )) %>%
+  mutate(education = case_when(
+    education == "None" ~ "None",
+    education == "Nursery" ~ "Pre-Highschool",
+    education == "Kindergarten" ~ "Pre-Highschool",
+    education == "Elementary" ~ "Pre-Highschool",
+    education == "Middle" ~ "Pre-Highschool",
+    education == "Highschool (or equivalent)" ~ "Highschool (or equivalent)",
+    education == "GED" ~ "Highschool (or equivalent)",
+    education == "Some College" ~ "Some College",
+    education == "Associate's" ~ "Undergraduate Degree (or equivalent)",
+    education == "Bachelor's" ~ "Undergraduate Degree (or equivalent)",
+    education == "Professional" ~ "Undergraduate Degree (or equivalent)",
+    education == "Master's" ~ "Graduate Degree",
+    education == "Doctorate" ~ "Graduate Degree",
+  )) %>%
+  mutate(county = case_when(
+    county == "San Francisco County, California" ~ "San Fransisco",
+    county == "Maricopa County, Arizona" ~ "Maricopa"
+  ))
+```
+
+
+```{r}
+data2 %>% 
+  group_by(county) %>%
+  mutate(prop = population / sum(population)) %>%
+  ggplot(aes(x = county, y = prop, fill = education)) +
+  geom_bar(stat = "identity", position = "fill") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Highest Education Completed",
+       x = "County",
+       y = "Percent of Population",
+       fill = "Education Level") + 
+  scale_fill_manual(values = c(
+  "#4E79A7", # steel blue
+  "#A0CBE8", # light blue
+  "#F28E2B", # orange
+  "#FFBE7D", # light orange
+  "#59A14F", # muted green
+  "#8CD17D" # light green
+)) +
+  theme_minimal()
+```
+
 
