@@ -720,3 +720,293 @@ ggplot() +
         )
 ```
 
+```{r}
+# loading libraries
+library(tidyverse)
+library(tidycensus) # Getting our data
+library(sf) # For shapefiles
+library(giscoR) # For mapping
+library(grid) # For mapping inset graphs
+library(classInt) # Making breaks
+```
+
+```{r}
+# Getting our data
+# We are making a function to streamline our data collection from tidy census
+
+get_data <- function(city, variable_list){
+  if(city == "San Francisco"){
+    return(get_acs(
+      state = "CA",
+      county = "San Francisco",
+      geography = "tract",
+      variables = variable_list,
+      geometry = TRUE,
+      year = 2021
+    )
+    )
+  }
+  else{
+    return(get_acs(
+      state = "AZ",
+      county = "Maricopa",
+      geography = "tract",
+      variables = variable_list,
+      geometry = TRUE,
+      year = 2021
+    )
+    )
+  }
+}
+
+# Getting all the San Francisco data we need
+# Data for percent of San Francisco population that is white
+sanfrancisco_white_population <- get_data(city = "San Francisco", variable_list = c("B02001_001", "B02001_002")) %>% 
+  select(geometry,variable,estimate) %>% 
+  mutate(variable = case_when(
+                              variable == "B02001_001" ~ "total_population",
+                              variable == "B02001_002" ~ "white_population"
+                              )
+         ) %>% 
+  pivot_wider(names_from = variable, values_from = estimate) %>% 
+  mutate(total_population = as.numeric(paste(total_population)),
+         white_population = as.numeric(paste(white_population)),
+         percent = white_population / total_population)
+
+# Data for percent of San Francisco population that is minority(not white)
+sanfrancisco_minority <- get_data(city = "San Francisco", variable_list = c("B02001_001", "B02001_003", "B02001_004", "B02001_005", "B02001_006", "B02001_007", "B02001_008")) %>% 
+  select(geometry,variable,estimate) %>% 
+  mutate(variable = case_when(
+                              variable == "B02001_001" ~ "total_population",
+                              variable == "B02001_003" ~ "black_african_american",
+                              variable == "B02001_004" ~ "native_american",
+                              variable == "B02001_005" ~ "asian",
+                              variable == "B02001_006" ~ "pacific_islander",
+                              variable == "B02001_007" ~ "other",
+                              variable == "B02001_008" ~ "two_or_more"
+                              )
+         ) %>% 
+  pivot_wider(names_from = variable, values_from = estimate) %>% 
+  mutate(total_population = as.numeric(paste(total_population)),
+         black_african_american = as.numeric(paste(black_african_american)),
+         native_american = as.numeric(paste(native_american)),
+         asian = as.numeric(paste(asian)),
+         pacific_islander = as.numeric(paste(pacific_islander)),
+         other= as.numeric(paste(other)),
+         two_or_more = as.numeric(paste(two_or_more)),
+         total_minority = black_african_american + native_american + asian + pacific_islander + other + two_or_more,
+         percent = total_minority/total_population
+        )
+
+# Data for Family Households in San Francisco
+sanfrancisco_familyhousehold <- get_data(city = "San Francisco", variable_list = c("B11001_001", "B11001_002")) %>% 
+  select(geometry,variable,estimate) %>% 
+  mutate(variable = case_when(
+                              variable == "B11001_001" ~ "total_households",
+                              variable == "B11001_002" ~ "family_households",
+                              )
+         ) %>%
+  pivot_wider(names_from = variable, values_from = estimate) %>%
+  mutate(total_households = as.numeric(paste(total_households)),
+         family_households = as.numeric(paste(family_households)),
+         percent = family_households/total_households)
+
+# Data for Non-family Households in San Francisco
+sanfrancisco_nonfamilyhousehold <- get_data(city = "San Francisco", variable_list = c("B11001_001", "B11001_007")) %>% 
+  select(geometry,variable,estimate) %>% 
+  mutate(variable = case_when(
+                              variable == "B11001_001" ~ "total_households",
+                              variable == "B11001_007" ~ "nonfamily_households",
+                              )
+         ) %>%
+  pivot_wider(names_from = variable, values_from = estimate) %>%
+  mutate(total_households = as.numeric(paste(total_households)),
+         nonfamily_households = as.numeric(paste(nonfamily_households)),
+         percent = nonfamily_households/total_households)
+
+# Data for median income in San Francisco
+sanfrancisco_income <- get_data(city = "San Francisco", variable_list = "B07011_001") %>% 
+  select(geometry,variable,estimate) %>%
+  mutate(variable = case_when(
+                              variable == "B07011_001" ~ "median_income"
+                              )
+  ) %>% 
+  pivot_wider(names_from = variable, values_from = estimate) %>%
+  mutate(median_income = as.numeric(paste(median_income)))
+
+# Data for highest level of education in San Francisco
+sanfrancisco_education <- get_data(city = "San Francisco", variable_list = c("B15003_002", "B15003_003", "B15003_004", "B15003_005", "B15003_006", "B15003_007", "B15003_008", "B15003_009", "B15003_010", "B15003_011", "B15003_012", "B15003_013", "B15003_014", "B15003_015", "B15003_016", "B15003_017", "B15003_018", "B15003_019", "B15003_020", "B15003_021", "B15003_022", "B15003_023", "B15003_024", "B15003_025")) %>% 
+  select(geometry,variable,estimate) %>% 
+  mutate(variable = case_when(
+                              variable == "B15003_002" ~ "none",
+                              variable == "B15003_003" ~ "pre_highschool",
+                              variable == "B15003_004" ~ "pre_highschool",
+                              variable == "B15003_005" ~ "pre_highschool",
+                              variable == "B15003_006" ~ "pre_highschool",
+                              variable == "B15003_007" ~ "pre_highschool",
+                              variable == "B15003_008" ~ "pre_highschool",
+                              variable == "B15003_009" ~ "pre_highschool",
+                              variable == "B15003_009" ~ "pre_highschool",
+                              variable == "B15003_010" ~ "pre_highschool",
+                              variable == "B15003_011" ~ "pre_highschool",
+                              variable == "B15003_012" ~ "pre_highschool",
+                              variable == "B15003_013" ~ "pre_highschool",
+                              variable == "B15003_014" ~ "pre_highschool",
+                              variable == "B15003_015" ~ "pre_highschool",
+                              variable == "B15003_016" ~ "pre_highschool",
+                              variable == "B15003_017" ~ "highschool_or_equivalent",
+                              variable == "B15003_018" ~ "highschool_or_equivalent",
+                              variable == "B15003_019" ~ "some_college",
+                              variable == "B15003_020" ~ "some_college",
+                              variable == "B15003_021" ~ "undergraduate",
+                              variable == "B15003_022" ~ "undergraduate",
+                              variable == "B15003_023" ~ "undergraduate",
+                              variable == "B15003_024" ~ "graduate",
+                              variable == "B15003_025" ~ "graduate"
+                              )
+         )%>% 
+  pivot_wider(names_from = variable, values_from = estimate) %>% 
+  mutate(none = as.numeric(paste(none)),
+         pre_highschool = as.numeric(paste(lapply(pre_highschool, sum))),
+         highschool_or_equivalent = as.numeric(paste(lapply(highschool_or_equivalent, sum))),
+         some_college = as.numeric(paste(lapply(some_college, sum))),
+         undergraduate = as.numeric(paste(lapply(undergraduate, sum))),
+         graduate = as.numeric(paste(lapply(graduate, sum))),
+         majority_educated = case_when(
+                                      none > pre_highschool & none > highschool_or_equivalent & none > some_college & none > undergraduate & none > graduate ~ "None",
+                                      pre_highschool > none & pre_highschool > highschool_or_equivalent & pre_highschool > some_college & pre_highschool > undergraduate & pre_highschool >graduate ~ "Pre-highschool",
+                                      highschool_or_equivalent > none & highschool_or_equivalent > pre_highschool & highschool_or_equivalent > some_college & highschool_or_equivalent > undergraduate & highschool_or_equivalent > graduate ~ "Highschool or Equivalent",
+                                      some_college > none & some_college > pre_highschool & some_college > highschool_or_equivalent & some_college > undergraduate & some_college > graduate ~ "Some College",
+                                      undergraduate > none & undergraduate > pre_highschool & undergraduate > highschool_or_equivalent & undergraduate > some_college & undergraduate > graduate ~ "Undergraduate Degree",
+                                      graduate > none & graduate > pre_highschool & graduate > highschool_or_equivalent & graduate > some_college & graduate > undergraduate ~ "graduate"
+                                      )
+         )
+
+# Data for percent of Mesa population that is white
+mesa_white_population <- get_data(city = "Mesa", variable_list = c("B02001_001", "B02001_002")) %>% 
+  select(geometry,variable,estimate) %>% 
+  mutate(variable = case_when(
+                              variable == "B02001_001" ~ "total_population",
+                              variable == "B02001_002" ~ "white_population"
+                              )
+         ) %>% 
+  pivot_wider(names_from = variable, values_from = estimate) %>% 
+  mutate(total_population = as.numeric(paste(total_population)),
+         white_population = as.numeric(paste(white_population)),
+         percent = white_population / total_population)
+
+# Data for percent of Mesa population that is minority(not white)
+mesa_minority <- get_data(city = "Mesa", variable_list = c("B02001_001", "B02001_003", "B02001_004", "B02001_005", "B02001_006", "B02001_007", "B02001_008")) %>% 
+  select(geometry,variable,estimate) %>% 
+  mutate(variable = case_when(
+                              variable == "B02001_001" ~ "total_population",
+                              variable == "B02001_003" ~ "black_african_american",
+                              variable == "B02001_004" ~ "native_american",
+                              variable == "B02001_005" ~ "asian",
+                              variable == "B02001_006" ~ "pacific_islander",
+                              variable == "B02001_007" ~ "other",
+                              variable == "B02001_008" ~ "two_or_more"
+                              )
+         ) %>% 
+  pivot_wider(names_from = variable, values_from = estimate) %>% 
+  mutate(total_population = as.numeric(paste(total_population)),
+         black_african_american = as.numeric(paste(black_african_american)),
+         native_american = as.numeric(paste(native_american)),
+         asian = as.numeric(paste(asian)),
+         pacific_islander = as.numeric(paste(pacific_islander)),
+         other= as.numeric(paste(other)),
+         two_or_more = as.numeric(paste(two_or_more)),
+         total_minority = black_african_american + native_american + asian + pacific_islander + other + two_or_more,
+         percent = total_minority/total_population
+        )
+
+# Data for Family Households in Mesa
+mesa_familyhousehold <- get_data(city = "Mesa", variable_list = c("B11001_001", "B11001_002")) %>% 
+  select(geometry,variable,estimate) %>% 
+  mutate(variable = case_when(
+                              variable == "B11001_001" ~ "total_households",
+                              variable == "B11001_002" ~ "family_households",
+                              )
+         ) %>%
+  pivot_wider(names_from = variable, values_from = estimate) %>%
+  mutate(total_households = as.numeric(paste(total_households)),
+         family_households = as.numeric(paste(family_households)),
+         percent = family_households/total_households)
+
+# Data for Non-family Households in Mesa
+mesa_nonfamilyhousehold <- get_data(city = "Mesa", variable_list = c("B11001_001", "B11001_007")) %>% 
+  select(geometry,variable,estimate) %>% 
+  mutate(variable = case_when(
+                              variable == "B11001_001" ~ "total_households",
+                              variable == "B11001_007" ~ "nonfamily_households",
+                              )
+         ) %>%
+  pivot_wider(names_from = variable, values_from = estimate) %>%
+  mutate(total_households = as.numeric(paste(total_households)),
+         nonfamily_households = as.numeric(paste(nonfamily_households)),
+         percent = nonfamily_households/total_households)
+
+# Data for median income in Mesa
+mesa_income <- get_data(city = "Mesa", variable_list = "B07011_001") %>% 
+  select(geometry,variable,estimate) %>%
+  mutate(variable = case_when(
+                              variable == "B07011_001" ~ "median_income"
+                              )
+  ) %>% 
+  pivot_wider(names_from = variable, values_from = estimate) %>%
+  mutate(median_income = as.numeric(paste(median_income)))
+
+# Data for highest level of education in Mesa
+mesa_education <- get_data(city = "Mesa", variable_list = c("B15003_002", "B15003_003", "B15003_004", "B15003_005", "B15003_006", "B15003_007", "B15003_008", "B15003_009", "B15003_010", "B15003_011", "B15003_012", "B15003_013", "B15003_014", "B15003_015", "B15003_016", "B15003_017", "B15003_018", "B15003_019", "B15003_020", "B15003_021", "B15003_022", "B15003_023", "B15003_024", "B15003_025")) %>% 
+  select(geometry,variable,estimate) %>% 
+  mutate(variable = case_when(
+                              variable == "B15003_002" ~ "none",
+                              variable == "B15003_003" ~ "pre_highschool",
+                              variable == "B15003_004" ~ "pre_highschool",
+                              variable == "B15003_005" ~ "pre_highschool",
+                              variable == "B15003_006" ~ "pre_highschool",
+                              variable == "B15003_007" ~ "pre_highschool",
+                              variable == "B15003_008" ~ "pre_highschool",
+                              variable == "B15003_009" ~ "pre_highschool",
+                              variable == "B15003_009" ~ "pre_highschool",
+                              variable == "B15003_010" ~ "pre_highschool",
+                              variable == "B15003_011" ~ "pre_highschool",
+                              variable == "B15003_012" ~ "pre_highschool",
+                              variable == "B15003_013" ~ "pre_highschool",
+                              variable == "B15003_014" ~ "pre_highschool",
+                              variable == "B15003_015" ~ "pre_highschool",
+                              variable == "B15003_016" ~ "pre_highschool",
+                              variable == "B15003_017" ~ "highschool_or_equivalent",
+                              variable == "B15003_018" ~ "highschool_or_equivalent",
+                              variable == "B15003_019" ~ "some_college",
+                              variable == "B15003_020" ~ "some_college",
+                              variable == "B15003_021" ~ "undergraduate",
+                              variable == "B15003_022" ~ "undergraduate",
+                              variable == "B15003_023" ~ "undergraduate",
+                              variable == "B15003_024" ~ "graduate",
+                              variable == "B15003_025" ~ "graduate"
+                              )
+         )%>% 
+  pivot_wider(names_from = variable, values_from = estimate) %>% 
+  mutate(none = as.numeric(paste(none)),
+         pre_highschool = as.numeric(paste(lapply(pre_highschool, sum))),
+         highschool_or_equivalent = as.numeric(paste(lapply(highschool_or_equivalent, sum))),
+         some_college = as.numeric(paste(lapply(some_college, sum))),
+         undergraduate = as.numeric(paste(lapply(undergraduate, sum))),
+         graduate = as.numeric(paste(lapply(graduate, sum))),
+         majority_educated = case_when(
+                                      none > pre_highschool & none > highschool_or_equivalent & none > some_college & none > undergraduate & none > graduate ~ "None",
+                                      pre_highschool > none & pre_highschool > highschool_or_equivalent & pre_highschool > some_college & pre_highschool > undergraduate & pre_highschool >graduate ~ "Pre-highschool",
+                                      highschool_or_equivalent > none & highschool_or_equivalent > pre_highschool & highschool_or_equivalent > some_college & highschool_or_equivalent > undergraduate & highschool_or_equivalent > graduate ~ "Highschool or Equivalent",
+                                      some_college > none & some_college > pre_highschool & some_college > highschool_or_equivalent & some_college > undergraduate & some_college > graduate ~ "Some College",
+                                      undergraduate > none & undergraduate > pre_highschool & undergraduate > highschool_or_equivalent & undergraduate > some_college & undergraduate > graduate ~ "Undergraduate Degree",
+                                      graduate > none & graduate > pre_highschool & graduate > highschool_or_equivalent & graduate > some_college & graduate > undergraduate ~ "graduate"
+                                      )
+         )
+
+```
+
+```{r}
+
+```
+
