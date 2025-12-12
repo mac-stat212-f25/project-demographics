@@ -724,10 +724,10 @@ ggplot() +
 # loading libraries
 library(tidyverse)
 library(tidycensus) # Getting our data
-library(sf) # For shapefiles
-library(giscoR) # For mapping
+library(ggthemes)
 library(grid) # For mapping inset graphs
 library(classInt) # Making breaks
+library(ggspatial) # For adding map annotations
 ```
 
 ```{r}
@@ -1004,9 +1004,35 @@ mesa_education <- get_data(city = "Mesa", variable_list = c("B15003_002", "B1500
                                       )
          )
 
+# City Locations 
+sanfransisco_city <- data.frame(lat = 37.7749, long = -122.4194, name = "San Fransisco")
+
+mesa_city <- data.frame(lat = 33.4152, long = - 111.8315, name = "Mesa")
 ```
 
 ```{r}
-
+# Making the San Francisco white Density Map
+ggplot() + 
+  geom_sf(data = sanfrancisco_white_population, aes(fill = percent), color = NA) +
+  geom_point(data = sanfransisco_city, aes(x = long, y = lat), color = "white")+
+  geom_label(data = sanfransisco_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+  scale_fill_viridis_c(option = "D", name = "Median Income") +
+  scale_x_continuous(limits = c(-122.525, -122.35), expand = c(0, 0))+
+  scale_y_continuous(limits = c(37.7, 37.84), expand = c(0,0))+
+  ggtitle("San Fransicso County Median Income Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi")+
+  theme(legend.position = c(0, 0.745),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
 ```
 
