@@ -444,14 +444,220 @@ cookieconsent.run({
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidycensus)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># df &lt;- read_csv()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>census_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/processed/acs_2023.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>sanfransisco <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="at">state =</span> <span class="st">"CA"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="at">county =</span> <span class="st">"San Francisco"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="at">geography =</span> <span class="st">"county"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"B02001_002"</span>, <span class="st">"B02001_003"</span>, <span class="st">"B02001_004"</span>, <span class="st">"B02001_005"</span>, </span>
+<span id="cb3-6"><a href="#cb3-6"></a>                <span class="st">"B02001_006"</span>, <span class="st">"B02001_007"</span>, <span class="st">"B02001_008"</span>),</span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="at">year =</span> <span class="dv">2023</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>mesa <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="at">state =</span> <span class="st">"AZ"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="at">county =</span> <span class="st">"Maricopa"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="at">geography =</span> <span class="st">"county"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"B02001_002"</span>, <span class="st">"B02001_003"</span>, <span class="st">"B02001_004"</span>, <span class="st">"B02001_005"</span>, </span>
+<span id="cb4-6"><a href="#cb4-6"></a>                <span class="st">"B02001_006"</span>, <span class="st">"B02001_007"</span>, <span class="st">"B02001_008"</span>),</span>
+<span id="cb4-7"><a href="#cb4-7"></a>  <span class="at">year =</span> <span class="dv">2023</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(sanfransisco, mesa)</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">select</span>(NAME, variable, estimate) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">rename</span>(<span class="st">"county"</span> <span class="ot">=</span> <span class="st">"NAME"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6"></a>         <span class="st">"race"</span> <span class="ot">=</span> <span class="st">"variable"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7"></a>         <span class="st">"population"</span> <span class="ot">=</span> <span class="st">"estimate"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">mutate</span>(<span class="at">race =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-9"><a href="#cb5-9"></a>    race <span class="sc">==</span> <span class="st">"B02001_002"</span> <span class="sc">~</span> <span class="st">"White"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10"></a>    race <span class="sc">==</span> <span class="st">"B02001_003"</span> <span class="sc">~</span> <span class="st">"Black"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11"></a>    race <span class="sc">==</span> <span class="st">"B02001_004"</span> <span class="sc">~</span> <span class="st">"American Indian"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12"></a>    race <span class="sc">==</span> <span class="st">"B02001_005"</span> <span class="sc">~</span> <span class="st">"Asian"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13"></a>    race <span class="sc">==</span> <span class="st">"B02001_006"</span> <span class="sc">~</span> <span class="st">"Pacific Islander"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14"></a>    race <span class="sc">==</span> <span class="st">"B02001_007"</span> <span class="sc">~</span> <span class="st">"Other"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15"></a>    race <span class="sc">==</span> <span class="st">"B02001_008"</span> <span class="sc">~</span> <span class="st">"Two or more races"</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a>  <span class="fu">mutate</span>(<span class="at">county =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-18"><a href="#cb5-18"></a>    county <span class="sc">==</span> <span class="st">"San Francisco County, California"</span> <span class="sc">~</span> <span class="st">"San Fransisco"</span>,</span>
+<span id="cb5-19"><a href="#cb5-19"></a>    county <span class="sc">==</span> <span class="st">"Maricopa County, Arizona"</span> <span class="sc">~</span> <span class="st">"Maricopa"</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">group_by</span>(county) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> population <span class="sc">/</span> <span class="fu">sum</span>(population)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> county, <span class="at">y =</span> prop, <span class="at">fill =</span> race)) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Race Composition of Two Counties"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8"></a>       <span class="at">x =</span> <span class="st">"County"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9"></a>       <span class="at">y =</span> <span class="st">"Percent of Population"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10"></a>       <span class="at">fill =</span> <span class="st">"Race Group"</span>) <span class="sc">+</span> </span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb6-12"><a href="#cb6-12"></a>  <span class="st">"#4E79A7"</span>, <span class="co"># steel blue</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>  <span class="st">"#A0CBE8"</span>, <span class="co"># light blue</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="st">"#F28E2B"</span>, <span class="co"># orange</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>  <span class="st">"#FFBE7D"</span>, <span class="co"># light orange</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>  <span class="st">"#59A14F"</span>, <span class="co"># muted green</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>  <span class="st">"#8CD17D"</span>, <span class="co"># light green</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>  <span class="st">"#B6992D"</span>  <span class="co"># olive gold</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>)) <span class="sc">+</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda-member2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>sanfransisco2 <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="at">state =</span> <span class="st">"CA"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">county =</span> <span class="st">"San Francisco"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="at">geography =</span> <span class="st">"county"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"B15003_002"</span>,<span class="st">"B15003_003"</span>,<span class="st">"B15003_004"</span>,<span class="st">"B15003_005"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>                <span class="st">"B15003_006"</span>,<span class="st">"B15003_007"</span>,<span class="st">"B15003_008"</span>,<span class="st">"B15003_009"</span>,<span class="st">"B15003_010"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7"></a>                <span class="st">"B15003_011"</span>,<span class="st">"B15003_012"</span>,<span class="st">"B15003_013"</span>,<span class="st">"B15003_014"</span>,<span class="st">"B15003_015"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8"></a>                <span class="st">"B15003_016"</span>,<span class="st">"B15003_017"</span>,<span class="st">"B15003_018"</span>,<span class="st">"B15003_019"</span>,<span class="st">"B15003_020"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9"></a>                <span class="st">"B15003_021"</span>,<span class="st">"B15003_022"</span>,<span class="st">"B15003_023"</span>,<span class="st">"B15003_024"</span>,<span class="st">"B15003_025"</span>),</span>
+<span id="cb7-10"><a href="#cb7-10"></a>  <span class="at">year =</span> <span class="dv">2023</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>mesa2 <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="at">state =</span> <span class="st">"AZ"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="at">county =</span> <span class="st">"Maricopa"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="at">geography =</span> <span class="st">"county"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"B15003_002"</span>,<span class="st">"B15003_003"</span>,<span class="st">"B15003_004"</span>,<span class="st">"B15003_005"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6"></a>                <span class="st">"B15003_006"</span>,<span class="st">"B15003_007"</span>,<span class="st">"B15003_008"</span>,<span class="st">"B15003_009"</span>,<span class="st">"B15003_010"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7"></a>                <span class="st">"B15003_011"</span>,<span class="st">"B15003_012"</span>,<span class="st">"B15003_013"</span>,<span class="st">"B15003_014"</span>,<span class="st">"B15003_015"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8"></a>                <span class="st">"B15003_016"</span>,<span class="st">"B15003_017"</span>,<span class="st">"B15003_018"</span>,<span class="st">"B15003_019"</span>,<span class="st">"B15003_020"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9"></a>                <span class="st">"B15003_021"</span>,<span class="st">"B15003_022"</span>,<span class="st">"B15003_023"</span>,<span class="st">"B15003_024"</span>,<span class="st">"B15003_025"</span>),</span>
+<span id="cb8-10"><a href="#cb8-10"></a>  <span class="at">year =</span> <span class="dv">2023</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>data2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(sanfransisco2, mesa2)</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>data2 <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">select</span>(NAME, variable, estimate) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">rename</span>(<span class="st">"county"</span> <span class="ot">=</span> <span class="st">"NAME"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6"></a>         <span class="st">"education"</span> <span class="ot">=</span> <span class="st">"variable"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7"></a>         <span class="st">"population"</span> <span class="ot">=</span> <span class="st">"estimate"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>  <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">case_when</span>(</span>
+<span id="cb9-9"><a href="#cb9-9"></a>    education <span class="sc">==</span> <span class="st">"B15003_002"</span> <span class="sc">~</span> <span class="st">"None"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10"></a>    education <span class="sc">==</span> <span class="st">"B15003_003"</span> <span class="sc">~</span> <span class="st">"Nursery"</span>,</span>
+<span id="cb9-11"><a href="#cb9-11"></a>    education <span class="sc">==</span> <span class="st">"B15003_004"</span> <span class="sc">~</span> <span class="st">"Kindergarten"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12"></a>    education <span class="sc">==</span> <span class="st">"B15003_005"</span> <span class="sc">~</span> <span class="st">"Kindergarten"</span>,</span>
+<span id="cb9-13"><a href="#cb9-13"></a>    education <span class="sc">==</span> <span class="st">"B15003_006"</span> <span class="sc">~</span> <span class="st">"Kindergarten"</span>,</span>
+<span id="cb9-14"><a href="#cb9-14"></a>    education <span class="sc">==</span> <span class="st">"B15003_007"</span> <span class="sc">~</span> <span class="st">"Kindergarten"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15"></a>    education <span class="sc">==</span> <span class="st">"B15003_008"</span> <span class="sc">~</span> <span class="st">"Kindergarten"</span>,</span>
+<span id="cb9-16"><a href="#cb9-16"></a>    education <span class="sc">==</span> <span class="st">"B15003_009"</span> <span class="sc">~</span> <span class="st">"Elementary"</span>,</span>
+<span id="cb9-17"><a href="#cb9-17"></a>    education <span class="sc">==</span> <span class="st">"B15003_010"</span> <span class="sc">~</span> <span class="st">"Elementary"</span>,</span>
+<span id="cb9-18"><a href="#cb9-18"></a>    education <span class="sc">==</span> <span class="st">"B15003_011"</span> <span class="sc">~</span> <span class="st">"Elementary"</span>,</span>
+<span id="cb9-19"><a href="#cb9-19"></a>    education <span class="sc">==</span> <span class="st">"B15003_012"</span> <span class="sc">~</span> <span class="st">"Elementary"</span>,</span>
+<span id="cb9-20"><a href="#cb9-20"></a>    education <span class="sc">==</span> <span class="st">"B15003_013"</span> <span class="sc">~</span> <span class="st">"Middle"</span>,</span>
+<span id="cb9-21"><a href="#cb9-21"></a>    education <span class="sc">==</span> <span class="st">"B15003_014"</span> <span class="sc">~</span> <span class="st">"Middle"</span>,</span>
+<span id="cb9-22"><a href="#cb9-22"></a>    education <span class="sc">==</span> <span class="st">"B15003_015"</span> <span class="sc">~</span> <span class="st">"Middle"</span>,</span>
+<span id="cb9-23"><a href="#cb9-23"></a>    education <span class="sc">==</span> <span class="st">"B15003_016"</span> <span class="sc">~</span> <span class="st">"Middle"</span>,</span>
+<span id="cb9-24"><a href="#cb9-24"></a>    education <span class="sc">==</span> <span class="st">"B15003_017"</span> <span class="sc">~</span> <span class="st">"Highschool (or equivalent)"</span>,</span>
+<span id="cb9-25"><a href="#cb9-25"></a>    education <span class="sc">==</span> <span class="st">"B15003_018"</span> <span class="sc">~</span> <span class="st">"GED"</span>,</span>
+<span id="cb9-26"><a href="#cb9-26"></a>    education <span class="sc">==</span> <span class="st">"B15003_019"</span> <span class="sc">~</span> <span class="st">"Some College"</span>,</span>
+<span id="cb9-27"><a href="#cb9-27"></a>    education <span class="sc">==</span> <span class="st">"B15003_020"</span> <span class="sc">~</span> <span class="st">"Some College"</span>,</span>
+<span id="cb9-28"><a href="#cb9-28"></a>    education <span class="sc">==</span> <span class="st">"B15003_021"</span> <span class="sc">~</span> <span class="st">"Associate's"</span>,</span>
+<span id="cb9-29"><a href="#cb9-29"></a>    education <span class="sc">==</span> <span class="st">"B15003_022"</span> <span class="sc">~</span> <span class="st">"Bachelor's"</span>,</span>
+<span id="cb9-30"><a href="#cb9-30"></a>    education <span class="sc">==</span> <span class="st">"B15003_023"</span> <span class="sc">~</span> <span class="st">"Master's"</span>,</span>
+<span id="cb9-31"><a href="#cb9-31"></a>    education <span class="sc">==</span> <span class="st">"B15003_024"</span> <span class="sc">~</span> <span class="st">"Professional"</span>,</span>
+<span id="cb9-32"><a href="#cb9-32"></a>    education <span class="sc">==</span> <span class="st">"B15003_025"</span> <span class="sc">~</span> <span class="st">"Doctorate"</span></span>
+<span id="cb9-33"><a href="#cb9-33"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb9-34"><a href="#cb9-34"></a>  <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">case_when</span>(</span>
+<span id="cb9-35"><a href="#cb9-35"></a>    education <span class="sc">==</span> <span class="st">"None"</span> <span class="sc">~</span> <span class="st">"None"</span>,</span>
+<span id="cb9-36"><a href="#cb9-36"></a>    education <span class="sc">==</span> <span class="st">"Nursery"</span> <span class="sc">~</span> <span class="st">"Pre-Highschool"</span>,</span>
+<span id="cb9-37"><a href="#cb9-37"></a>    education <span class="sc">==</span> <span class="st">"Kindergarten"</span> <span class="sc">~</span> <span class="st">"Pre-Highschool"</span>,</span>
+<span id="cb9-38"><a href="#cb9-38"></a>    education <span class="sc">==</span> <span class="st">"Elementary"</span> <span class="sc">~</span> <span class="st">"Pre-Highschool"</span>,</span>
+<span id="cb9-39"><a href="#cb9-39"></a>    education <span class="sc">==</span> <span class="st">"Middle"</span> <span class="sc">~</span> <span class="st">"Pre-Highschool"</span>,</span>
+<span id="cb9-40"><a href="#cb9-40"></a>    education <span class="sc">==</span> <span class="st">"Highschool (or equivalent)"</span> <span class="sc">~</span> <span class="st">"Highschool (or equivalent)"</span>,</span>
+<span id="cb9-41"><a href="#cb9-41"></a>    education <span class="sc">==</span> <span class="st">"GED"</span> <span class="sc">~</span> <span class="st">"Highschool (or equivalent)"</span>,</span>
+<span id="cb9-42"><a href="#cb9-42"></a>    education <span class="sc">==</span> <span class="st">"Some College"</span> <span class="sc">~</span> <span class="st">"Some College"</span>,</span>
+<span id="cb9-43"><a href="#cb9-43"></a>    education <span class="sc">==</span> <span class="st">"Associate's"</span> <span class="sc">~</span> <span class="st">"Undergraduate Degree (or equivalent)"</span>,</span>
+<span id="cb9-44"><a href="#cb9-44"></a>    education <span class="sc">==</span> <span class="st">"Bachelor's"</span> <span class="sc">~</span> <span class="st">"Undergraduate Degree (or equivalent)"</span>,</span>
+<span id="cb9-45"><a href="#cb9-45"></a>    education <span class="sc">==</span> <span class="st">"Professional"</span> <span class="sc">~</span> <span class="st">"Undergraduate Degree (or equivalent)"</span>,</span>
+<span id="cb9-46"><a href="#cb9-46"></a>    education <span class="sc">==</span> <span class="st">"Master's"</span> <span class="sc">~</span> <span class="st">"Graduate Degree"</span>,</span>
+<span id="cb9-47"><a href="#cb9-47"></a>    education <span class="sc">==</span> <span class="st">"Doctorate"</span> <span class="sc">~</span> <span class="st">"Graduate Degree"</span>,</span>
+<span id="cb9-48"><a href="#cb9-48"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb9-49"><a href="#cb9-49"></a>  <span class="fu">mutate</span>(<span class="at">county =</span> <span class="fu">case_when</span>(</span>
+<span id="cb9-50"><a href="#cb9-50"></a>    county <span class="sc">==</span> <span class="st">"San Francisco County, California"</span> <span class="sc">~</span> <span class="st">"San Fransisco"</span>,</span>
+<span id="cb9-51"><a href="#cb9-51"></a>    county <span class="sc">==</span> <span class="st">"Maricopa County, Arizona"</span> <span class="sc">~</span> <span class="st">"Maricopa"</span></span>
+<span id="cb9-52"><a href="#cb9-52"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>data2 <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">group_by</span>(county) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> population <span class="sc">/</span> <span class="fu">sum</span>(population)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> county, <span class="at">y =</span> prop, <span class="at">fill =</span> education)) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Highest Education Completed"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8"></a>       <span class="at">x =</span> <span class="st">"County"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9"></a>       <span class="at">y =</span> <span class="st">"Percent of Population"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10"></a>       <span class="at">fill =</span> <span class="st">"Education Level"</span>) <span class="sc">+</span> </span>
+<span id="cb10-11"><a href="#cb10-11"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb10-12"><a href="#cb10-12"></a>  <span class="st">"#4E79A7"</span>, <span class="co"># steel blue</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a>  <span class="st">"#A0CBE8"</span>, <span class="co"># light blue</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a>  <span class="st">"#F28E2B"</span>, <span class="co"># orange</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a>  <span class="st">"#FFBE7D"</span>, <span class="co"># light orange</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a>  <span class="st">"#59A14F"</span>, <span class="co"># muted green</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a>  <span class="st">"#8CD17D"</span> <span class="co"># light green</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a>)) <span class="sc">+</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda-member2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 
 
@@ -940,20 +1146,201 @@ cookieconsent.run({
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">---</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="an">title:</span><span class="co"> "Member 2 First Name &amp; Last Name Initial"</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">---</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a>Your exploratory data analysis of the team datasets go here.</span>
-<span id="cb3-6"><a href="#cb3-6"></a></span>
-<span id="cb3-7"><a href="#cb3-7"></a></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="in">```{r}</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="in">```</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="in">```{r}</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co"># df &lt;- read_csv()</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="in">```</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">---</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="an">title:</span><span class="co"> "Member 2 First Name &amp; Last Name Initial"</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co">---</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5"></a>Your exploratory data analysis of the team datasets go here.</span>
+<span id="cb11-6"><a href="#cb11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7"></a></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="in">```{r}</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="fu">library</span>(tidycensus)</span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="in">```</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a></span>
+<span id="cb11-19"><a href="#cb11-19"></a><span class="in">```{r}</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a>census_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/processed/acs_2023.csv"</span>)</span>
+<span id="cb11-21"><a href="#cb11-21"></a><span class="in">```</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a></span>
+<span id="cb11-25"><a href="#cb11-25"></a><span class="in">```{r}</span></span>
+<span id="cb11-26"><a href="#cb11-26"></a>sanfransisco <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb11-27"><a href="#cb11-27"></a>  <span class="at">state =</span> <span class="st">"CA"</span>,</span>
+<span id="cb11-28"><a href="#cb11-28"></a>  <span class="at">county =</span> <span class="st">"San Francisco"</span>,</span>
+<span id="cb11-29"><a href="#cb11-29"></a>  <span class="at">geography =</span> <span class="st">"county"</span>,</span>
+<span id="cb11-30"><a href="#cb11-30"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"B02001_002"</span>, <span class="st">"B02001_003"</span>, <span class="st">"B02001_004"</span>, <span class="st">"B02001_005"</span>, </span>
+<span id="cb11-31"><a href="#cb11-31"></a>                <span class="st">"B02001_006"</span>, <span class="st">"B02001_007"</span>, <span class="st">"B02001_008"</span>),</span>
+<span id="cb11-32"><a href="#cb11-32"></a>  <span class="at">year =</span> <span class="dv">2023</span></span>
+<span id="cb11-33"><a href="#cb11-33"></a>)</span>
+<span id="cb11-34"><a href="#cb11-34"></a><span class="in">```</span></span>
+<span id="cb11-35"><a href="#cb11-35"></a></span>
+<span id="cb11-38"><a href="#cb11-38"></a><span class="in">```{r}</span></span>
+<span id="cb11-39"><a href="#cb11-39"></a>mesa <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb11-40"><a href="#cb11-40"></a>  <span class="at">state =</span> <span class="st">"AZ"</span>,</span>
+<span id="cb11-41"><a href="#cb11-41"></a>  <span class="at">county =</span> <span class="st">"Maricopa"</span>,</span>
+<span id="cb11-42"><a href="#cb11-42"></a>  <span class="at">geography =</span> <span class="st">"county"</span>,</span>
+<span id="cb11-43"><a href="#cb11-43"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"B02001_002"</span>, <span class="st">"B02001_003"</span>, <span class="st">"B02001_004"</span>, <span class="st">"B02001_005"</span>, </span>
+<span id="cb11-44"><a href="#cb11-44"></a>                <span class="st">"B02001_006"</span>, <span class="st">"B02001_007"</span>, <span class="st">"B02001_008"</span>),</span>
+<span id="cb11-45"><a href="#cb11-45"></a>  <span class="at">year =</span> <span class="dv">2023</span></span>
+<span id="cb11-46"><a href="#cb11-46"></a>)</span>
+<span id="cb11-47"><a href="#cb11-47"></a><span class="in">```</span></span>
+<span id="cb11-48"><a href="#cb11-48"></a></span>
+<span id="cb11-51"><a href="#cb11-51"></a><span class="in">```{r}</span></span>
+<span id="cb11-52"><a href="#cb11-52"></a>data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(sanfransisco, mesa)</span>
+<span id="cb11-53"><a href="#cb11-53"></a></span>
+<span id="cb11-54"><a href="#cb11-54"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb11-55"><a href="#cb11-55"></a>  <span class="fu">select</span>(NAME, variable, estimate) <span class="sc">%&gt;%</span></span>
+<span id="cb11-56"><a href="#cb11-56"></a>  <span class="fu">rename</span>(<span class="st">"county"</span> <span class="ot">=</span> <span class="st">"NAME"</span>,</span>
+<span id="cb11-57"><a href="#cb11-57"></a>         <span class="st">"race"</span> <span class="ot">=</span> <span class="st">"variable"</span>,</span>
+<span id="cb11-58"><a href="#cb11-58"></a>         <span class="st">"population"</span> <span class="ot">=</span> <span class="st">"estimate"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-59"><a href="#cb11-59"></a>  <span class="fu">mutate</span>(<span class="at">race =</span> <span class="fu">case_when</span>(</span>
+<span id="cb11-60"><a href="#cb11-60"></a>    race <span class="sc">==</span> <span class="st">"B02001_002"</span> <span class="sc">~</span> <span class="st">"White"</span>,</span>
+<span id="cb11-61"><a href="#cb11-61"></a>    race <span class="sc">==</span> <span class="st">"B02001_003"</span> <span class="sc">~</span> <span class="st">"Black"</span>,</span>
+<span id="cb11-62"><a href="#cb11-62"></a>    race <span class="sc">==</span> <span class="st">"B02001_004"</span> <span class="sc">~</span> <span class="st">"American Indian"</span>,</span>
+<span id="cb11-63"><a href="#cb11-63"></a>    race <span class="sc">==</span> <span class="st">"B02001_005"</span> <span class="sc">~</span> <span class="st">"Asian"</span>,</span>
+<span id="cb11-64"><a href="#cb11-64"></a>    race <span class="sc">==</span> <span class="st">"B02001_006"</span> <span class="sc">~</span> <span class="st">"Pacific Islander"</span>,</span>
+<span id="cb11-65"><a href="#cb11-65"></a>    race <span class="sc">==</span> <span class="st">"B02001_007"</span> <span class="sc">~</span> <span class="st">"Other"</span>,</span>
+<span id="cb11-66"><a href="#cb11-66"></a>    race <span class="sc">==</span> <span class="st">"B02001_008"</span> <span class="sc">~</span> <span class="st">"Two or more races"</span></span>
+<span id="cb11-67"><a href="#cb11-67"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb11-68"><a href="#cb11-68"></a>  <span class="fu">mutate</span>(<span class="at">county =</span> <span class="fu">case_when</span>(</span>
+<span id="cb11-69"><a href="#cb11-69"></a>    county <span class="sc">==</span> <span class="st">"San Francisco County, California"</span> <span class="sc">~</span> <span class="st">"San Fransisco"</span>,</span>
+<span id="cb11-70"><a href="#cb11-70"></a>    county <span class="sc">==</span> <span class="st">"Maricopa County, Arizona"</span> <span class="sc">~</span> <span class="st">"Maricopa"</span></span>
+<span id="cb11-71"><a href="#cb11-71"></a>  ))</span>
+<span id="cb11-72"><a href="#cb11-72"></a><span class="in">```</span></span>
+<span id="cb11-73"><a href="#cb11-73"></a></span>
+<span id="cb11-74"><a href="#cb11-74"></a></span>
+<span id="cb11-77"><a href="#cb11-77"></a><span class="in">```{r}</span></span>
+<span id="cb11-78"><a href="#cb11-78"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb11-79"><a href="#cb11-79"></a>  <span class="fu">group_by</span>(county) <span class="sc">%&gt;%</span></span>
+<span id="cb11-80"><a href="#cb11-80"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> population <span class="sc">/</span> <span class="fu">sum</span>(population)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-81"><a href="#cb11-81"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> county, <span class="at">y =</span> prop, <span class="at">fill =</span> race)) <span class="sc">+</span></span>
+<span id="cb11-82"><a href="#cb11-82"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb11-83"><a href="#cb11-83"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb11-84"><a href="#cb11-84"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Race Composition of Two Counties"</span>,</span>
+<span id="cb11-85"><a href="#cb11-85"></a>       <span class="at">x =</span> <span class="st">"County"</span>,</span>
+<span id="cb11-86"><a href="#cb11-86"></a>       <span class="at">y =</span> <span class="st">"Percent of Population"</span>,</span>
+<span id="cb11-87"><a href="#cb11-87"></a>       <span class="at">fill =</span> <span class="st">"Race Group"</span>) <span class="sc">+</span> </span>
+<span id="cb11-88"><a href="#cb11-88"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb11-89"><a href="#cb11-89"></a>  <span class="st">"#4E79A7"</span>, <span class="co"># steel blue</span></span>
+<span id="cb11-90"><a href="#cb11-90"></a>  <span class="st">"#A0CBE8"</span>, <span class="co"># light blue</span></span>
+<span id="cb11-91"><a href="#cb11-91"></a>  <span class="st">"#F28E2B"</span>, <span class="co"># orange</span></span>
+<span id="cb11-92"><a href="#cb11-92"></a>  <span class="st">"#FFBE7D"</span>, <span class="co"># light orange</span></span>
+<span id="cb11-93"><a href="#cb11-93"></a>  <span class="st">"#59A14F"</span>, <span class="co"># muted green</span></span>
+<span id="cb11-94"><a href="#cb11-94"></a>  <span class="st">"#8CD17D"</span>, <span class="co"># light green</span></span>
+<span id="cb11-95"><a href="#cb11-95"></a>  <span class="st">"#B6992D"</span>  <span class="co"># olive gold</span></span>
+<span id="cb11-96"><a href="#cb11-96"></a>)) <span class="sc">+</span></span>
+<span id="cb11-97"><a href="#cb11-97"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb11-98"><a href="#cb11-98"></a><span class="in">```</span></span>
+<span id="cb11-99"><a href="#cb11-99"></a></span>
+<span id="cb11-100"><a href="#cb11-100"></a></span>
+<span id="cb11-103"><a href="#cb11-103"></a><span class="in">```{r}</span></span>
+<span id="cb11-104"><a href="#cb11-104"></a>sanfransisco2 <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb11-105"><a href="#cb11-105"></a>  <span class="at">state =</span> <span class="st">"CA"</span>,</span>
+<span id="cb11-106"><a href="#cb11-106"></a>  <span class="at">county =</span> <span class="st">"San Francisco"</span>,</span>
+<span id="cb11-107"><a href="#cb11-107"></a>  <span class="at">geography =</span> <span class="st">"county"</span>,</span>
+<span id="cb11-108"><a href="#cb11-108"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"B15003_002"</span>,<span class="st">"B15003_003"</span>,<span class="st">"B15003_004"</span>,<span class="st">"B15003_005"</span>,</span>
+<span id="cb11-109"><a href="#cb11-109"></a>                <span class="st">"B15003_006"</span>,<span class="st">"B15003_007"</span>,<span class="st">"B15003_008"</span>,<span class="st">"B15003_009"</span>,<span class="st">"B15003_010"</span>,</span>
+<span id="cb11-110"><a href="#cb11-110"></a>                <span class="st">"B15003_011"</span>,<span class="st">"B15003_012"</span>,<span class="st">"B15003_013"</span>,<span class="st">"B15003_014"</span>,<span class="st">"B15003_015"</span>,</span>
+<span id="cb11-111"><a href="#cb11-111"></a>                <span class="st">"B15003_016"</span>,<span class="st">"B15003_017"</span>,<span class="st">"B15003_018"</span>,<span class="st">"B15003_019"</span>,<span class="st">"B15003_020"</span>,</span>
+<span id="cb11-112"><a href="#cb11-112"></a>                <span class="st">"B15003_021"</span>,<span class="st">"B15003_022"</span>,<span class="st">"B15003_023"</span>,<span class="st">"B15003_024"</span>,<span class="st">"B15003_025"</span>),</span>
+<span id="cb11-113"><a href="#cb11-113"></a>  <span class="at">year =</span> <span class="dv">2023</span></span>
+<span id="cb11-114"><a href="#cb11-114"></a>)</span>
+<span id="cb11-115"><a href="#cb11-115"></a><span class="in">```</span></span>
+<span id="cb11-116"><a href="#cb11-116"></a></span>
+<span id="cb11-119"><a href="#cb11-119"></a><span class="in">```{r}</span></span>
+<span id="cb11-120"><a href="#cb11-120"></a>mesa2 <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb11-121"><a href="#cb11-121"></a>  <span class="at">state =</span> <span class="st">"AZ"</span>,</span>
+<span id="cb11-122"><a href="#cb11-122"></a>  <span class="at">county =</span> <span class="st">"Maricopa"</span>,</span>
+<span id="cb11-123"><a href="#cb11-123"></a>  <span class="at">geography =</span> <span class="st">"county"</span>,</span>
+<span id="cb11-124"><a href="#cb11-124"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"B15003_002"</span>,<span class="st">"B15003_003"</span>,<span class="st">"B15003_004"</span>,<span class="st">"B15003_005"</span>,</span>
+<span id="cb11-125"><a href="#cb11-125"></a>                <span class="st">"B15003_006"</span>,<span class="st">"B15003_007"</span>,<span class="st">"B15003_008"</span>,<span class="st">"B15003_009"</span>,<span class="st">"B15003_010"</span>,</span>
+<span id="cb11-126"><a href="#cb11-126"></a>                <span class="st">"B15003_011"</span>,<span class="st">"B15003_012"</span>,<span class="st">"B15003_013"</span>,<span class="st">"B15003_014"</span>,<span class="st">"B15003_015"</span>,</span>
+<span id="cb11-127"><a href="#cb11-127"></a>                <span class="st">"B15003_016"</span>,<span class="st">"B15003_017"</span>,<span class="st">"B15003_018"</span>,<span class="st">"B15003_019"</span>,<span class="st">"B15003_020"</span>,</span>
+<span id="cb11-128"><a href="#cb11-128"></a>                <span class="st">"B15003_021"</span>,<span class="st">"B15003_022"</span>,<span class="st">"B15003_023"</span>,<span class="st">"B15003_024"</span>,<span class="st">"B15003_025"</span>),</span>
+<span id="cb11-129"><a href="#cb11-129"></a>  <span class="at">year =</span> <span class="dv">2023</span></span>
+<span id="cb11-130"><a href="#cb11-130"></a>)</span>
+<span id="cb11-131"><a href="#cb11-131"></a><span class="in">```</span></span>
+<span id="cb11-132"><a href="#cb11-132"></a></span>
+<span id="cb11-133"><a href="#cb11-133"></a></span>
+<span id="cb11-136"><a href="#cb11-136"></a><span class="in">```{r}</span></span>
+<span id="cb11-137"><a href="#cb11-137"></a>data2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(sanfransisco2, mesa2)</span>
+<span id="cb11-138"><a href="#cb11-138"></a></span>
+<span id="cb11-139"><a href="#cb11-139"></a>data2 <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span></span>
+<span id="cb11-140"><a href="#cb11-140"></a>  <span class="fu">select</span>(NAME, variable, estimate) <span class="sc">%&gt;%</span></span>
+<span id="cb11-141"><a href="#cb11-141"></a>  <span class="fu">rename</span>(<span class="st">"county"</span> <span class="ot">=</span> <span class="st">"NAME"</span>,</span>
+<span id="cb11-142"><a href="#cb11-142"></a>         <span class="st">"education"</span> <span class="ot">=</span> <span class="st">"variable"</span>,</span>
+<span id="cb11-143"><a href="#cb11-143"></a>         <span class="st">"population"</span> <span class="ot">=</span> <span class="st">"estimate"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-144"><a href="#cb11-144"></a>  <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">case_when</span>(</span>
+<span id="cb11-145"><a href="#cb11-145"></a>    education <span class="sc">==</span> <span class="st">"B15003_002"</span> <span class="sc">~</span> <span class="st">"None"</span>,</span>
+<span id="cb11-146"><a href="#cb11-146"></a>    education <span class="sc">==</span> <span class="st">"B15003_003"</span> <span class="sc">~</span> <span class="st">"Nursery"</span>,</span>
+<span id="cb11-147"><a href="#cb11-147"></a>    education <span class="sc">==</span> <span class="st">"B15003_004"</span> <span class="sc">~</span> <span class="st">"Kindergarten"</span>,</span>
+<span id="cb11-148"><a href="#cb11-148"></a>    education <span class="sc">==</span> <span class="st">"B15003_005"</span> <span class="sc">~</span> <span class="st">"Kindergarten"</span>,</span>
+<span id="cb11-149"><a href="#cb11-149"></a>    education <span class="sc">==</span> <span class="st">"B15003_006"</span> <span class="sc">~</span> <span class="st">"Kindergarten"</span>,</span>
+<span id="cb11-150"><a href="#cb11-150"></a>    education <span class="sc">==</span> <span class="st">"B15003_007"</span> <span class="sc">~</span> <span class="st">"Kindergarten"</span>,</span>
+<span id="cb11-151"><a href="#cb11-151"></a>    education <span class="sc">==</span> <span class="st">"B15003_008"</span> <span class="sc">~</span> <span class="st">"Kindergarten"</span>,</span>
+<span id="cb11-152"><a href="#cb11-152"></a>    education <span class="sc">==</span> <span class="st">"B15003_009"</span> <span class="sc">~</span> <span class="st">"Elementary"</span>,</span>
+<span id="cb11-153"><a href="#cb11-153"></a>    education <span class="sc">==</span> <span class="st">"B15003_010"</span> <span class="sc">~</span> <span class="st">"Elementary"</span>,</span>
+<span id="cb11-154"><a href="#cb11-154"></a>    education <span class="sc">==</span> <span class="st">"B15003_011"</span> <span class="sc">~</span> <span class="st">"Elementary"</span>,</span>
+<span id="cb11-155"><a href="#cb11-155"></a>    education <span class="sc">==</span> <span class="st">"B15003_012"</span> <span class="sc">~</span> <span class="st">"Elementary"</span>,</span>
+<span id="cb11-156"><a href="#cb11-156"></a>    education <span class="sc">==</span> <span class="st">"B15003_013"</span> <span class="sc">~</span> <span class="st">"Middle"</span>,</span>
+<span id="cb11-157"><a href="#cb11-157"></a>    education <span class="sc">==</span> <span class="st">"B15003_014"</span> <span class="sc">~</span> <span class="st">"Middle"</span>,</span>
+<span id="cb11-158"><a href="#cb11-158"></a>    education <span class="sc">==</span> <span class="st">"B15003_015"</span> <span class="sc">~</span> <span class="st">"Middle"</span>,</span>
+<span id="cb11-159"><a href="#cb11-159"></a>    education <span class="sc">==</span> <span class="st">"B15003_016"</span> <span class="sc">~</span> <span class="st">"Middle"</span>,</span>
+<span id="cb11-160"><a href="#cb11-160"></a>    education <span class="sc">==</span> <span class="st">"B15003_017"</span> <span class="sc">~</span> <span class="st">"Highschool (or equivalent)"</span>,</span>
+<span id="cb11-161"><a href="#cb11-161"></a>    education <span class="sc">==</span> <span class="st">"B15003_018"</span> <span class="sc">~</span> <span class="st">"GED"</span>,</span>
+<span id="cb11-162"><a href="#cb11-162"></a>    education <span class="sc">==</span> <span class="st">"B15003_019"</span> <span class="sc">~</span> <span class="st">"Some College"</span>,</span>
+<span id="cb11-163"><a href="#cb11-163"></a>    education <span class="sc">==</span> <span class="st">"B15003_020"</span> <span class="sc">~</span> <span class="st">"Some College"</span>,</span>
+<span id="cb11-164"><a href="#cb11-164"></a>    education <span class="sc">==</span> <span class="st">"B15003_021"</span> <span class="sc">~</span> <span class="st">"Associate's"</span>,</span>
+<span id="cb11-165"><a href="#cb11-165"></a>    education <span class="sc">==</span> <span class="st">"B15003_022"</span> <span class="sc">~</span> <span class="st">"Bachelor's"</span>,</span>
+<span id="cb11-166"><a href="#cb11-166"></a>    education <span class="sc">==</span> <span class="st">"B15003_023"</span> <span class="sc">~</span> <span class="st">"Master's"</span>,</span>
+<span id="cb11-167"><a href="#cb11-167"></a>    education <span class="sc">==</span> <span class="st">"B15003_024"</span> <span class="sc">~</span> <span class="st">"Professional"</span>,</span>
+<span id="cb11-168"><a href="#cb11-168"></a>    education <span class="sc">==</span> <span class="st">"B15003_025"</span> <span class="sc">~</span> <span class="st">"Doctorate"</span></span>
+<span id="cb11-169"><a href="#cb11-169"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb11-170"><a href="#cb11-170"></a>  <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">case_when</span>(</span>
+<span id="cb11-171"><a href="#cb11-171"></a>    education <span class="sc">==</span> <span class="st">"None"</span> <span class="sc">~</span> <span class="st">"None"</span>,</span>
+<span id="cb11-172"><a href="#cb11-172"></a>    education <span class="sc">==</span> <span class="st">"Nursery"</span> <span class="sc">~</span> <span class="st">"Pre-Highschool"</span>,</span>
+<span id="cb11-173"><a href="#cb11-173"></a>    education <span class="sc">==</span> <span class="st">"Kindergarten"</span> <span class="sc">~</span> <span class="st">"Pre-Highschool"</span>,</span>
+<span id="cb11-174"><a href="#cb11-174"></a>    education <span class="sc">==</span> <span class="st">"Elementary"</span> <span class="sc">~</span> <span class="st">"Pre-Highschool"</span>,</span>
+<span id="cb11-175"><a href="#cb11-175"></a>    education <span class="sc">==</span> <span class="st">"Middle"</span> <span class="sc">~</span> <span class="st">"Pre-Highschool"</span>,</span>
+<span id="cb11-176"><a href="#cb11-176"></a>    education <span class="sc">==</span> <span class="st">"Highschool (or equivalent)"</span> <span class="sc">~</span> <span class="st">"Highschool (or equivalent)"</span>,</span>
+<span id="cb11-177"><a href="#cb11-177"></a>    education <span class="sc">==</span> <span class="st">"GED"</span> <span class="sc">~</span> <span class="st">"Highschool (or equivalent)"</span>,</span>
+<span id="cb11-178"><a href="#cb11-178"></a>    education <span class="sc">==</span> <span class="st">"Some College"</span> <span class="sc">~</span> <span class="st">"Some College"</span>,</span>
+<span id="cb11-179"><a href="#cb11-179"></a>    education <span class="sc">==</span> <span class="st">"Associate's"</span> <span class="sc">~</span> <span class="st">"Undergraduate Degree (or equivalent)"</span>,</span>
+<span id="cb11-180"><a href="#cb11-180"></a>    education <span class="sc">==</span> <span class="st">"Bachelor's"</span> <span class="sc">~</span> <span class="st">"Undergraduate Degree (or equivalent)"</span>,</span>
+<span id="cb11-181"><a href="#cb11-181"></a>    education <span class="sc">==</span> <span class="st">"Professional"</span> <span class="sc">~</span> <span class="st">"Undergraduate Degree (or equivalent)"</span>,</span>
+<span id="cb11-182"><a href="#cb11-182"></a>    education <span class="sc">==</span> <span class="st">"Master's"</span> <span class="sc">~</span> <span class="st">"Graduate Degree"</span>,</span>
+<span id="cb11-183"><a href="#cb11-183"></a>    education <span class="sc">==</span> <span class="st">"Doctorate"</span> <span class="sc">~</span> <span class="st">"Graduate Degree"</span>,</span>
+<span id="cb11-184"><a href="#cb11-184"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb11-185"><a href="#cb11-185"></a>  <span class="fu">mutate</span>(<span class="at">county =</span> <span class="fu">case_when</span>(</span>
+<span id="cb11-186"><a href="#cb11-186"></a>    county <span class="sc">==</span> <span class="st">"San Francisco County, California"</span> <span class="sc">~</span> <span class="st">"San Fransisco"</span>,</span>
+<span id="cb11-187"><a href="#cb11-187"></a>    county <span class="sc">==</span> <span class="st">"Maricopa County, Arizona"</span> <span class="sc">~</span> <span class="st">"Maricopa"</span></span>
+<span id="cb11-188"><a href="#cb11-188"></a>  ))</span>
+<span id="cb11-189"><a href="#cb11-189"></a><span class="in">```</span></span>
+<span id="cb11-190"><a href="#cb11-190"></a></span>
+<span id="cb11-191"><a href="#cb11-191"></a></span>
+<span id="cb11-194"><a href="#cb11-194"></a><span class="in">```{r}</span></span>
+<span id="cb11-195"><a href="#cb11-195"></a>data2 <span class="sc">%&gt;%</span> </span>
+<span id="cb11-196"><a href="#cb11-196"></a>  <span class="fu">group_by</span>(county) <span class="sc">%&gt;%</span></span>
+<span id="cb11-197"><a href="#cb11-197"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> population <span class="sc">/</span> <span class="fu">sum</span>(population)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-198"><a href="#cb11-198"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> county, <span class="at">y =</span> prop, <span class="at">fill =</span> education)) <span class="sc">+</span></span>
+<span id="cb11-199"><a href="#cb11-199"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb11-200"><a href="#cb11-200"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb11-201"><a href="#cb11-201"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Highest Education Completed"</span>,</span>
+<span id="cb11-202"><a href="#cb11-202"></a>       <span class="at">x =</span> <span class="st">"County"</span>,</span>
+<span id="cb11-203"><a href="#cb11-203"></a>       <span class="at">y =</span> <span class="st">"Percent of Population"</span>,</span>
+<span id="cb11-204"><a href="#cb11-204"></a>       <span class="at">fill =</span> <span class="st">"Education Level"</span>) <span class="sc">+</span> </span>
+<span id="cb11-205"><a href="#cb11-205"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb11-206"><a href="#cb11-206"></a>  <span class="st">"#4E79A7"</span>, <span class="co"># steel blue</span></span>
+<span id="cb11-207"><a href="#cb11-207"></a>  <span class="st">"#A0CBE8"</span>, <span class="co"># light blue</span></span>
+<span id="cb11-208"><a href="#cb11-208"></a>  <span class="st">"#F28E2B"</span>, <span class="co"># orange</span></span>
+<span id="cb11-209"><a href="#cb11-209"></a>  <span class="st">"#FFBE7D"</span>, <span class="co"># light orange</span></span>
+<span id="cb11-210"><a href="#cb11-210"></a>  <span class="st">"#59A14F"</span>, <span class="co"># muted green</span></span>
+<span id="cb11-211"><a href="#cb11-211"></a>  <span class="st">"#8CD17D"</span> <span class="co"># light green</span></span>
+<span id="cb11-212"><a href="#cb11-212"></a>)) <span class="sc">+</span></span>
+<span id="cb11-213"><a href="#cb11-213"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb11-214"><a href="#cb11-214"></a><span class="in">```</span></span>
+<span id="cb11-215"><a href="#cb11-215"></a></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
