@@ -1053,25 +1053,24 @@ mesa_white_population$cat <- cut(
 
 ```
 
-```{r making base maps, fig.width = 10, fig.height=10}
-# San Francisco White Population Map
-cols <- c("#edf8fb", "#b2e2e2","#66c2a4","#2ca25f","#006d2c")
-
-ggplot2::ggplot()+
-  geom_sf(data = sanfrancisco_white_population,
-          aes(fill = cat),
+```{r making San Francisco Maping Function, fig.width = 7.5, fig.height=7.5}
+# Making a function to make maps of San Francisco
+make_sanfrancisco <- function(data, variable, title_text, legend_name, colors){
+  ggplot()+
+  geom_sf(data = data,
+          aes(fill = variable),
           color = "black",
           size = 0.5
           )+
-  scale_x_continuous(limits = c(-122.52, -122.35), 
+  scale_x_continuous(limits = c(-122.5, -122.4), 
                      expand = c(0, 0)
                      )+
   scale_y_continuous(limits = c(37.7, 37.84), 
                      expand = c(0,0)
                      )+
   scale_fill_manual(
-    name = "% of Population that is White",
-    values = cols
+    name = legend_name,
+    values = colors
   )+
   guides(
     fill = guide_legend(
@@ -1087,18 +1086,89 @@ ggplot2::ggplot()+
     )
   )+
   labs(
-    title = "San Francisco White Population Density 2021"
+    title = title_text
   )+
   theme_void()+
+  annotation_north_arrow(location = "tl",
+                         pad_x = unit(0, "cm"),
+                         pad_y = unit(3.25, "cm"),
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi",
+                   location = "br",
+                   pad_x = unit(-4, "cm"),
+                   pad_y = unit(6.5, "cm"))+
+  coord_sf(clip = "off")+
+  theme(
+    legend.position = c(0.65,-0.023),
+    plot.title = element_text(
+                              size = 15.75,
+                              vjust = -12,
+                              hjust = 0.5
+                              ),
+    plot.margin = margin(1, 1, 3, 1, "cm")
+  )
+}
+
+
+# Testing with San Francisco White Population Map
+cols <- c("#edf8fb", "#b2e2e2","#66c2a4","#2ca25f","#006d2c")
+
+make_sanfrancisco(data = sanfrancisco_white_population, variable = sanfrancisco_white_population$cat, title_text =  "San Francisco White Population Density 2021", legend_name = "% of Population that is White", colors = cols)
+
+
+```
+
+```{r making Mesa mapping function, fig.height=7.5, fig.width=7.5}
+# Making a function that makes maps of Maricopa Country
+make_mesa <- function(data, variable, title_text, legend_name, colors){
+  ggplot()+
+  geom_sf(data = data,
+          aes(fill = variable),
+          color = "black",
+          size = 0.5)+
+  scale_fill_manual(
+    name = legend_name,
+    values = colors)+
+  guides(
+    fill = guide_legend(
+      direction = "horizontal",
+      keyheight = unit(2, "mm"),
+      keywidth = unit(13, "mm"),
+      title.position = "top",
+      label.position = "bottom",
+      title.hjust = 0.5,
+      label.hjust = 0.5,
+      nrow = 1,
+      byrow = TRUE))+
+  labs(
+    title = title_text
+  )+
+  theme_void()+
+  annotation_north_arrow(location = "tr",
+                         pad_x = unit(1.5, "cm"),
+                         pad_y = unit(1.5, "cm"),
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi",
+                   location = "br",
+                   pad_x = unit(2.5, "cm"),
+                   pad_y = unit(5.5, "cm"))+
   coord_sf(clip = "off")+
   theme(
     legend.position = c(0.5,-0.023),
     plot.title = element_text(
-                              size = 17,
-                              vjust = -15
+                              size = 15.75,
+                              vjust = 0,
+                              hjust = 0.5
                               ),
     plot.margin = margin(1, 1, 3, 1, "cm")
   )
+}
   
+
+make_mesa(data = mesa_white_population, mesa_white_population$cat, "Mesa White Population Density", "% of Population that is White", cols)
 ```
 
