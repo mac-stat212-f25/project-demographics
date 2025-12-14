@@ -370,5 +370,38 @@ ggplot(data4, aes(x = county, y = income)) +
 ```
 
 ```{r}
-
+data3 %>%
+  mutate(prop = )
+  mutate(population = if_else(
+    county == "San Francisco",
+    -population,
+    population
+  )) %>%
+  mutate(value = if_else(county == "A", -population, population)) %>%
+  ggplot(aes(x = household, y = population, fill = household)) +
+  geom_col(width = 0.8) +
+  coord_flip() +
+  scale_y_continuous(labels = abs) +
+  labs(y = "Count", x = NULL, fill = "County") +
+  theme_minimal() +
+  geom_hline(yintercept = 0)
 ```
+
+
+```{r}
+data2 %>%
+  mutate(population = if_else(
+    county == "San Francisco",
+    -population,
+    population
+  )) %>%
+  mutate(value = if_else(county == "A", -population, population)) %>%
+  ggplot(aes(x = household, y = population, fill = household)) +
+  geom_col(width = 0.8) +
+  coord_flip() +
+  scale_y_continuous(labels = abs) +
+  labs(y = "Count", x = NULL, fill = "County") +
+  theme_minimal() +
+  geom_hline(yintercept = 0)
+```
+
