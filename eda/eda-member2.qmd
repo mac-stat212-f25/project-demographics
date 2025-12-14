@@ -370,5 +370,60 @@ ggplot(data4, aes(x = county, y = income)) +
 ```
 
 ```{r}
-
+data6 <- data3 %>%
+  group_by(county) %>%
+  mutate(prop = population/sum(population)*100) %>%
+  mutate(prop = if_else(
+    county == "San Francisco",
+    -prop,
+    prop
+  ))
+    
+    
+ggplot(data6, aes(x = household, y = prop, fill = household)) +
+  geom_col(width = 0.8) +
+  coord_flip() +
+  scale_y_continuous(labels = abs) +
+  labs(y = "%", x = NULL, fill = "County") +
+  theme_minimal() +
+  geom_hline(yintercept = 0)
 ```
+
+
+```{r}
+data2 %>%
+  mutate(prop = prop*100) %>%
+  mutate(prop = if_else(
+    county == "San Francisco",
+    -prop,
+    prop
+  )) %>%
+ggplot(aes(x = education, y = prop, fill = education)) +
+  geom_col(width = 0.8) +
+  coord_flip() +
+  scale_y_continuous(labels = abs) +
+  labs(y = "%", x = NULL, fill = "County") +
+  theme_minimal() +
+  geom_hline(yintercept = 0)
+```
+
+```{r}
+data7 <- data5 %>%
+  group_by(county) %>%
+  mutate(prop = population/sum(population)*100) %>%
+  mutate(prop = if_else(
+    county == "San Francisco",
+    -prop,
+    prop
+  ))
+  
+
+ggplot(data7, aes(x = race, y = prop, fill = race)) +
+  geom_col(width = 0.8) +
+  coord_flip() +
+  scale_y_continuous(labels = abs) +
+  labs(y = "%", x = NULL, fill = "County") +
+  theme_minimal() +
+  geom_hline(yintercept = 0)
+```
+
