@@ -729,7 +729,7 @@ library(classInt) # Making breaks
 library(ggspatial) # For adding map annotations
 ```
 
-```{r loading data}
+```{r making a function for loading our data}
 # Getting our data
 # We are making a function to streamline our data collection from tidy census
 
@@ -758,6 +758,95 @@ get_data <- function(city, variable_list){
   }
 }
 
+```
+
+```{r making functions for data wrangling}
+# Since we are going to be making two identical data sets for each variable we are looking at, it is useful to make a function to reduce clutter and chances or error
+
+# This function helps us turn or single value lists into a double
+convert_to_numeric <- funtion(value){
+  as.numeric(paste(value))
+}
+
+# This function helps us do the wrangling for the race data
+wrangling_race <- function(data){
+  data |> 
+    select(geometry,variable,estimate) |> 
+    mutate(variable = case_when(variable == "B02001_002" ~ "white_population",
+                                variable == "B02001_003" ~ "black_african_american",
+                                variable == "B02001_004" ~ "native_american",
+                                variable == "B02001_005" ~ "asian",
+                                variable == "B02001_006" ~ "pacific_islander",
+                                variable == "B02001_007" ~ "other",
+                                variable == "B02001_008" ~ "two_or_more")) |>
+    pivot_wider(names_from = variable, values_from = estimate) |> 
+    mutate(white_population = convert_to_numeric(white_population),
+           black_african_american = convert_to_numeric(black_african_american),
+           native_american = convert_to_numeric(native_american),
+           asian = convert_to_numeric(asian),
+           pacific_islander = convert_to_numeric(pacific_islander),
+           other = convert_to_numeric(other),
+           two_or_more = convert_to_numeric(two_or_more)) |> 
+    mutate(majority = case_when(white_population > black_african_american & white_population > native_american & white_population > asian & white_population > pacific_islander & white_population > other & white_population > two_or_more ~ "White",
+                                black_african_american > white_population & black_african_american > native_american & black_african_american > asian & black_african_american > pacific_islander & black_african_american > other & black_african_american > two_or_more ~ "Black/African American",
+                                native_american > white_population & native_american > black_african_american & native_american > asian & native_american > pacific_islander & navtive_american > other & native_american > two_or_more ~ "Native American",
+                                asian > white_population & asian > black_african_american & asian > native_american & asian > pacific_islander & asian > other & asian > two_or_more ~ "Asian",
+                                pacific_islander > white_population & pacific_islander > black_african_american & pacific_islander > native_american & pacific_islander > asian & pacific_islander > other & pacific_islander > two_or_more ~ "Pacific Islander",
+                                other > white_population & other > black_african_american & other > native_american & other > asian & other > pacific_islander & other > two_or_more ~ "Other",
+                                two_or_more > white_population & two_or_more > black_african_american & two_or_more > native_american & two_or_more > asian & two_or_more > pacific_islander & two_or_more > other ~ "Two or More"))
+}
+
+# This function helps us wrangle the education data
+wrangling_education <- function(date){
+  data |>
+    select(geometry,variable,estimate) |> 
+  mutate(variable = case_when(variable == "B15003_002" ~ "none",
+                              variable == "B15003_003" ~ "pre_highschool",
+                              variable == "B15003_004" ~ "pre_highschool",
+                              variable == "B15003_005" ~ "pre_highschool",
+                              variable == "B15003_006" ~ "pre_highschool",
+                              variable == "B15003_007" ~ "pre_highschool",
+                              variable == "B15003_008" ~ "pre_highschool",
+                              variable == "B15003_009" ~ "pre_highschool",
+                              variable == "B15003_009" ~ "pre_highschool",
+                              variable == "B15003_010" ~ "pre_highschool",
+                              variable == "B15003_011" ~ "pre_highschool",
+                              variable == "B15003_012" ~ "pre_highschool",
+                              variable == "B15003_013" ~ "pre_highschool",
+                              variable == "B15003_014" ~ "pre_highschool",
+                              variable == "B15003_015" ~ "pre_highschool",
+                              variable == "B15003_016" ~ "pre_highschool",
+                              variable == "B15003_017" ~ "highschool_or_equivalent",
+                              variable == "B15003_018" ~ "highschool_or_equivalent",
+                              variable == "B15003_019" ~ "some_college",
+                              variable == "B15003_020" ~ "some_college",
+                              variable == "B15003_021" ~ "undergraduate",
+                              variable == "B15003_022" ~ "undergraduate",
+                              variable == "B15003_023" ~ "undergraduate",
+                              variable == "B15003_024" ~ "graduate",
+                              variable == "B15003_025" ~ "graduate")) |> 
+  pivot_wider(names_from = variable, values_from = estimate) |> 
+  mutate(none = convert_to_numeric(none),
+         pre_highschool = convert_to_numeric(lapply(pre_highschool, sum)),
+         highschool_or_equivalent = convert_to_numeric(lapply(highschool_or_equivalent, sum)),
+         some_college = convert_to_numeric(lapply(some_college, sum)),
+         undergraduate = convert_to_numeric(lapply(undergraduate, sum)),
+         graduate = convert_to_numeric(lapply(graduate, sum)),
+         majority_educated = case_when(none > pre_highschool & none > highschool_or_equivalent & none > some_college & none > undergraduate & none > graduate ~ "None",
+                                       pre_highschool > none & pre_highschool > highschool_or_equivalent & pre_highschool > some_college & pre_highschool > undergraduate & pre_highschool >graduate ~ "Pre-highschool",
+                                       highschool_or_equivalent > none & highschool_or_equivalent > pre_highschool & highschool_or_equivalent > some_college & highschool_or_equivalent > undergraduate & highschool_or_equivalent > graduate ~ "Highschool or Equivalent",
+                                       some_college > none & some_college > pre_highschool & some_college > highschool_or_equivalent & some_college > undergraduate & some_college > graduate ~ "Some College",
+                                       undergraduate > none & undergraduate > pre_highschool & undergraduate > highschool_or_equivalent & undergraduate > some_college & undergraduate > graduate ~ "Undergraduate Degree",
+                                       graduate > none & graduate > pre_highschool & graduate > highschool_or_equivalent & graduate > some_college & graduate > undergraduate ~ "graduate"))
+}
+
+# Function for wrangling the household data
+wrangling_households |> 
+  
+```
+
+
+```{r extracting data for San Francisco}
 # Getting all the San Francisco data we need
 # Data for percent of San Francisco population that is white
 sanfrancisco_white_population <- get_data(city = "San Francisco", variable_list = c("B02001_001", "B02001_002")) %>% 
@@ -1009,6 +1098,7 @@ sanfransisco_city <- data.frame(lat = 37.7749, long = -122.4194, name = "San Fra
 mesa_city <- data.frame(lat = 33.4152, long = - 111.8315, name = "Mesa")
 ```
 
+
 ```{r making map breaks}
 # For breaks we will use the Jenk's Natural Intervals method. This will help us create more natural intervals where the variance in each interval is minimized while the variance between intervals is maximized.
 
@@ -1053,25 +1143,24 @@ mesa_white_population$cat <- cut(
 
 ```
 
-```{r making base maps, fig.width = 10, fig.height=10}
-# San Francisco White Population Map
-cols <- c("#edf8fb", "#b2e2e2","#66c2a4","#2ca25f","#006d2c")
-
-ggplot2::ggplot()+
-  geom_sf(data = sanfrancisco_white_population,
-          aes(fill = cat),
+```{r making San Francisco Maping Function, fig.width = 7.5, fig.height=7.5}
+# Making a function to make maps of San Francisco
+make_sanfrancisco <- function(data, variable, title_text, legend_name, colors){
+  ggplot()+
+  geom_sf(data = data,
+          aes(fill = variable),
           color = "black",
           size = 0.5
           )+
-  scale_x_continuous(limits = c(-122.52, -122.35), 
+  scale_x_continuous(limits = c(-122.5, -122.4), 
                      expand = c(0, 0)
                      )+
   scale_y_continuous(limits = c(37.7, 37.84), 
                      expand = c(0,0)
                      )+
   scale_fill_manual(
-    name = "% of Population that is White",
-    values = cols
+    name = legend_name,
+    values = colors
   )+
   guides(
     fill = guide_legend(
@@ -1087,18 +1176,89 @@ ggplot2::ggplot()+
     )
   )+
   labs(
-    title = "San Francisco White Population Density 2021"
+    title = title_text
   )+
   theme_void()+
+  annotation_north_arrow(location = "tl",
+                         pad_x = unit(0, "cm"),
+                         pad_y = unit(3.25, "cm"),
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi",
+                   location = "br",
+                   pad_x = unit(-4, "cm"),
+                   pad_y = unit(6.5, "cm"))+
+  coord_sf(clip = "off")+
+  theme(
+    legend.position = c(0.65,-0.023),
+    plot.title = element_text(
+                              size = 15.75,
+                              vjust = -12,
+                              hjust = 0.5
+                              ),
+    plot.margin = margin(1, 1, 3, 1, "cm")
+  )
+}
+
+
+# Testing with San Francisco White Population Map
+cols <- c("#edf8fb", "#b2e2e2","#66c2a4","#2ca25f","#006d2c")
+
+make_sanfrancisco(data = sanfrancisco_white_population, variable = sanfrancisco_white_population$cat, title_text =  "San Francisco White Population Density 2021", legend_name = "% of Population that is White", colors = cols)
+
+
+```
+
+```{r making Mesa mapping function, fig.height=7.5, fig.width=7.5}
+# Making a function that makes maps of Maricopa Country
+make_mesa <- function(data, variable, title_text, legend_name, colors){
+  ggplot()+
+  geom_sf(data = data,
+          aes(fill = variable),
+          color = "black",
+          size = 0.5)+
+  scale_fill_manual(
+    name = legend_name,
+    values = colors)+
+  guides(
+    fill = guide_legend(
+      direction = "horizontal",
+      keyheight = unit(2, "mm"),
+      keywidth = unit(13, "mm"),
+      title.position = "top",
+      label.position = "bottom",
+      title.hjust = 0.5,
+      label.hjust = 0.5,
+      nrow = 1,
+      byrow = TRUE))+
+  labs(
+    title = title_text
+  )+
+  theme_void()+
+  annotation_north_arrow(location = "tr",
+                         pad_x = unit(1.5, "cm"),
+                         pad_y = unit(1.5, "cm"),
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi",
+                   location = "br",
+                   pad_x = unit(2.5, "cm"),
+                   pad_y = unit(5.5, "cm"))+
   coord_sf(clip = "off")+
   theme(
     legend.position = c(0.5,-0.023),
     plot.title = element_text(
-                              size = 17,
-                              vjust = -15
+                              size = 15.75,
+                              vjust = 0,
+                              hjust = 0.5
                               ),
     plot.margin = margin(1, 1, 3, 1, "cm")
   )
+}
   
+
+make_mesa(data = mesa_white_population, mesa_white_population$cat, "Mesa White Population Density", "% of Population that is White", cols)
 ```
 
