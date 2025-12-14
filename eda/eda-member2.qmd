@@ -17,7 +17,7 @@ census_data <- read_csv("../data/processed/acs_2023.csv")
 ```
 
 ```{r}
-sanfransisco <- get_acs(
+sanfrancisco <- get_acs(
   state = "CA",
   county = "San Francisco",
   geography = "county",
@@ -39,7 +39,7 @@ mesa <- get_acs(
 ```
 
 ```{r}
-data <- rbind(sanfransisco, mesa)
+data <- rbind(sanfrancisco, mesa)
 
 data <- data %>%
   select(NAME, variable, estimate) %>%
@@ -56,7 +56,7 @@ data <- data %>%
     race == "B02001_008" ~ "Two or more races"
   )) %>%
   mutate(county = case_when(
-    county == "San Francisco County, California" ~ "San Fransisco",
+    county == "San Francisco County, California" ~ "San Francisco",
     county == "Maricopa County, Arizona" ~ "Maricopa"
   ))
 ```
@@ -85,9 +85,43 @@ data %>%
   theme_minimal()
 ```
 
+```{r}
+data5 <- data %>%
+  filter(race %in% c("White", "Black", "Asian", "American Indian")) %>%
+  mutate(race = factor(
+    race,
+    levels = c(
+      "American Indian",
+      "Black",
+      "Asian",
+      "White"
+    )
+  ))
+
+data5 %>% 
+  group_by(county) %>%
+  mutate(prop = population / sum(population)) %>%
+  ggplot(aes(x = county, y = prop, fill = race)) +
+  geom_bar(stat = "identity", position = "fill") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Race Composition of Two Counties",
+       x = "County",
+       y = "Percent of Population",
+       fill = "Race Group") + 
+  scale_fill_manual(values = c(
+  
+  "#FFBE7D",
+  "#59A14F",
+  "#8CD17D",
+  "#A0CBE8"
+)) +
+  theme_minimal() +
+  coord_flip()
+```
+
 
 ```{r}
-sanfransisco2 <- get_acs(
+sanfrancisco2 <- get_acs(
   state = "CA",
   county = "San Francisco",
   geography = "county",
@@ -116,7 +150,7 @@ mesa2 <- get_acs(
 
 
 ```{r}
-data2 <- rbind(sanfransisco2, mesa2)
+data2 <- rbind(sanfrancisco2, mesa2)
 
 data2 <- data2 %>%
   select(NAME, variable, estimate) %>%
@@ -165,32 +199,176 @@ data2 <- data2 %>%
     education == "Doctorate" ~ "Graduate Degree",
   )) %>%
   mutate(county = case_when(
-    county == "San Francisco County, California" ~ "San Fransisco",
+    county == "San Francisco County, California" ~ "San Francisco",
     county == "Maricopa County, Arizona" ~ "Maricopa"
   ))
 ```
 
 
 ```{r}
-data2 %>% 
+data2 <- data2 %>% 
   group_by(county) %>%
   mutate(prop = population / sum(population)) %>%
+  mutate(education = factor(
+    education,
+    levels = c(
+      "Graduate Degree",
+      "Undergraduate Degree (or equivalent)",
+      "Some College",
+      "Highschool (or equivalent)",
+      "Pre-Highschool",
+      "None"
+    )
+  ))
+  
+
+data2 %>%
   ggplot(aes(x = county, y = prop, fill = education)) +
   geom_bar(stat = "identity", position = "fill") +
   scale_y_continuous(labels = scales::percent) +
-  labs(title = "Highest Education Completed",
+  labs(title = "Highest Education Completed in Two Counties",
        x = "County",
        y = "Percent of Population",
        fill = "Education Level") + 
   scale_fill_manual(values = c(
-  "#4E79A7", # steel blue
-  "#A0CBE8", # light blue
-  "#F28E2B", # orange
-  "#FFBE7D", # light orange
-  "#59A14F", # muted green
-  "#8CD17D" # light green
+  "#4E79A7",
+  "#A0CBE8",
+  "#59A14F",
+  "#8CD17D",
+  "#FFBE7D",
+  "#F28E2B"
+)) +
+  theme_minimal() + 
+  coord_flip()
+```
+
+```{r}
+sanfrancisco3 <- get_acs(
+  state = "CA",
+  county = "San Francisco",
+  geography = "county",
+  variables = c("B11001_003", "B11001_005", "B11001_006", 
+                "B11001_008", "B11001_009"),
+  year = 2023
+)
+```
+
+```{r}
+mesa3 <- get_acs(
+  state = "AZ",
+  county = "Maricopa",
+  geography = "county",
+  variables = c("B11001_003", "B11001_005", "B11001_006", 
+                "B11001_008", "B11001_009"),
+  year = 2023
+)
+```
+
+```{r}
+data3 <- rbind(sanfrancisco3, mesa3)
+
+data3 <- data3 %>%
+  select(NAME, variable, estimate) %>%
+  rename("county" = "NAME",
+         "household" = "variable",
+         "population" = "estimate")  %>%
+  mutate(county = case_when(
+    county == "San Francisco County, California" ~ "San Francisco",
+    county == "Maricopa County, Arizona" ~ "Maricopa"
+  )) %>%
+  mutate(household = case_when(
+    household == "B11001_003" ~ "Married couple (family)",
+    household == "B11001_005" ~ "Male householder, no spouse (family)",
+    household == "B11001_006" ~ "Female householder, no spouse (family)",
+    household == "B11001_008" ~ "Lives alone (non-family)",
+    household == "B11001_009" ~ "Does not live alone (non-family)"
+  ))
+```
+
+```{r}
+data3 %>% 
+  group_by(county) %>%
+  mutate(prop = population / sum(population)) %>%
+  ggplot(aes(x = county, y = prop, fill = household)) +
+  geom_bar(stat = "identity", position = "fill") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Household Type in Two Counties",
+       x = "County",
+       y = "Percent of Population",
+       fill = "Household Type") + 
+  scale_fill_manual(values = c(
+  "#4E79A7",
+  "#F28E2B",
+  "#FFBE7D",
+  "#59A14F",
+  "#8CD17D"
 )) +
   theme_minimal()
 ```
 
+```{r}
+sanfrancisco4 <- get_acs(
+  state = "CA",
+  county = "San Francisco",
+  geography = "county",
+  variables = c("B07011_001"),
+  year = 2023
+)
+```
 
+```{r}
+mesa4 <- get_acs(
+  state = "AZ",
+  county = "Maricopa",
+  geography = "county",
+  variables = c("B07011_001"),
+  year = 2023
+)
+```
+
+```{r}
+avg_income <- get_acs(
+  geography = "county",
+  variables = c("B07011_001"),
+  year = 2023
+) %>%
+  summarize(income = mean(estimate, na.rm = TRUE)/1000) %>%
+  mutate(county = "Average U.S County")
+```
+
+
+```{r}
+data4 <- rbind(sanfrancisco4, mesa4)
+
+data4 <- data4 %>%
+  select(NAME, estimate) %>%
+  rename("county" = "NAME",
+         "income" = "estimate")  %>%
+  mutate(county = case_when(
+    county == "San Francisco County, California" ~ "San Francisco",
+    county == "Maricopa County, Arizona" ~ "Maricopa"),
+    income = income/1000)
+```
+
+```{r}
+data4 <- rbind(data4, avg_income)
+```
+
+
+```{r}
+ggplot(data4, aes(x = county, y = income)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Average Annual Income in Two Counties",
+       x = "County",
+       y = "Income (thousand)") + 
+  scale_fill_manual(values = c(
+    "Average U.S County" = "#1b9e77",
+    "Maricopa" = "#d95f02",
+    "San Francisco" = "#7570b3"
+  ))
+```
+
+```{r}
+
+```
