@@ -109,7 +109,6 @@ data5 %>%
        y = "Percent of Population",
        fill = "Race Group") + 
   scale_fill_manual(values = c(
-  
   "#FFBE7D",
   "#59A14F",
   "#8CD17D",
@@ -282,6 +281,16 @@ data3 <- data3 %>%
     household == "B11001_006" ~ "Female householder, no spouse (family)",
     household == "B11001_008" ~ "Lives alone (non-family)",
     household == "B11001_009" ~ "Does not live alone (non-family)"
+  )) %>%
+  mutate(household = factor(
+    household,
+    levels = c(
+      "Lives alone (non-family)",
+      "Does not live alone (non-family)",
+      "Female householder, no spouse (family)",
+      "Male householder, no spouse (family)",
+      "Married couple (family)"
+    )
   ))
 ```
 
@@ -297,11 +306,11 @@ data3 %>%
        y = "Percent of Population",
        fill = "Household Type") + 
   scale_fill_manual(values = c(
-  "#4E79A7",
   "#F28E2B",
   "#FFBE7D",
+  "#8CD17D",
   "#59A14F",
-  "#8CD17D"
+  "#4E79A7"
 )) +
   theme_minimal()
 ```
@@ -383,28 +392,77 @@ data6 <- data3 %>%
 ggplot(data6, aes(x = household, y = prop, fill = household)) +
   geom_col(width = 0.8) +
   coord_flip() +
-  scale_y_continuous(labels = abs) +
-  labs(y = "%", x = NULL, fill = "County") +
+  labs(title="Household Comparision across Two Counties",
+         y = "Percent of Population", x = NULL, fill = "Household Type") +
   theme_minimal() +
-  geom_hline(yintercept = 0)
+  scale_fill_manual(values = c(
+  "#4E79A7",
+  "#F28E2B",
+  "#FFBE7D",
+  "#59A14F",
+  "#8CD17D"
+)) +
+  geom_hline(yintercept = 0) + 
+  guides(fill = guide_legend(reverse = TRUE)) +
+  theme(axis.text.y = element_blank(),
+        legend.position = "top",
+        legend.direction = "vertical") +
+  scale_y_continuous(
+    limits = c(-50, 50),
+    breaks = seq(-50, 50, 10),
+    labels = abs
+)
 ```
 
 
 ```{r}
-data2 %>%
+data8 <- data2 %>%
+  group_by(county, education) %>%
+  summarize(prop = sum(prop)) %>%
+  ungroup() %>%
   mutate(prop = prop*100) %>%
   mutate(prop = if_else(
     county == "San Francisco",
     -prop,
     prop
   )) %>%
-ggplot(aes(x = education, y = prop, fill = education)) +
+  mutate(education = factor(
+    education,
+    levels = c(
+      "None",
+      "Pre-Highschool",
+      "Highschool (or equivalent)",
+      "Some College",
+      "Undergraduate Degree (or equivalent)",
+      "Graduate Degree"
+    )
+  ))
+  
+
+ggplot(data8, aes(x = education, y = prop, fill = education)) +
   geom_col(width = 0.8) +
   coord_flip() +
-  scale_y_continuous(labels = abs) +
-  labs(y = "%", x = NULL, fill = "County") +
+  labs(title="Education Level across Two Counties",
+       y = "Percent of Population", x = NULL, fill = "Highest Education Attained") +
   theme_minimal() +
-  geom_hline(yintercept = 0)
+  geom_hline(yintercept = 0)  +
+  scale_fill_manual(values = c(
+  "#F28E2B",
+  "#FFBE7D",
+  "#8CD17D",
+  "#59A14F",
+  "#A0CBE8",
+  "#4E79A7"
+))  + 
+  guides(fill = guide_legend(reverse = TRUE)) +
+  theme(axis.text.y = element_blank(),
+        legend.position = "top",
+        legend.direction = "vertical") +
+  scale_y_continuous(
+    limits = c(-50, 50),
+    breaks = seq(-50, 50, 10),
+    labels = abs
+)
 ```
 
 ```{r}
@@ -421,9 +479,24 @@ data7 <- data5 %>%
 ggplot(data7, aes(x = race, y = prop, fill = race)) +
   geom_col(width = 0.8) +
   coord_flip() +
-  scale_y_continuous(labels = abs) +
-  labs(y = "%", x = NULL, fill = "County") +
+  labs(title="Race Comparision across Two Counties",
+       y = "Percent of Population", x = NULL, fill = "Race Group") +
   theme_minimal() +
-  geom_hline(yintercept = 0)
+  geom_hline(yintercept = 0) +
+  scale_fill_manual(values = c(
+  "#FFBE7D",
+  "#59A14F",
+  "#8CD17D",
+  "#A0CBE8"
+))  + 
+  guides(fill = guide_legend(reverse = TRUE)) +
+  theme(axis.text.y = element_blank(),
+        legend.position = "top",
+        legend.direction = "vertical") +
+  scale_y_continuous(
+    limits = c(-85, 85),
+    breaks = seq(-90, 90, 15),
+    labels = abs
+)
 ```
 
