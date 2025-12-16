@@ -501,7 +501,8 @@ data7 <- data5 %>%
     county == "San Francisco",
     -prop,
     prop
-  ))
+  )) %>%
+  ungroup()
   
 
 ggplot(data7, aes(x = race, y = prop, fill = race)) +
@@ -538,4 +539,79 @@ ggplot(data7, aes(x = race, y = prop, fill = race)) +
 ```
 
 
+
+```{r}
+radar1 <- data6 %>%
+  select(-population) %>%
+  mutate(prop = abs(prop)) %>%
+  pivot_wider(
+    names_from = household,
+    values_from = prop
+  )
+
+radar2 <- data7 %>%
+  select(-population) %>%
+  mutate(prop = abs(prop)) %>%
+  pivot_wider(
+    names_from = race,
+    values_from = prop
+  )
+
+radar3 <- data8 %>%
+  mutate(prop = abs(prop)) %>%
+  pivot_wider(
+    names_from = education,
+    values_from = prop
+  )
+
+radar4 <- cbind(radar1, radar2 %>% select(-county), radar3 %>% select(-county))
+  
+```
+
+
+```{r}
+library(tibble)
+library(ggradar)
+
+df <- tibble(
+  group = c("A", "B"),
+  Speed = c(7, 5),
+  Power = c(6, 9),
+  Skill = c(8, 4),
+  Stamina = c(5, 7)
+)
+
+ggradar(
+  radar4,
+  grid.min = 0,
+  grid.mid = 25,
+  grid.max = 50,
+  group.colours = c("red", "blue")
+)
+
+ggradar(
+  radar1,
+  grid.min = 0,
+  grid.mid = 25,
+  grid.max = 50,
+  group.colours = c("red", "blue")
+)
+
+ggradar(
+  radar2,
+  grid.min = 0,
+  grid.mid = 25,
+  grid.max = 50,
+  group.colours = c("red", "blue")
+)
+
+ggradar(
+  radar3,
+  grid.min = 0,
+  grid.mid = 25,
+  grid.max = 50,
+  group.colours = c("red", "blue")
+)
+
+```
 
