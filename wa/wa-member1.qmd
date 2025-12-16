@@ -1070,7 +1070,7 @@ make_mesa <- function(data, variable, title_text, legend_name, colors){
 }
   
 
-make_mesa(data = mesa_race, mesa_race$majority, "Mesa White Population Density", "% of Population that is White", cols)
+mesa_race_map<- make_mesa(data = mesa_race, mesa_race$majority, "Mesa White Population Density", "% of Population that is White", cols)
 ```
 
 ```{r, fig.width = 7.5, fig.height=7.5}
