@@ -1,1 +1,7 @@
 The is a work area to try code
+
+Trying to combine graphs into final graphics
+```{r loading libraries}
+
+```
+

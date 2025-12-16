@@ -727,6 +727,7 @@ library(ggthemes)
 library(grid) # For mapping inset graphs
 library(classInt) # Making breaks
 library(ggspatial) # For adding map annotations
+library(magick) #for reading pngs
 ```
 
 ```{r making a function for loading our data}
