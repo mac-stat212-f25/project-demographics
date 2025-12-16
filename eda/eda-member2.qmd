@@ -378,7 +378,7 @@ ggplot(data4, aes(x = county, y = income)) +
   ))
 ```
 
-```{r}
+```{r fig.width=10, fig.height=7}
 data6 <- data3 %>%
   group_by(county) %>%
   mutate(prop = population/sum(population)*100) %>%
@@ -393,8 +393,9 @@ ggplot(data6, aes(x = household, y = prop, fill = household)) +
   geom_col(width = 0.8) +
   coord_flip() +
   labs(title="Household Comparision across Two Counties",
+       subtitle = "Measured by Percent of Observed Population",
          y = "Percent of Population", x = NULL, fill = "Household Type") +
-  theme_minimal() +
+  theme_void() +
   scale_fill_manual(values = c(
   "#4E79A7",
   "#F28E2B",
@@ -405,17 +406,29 @@ ggplot(data6, aes(x = household, y = prop, fill = household)) +
   geom_hline(yintercept = 0) + 
   guides(fill = guide_legend(reverse = TRUE)) +
   theme(axis.text.y = element_blank(),
-        legend.position = "top",
-        legend.direction = "vertical") +
-  scale_y_continuous(
-    limits = c(-50, 50),
-    breaks = seq(-50, 50, 10),
-    labels = abs
-)
+        legend.position = c(0.84,0.47),
+        legend.direction = "vertical",
+        plot.title = element_text(hjust = 0.315, vjust = 3.5, size = 20),
+        plot.subtitle = element_text(hjust=0.265, vjust = 8),
+        plot.margin = margin(1, 1, 1, 1, "cm")) +
+  annotate("text", x= 5.5, y =-30, label = "San Francisco County", size = 5)+
+  annotate("text", x = 5.5, y= 30, label = "Maricopa County", size = 5)+
+
+  annotate("text", x= 5, y = -17.75, label = "35.5%")+
+  annotate("text", x= 4, y = -9.5, label = "3.5%")+
+  annotate("text", x =3, y = -3.85, label = "7.7%")+
+  annotate("text", x= 2, y = -7.6, label = "15.2%")+
+  annotate("text", x= 1, y =-19, label = "38.0%")+
+  
+  annotate("text", x= 5, y = 23.65, label = "47.3%")+
+  annotate("text", x= 4, y = 11.7, label = "5.7%")+
+  annotate("text", x= 3, y = 6, label = "12.0%")+
+  annotate("text", x= 2, y = 4.25, label = "8.5%")+
+  annotate("text", x=1, y = 13.2, label = "26.4%")
 ```
 
 
-```{r}
+```{r fig.width=10, fig.height=7}
 data8 <- data2 %>%
   group_by(county, education) %>%
   summarize(prop = sum(prop)) %>%
@@ -443,8 +456,9 @@ ggplot(data8, aes(x = education, y = prop, fill = education)) +
   geom_col(width = 0.8) +
   coord_flip() +
   labs(title="Education Level across Two Counties",
+       subtitle = "Measured by Percent of Observed Population",
        y = "Percent of Population", x = NULL, fill = "Highest Education Attained") +
-  theme_minimal() +
+  theme_void() +
   geom_hline(yintercept = 0)  +
   scale_fill_manual(values = c(
   "#F28E2B",
@@ -456,13 +470,27 @@ ggplot(data8, aes(x = education, y = prop, fill = education)) +
 ))  + 
   guides(fill = guide_legend(reverse = TRUE)) +
   theme(axis.text.y = element_blank(),
-        legend.position = "top",
-        legend.direction = "vertical") +
-  scale_y_continuous(
-    limits = c(-50, 50),
-    breaks = seq(-50, 50, 10),
-    labels = abs
-)
+        legend.position = c(0.23,0.3),
+        legend.direction = "vertical",
+        plot.title = element_text(hjust = 0.315, vjust = 3.5, size = 20),
+        plot.subtitle = element_text(hjust=0.265, vjust = 8),
+        plot.margin = margin(1, 1, 1, 1, "cm")) +
+  annotate("text", x= 6.5, y =-32, label = "San Francisco County", size = 5)+
+  annotate("text", x = 6.5, y= 22, label = "Maricopa County", size = 5)+
+  #
+  annotate("text", x= 6, y = -10.05, label = "20.1%")+
+  annotate("text", x= 5, y = -22.65, label = "45.3%")+
+  annotate("text", x= 4, y = -6, label = "12.0%")+
+  annotate("text", x =3, y = -5.65, label = "11.3%")+
+  annotate("text", x= 2, y = -3.75, label = "7.5%")+
+  annotate("text", x= 1, y =-7.85, label = "3.7%")+
+  
+  annotate("text", x= 6, y = 5.65, label = "11.3%")+
+  annotate("text", x= 5, y = 16.8, label = "33.6%")+
+  annotate("text", x= 4, y = 11.3, label = "22.6%")+
+  annotate("text", x= 3, y = 11.5, label = "22.0%")+
+  annotate("text", x= 2, y = 4.3, label = "8.6%")+
+  annotate("text", x=1, y = 5.9, label = "1.9%")
 ```
 
 ```{r fig.width=10, fig.height=7}
@@ -509,7 +537,5 @@ ggplot(data7, aes(x = race, y = prop, fill = race)) +
   annotate("text", x=1, y = 8.58, label = "2.5%")
 ```
 
-```{r}
 
-```
 
