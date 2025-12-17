@@ -681,7 +681,7 @@ ggsave("mesa_education.png", mesa_education_map)
 ```
 
 ```{r education barplot, fig.height= 7.5, fig.width=10}
-ggplot(education_data, aes(x = education, y = prop, fill = education)) +
+education_bar_plot<-ggplot(education_data, aes(x = education, y = prop, fill = education)) +
   geom_col(width = 0.8) +
   coord_flip() +
   labs(title="Education Level across Two Counties",
@@ -690,12 +690,12 @@ ggplot(education_data, aes(x = education, y = prop, fill = education)) +
   theme_void() +
   geom_hline(yintercept = 0)  +
   scale_fill_manual(values = c(
-  "#F28E2B",
-  "#FFBE7D",
-  "#8CD17D",
-  "#59A14F",
-  "#A0CBE8",
-  "#4E79A7"
+  "#6c31fd",
+  "#8289fe",
+  "#5fa09f",
+  "#fe8127",
+  "#fedf60",
+  "#d23743"
 ))  + 
   guides(fill = guide_legend(reverse = TRUE)) +
   theme(axis.text.y = element_blank(),
@@ -720,5 +720,16 @@ ggplot(education_data, aes(x = education, y = prop, fill = education)) +
   annotate("text", x= 3, y = 11.5, label = "22.0%")+
   annotate("text", x= 2, y = 4.3, label = "8.6%")+
   annotate("text", x=1, y = 5.9, label = "1.9%")
+
+ggsave("education_barplot.png", education_bar_plot)
 ```
 
+```{r assembling the education plots}
+household_map_sf <- image_read("sanfrancisco_education.png")
+household_map_mesa <- image_read("mesa_education.png")
+household_barplot_ig <- image_border(image_scale(image_read("education_barplot.png"),"x1570"), color = "white", geometry = "0x340")
+race_maps <- image_append(c(household_map_sf,household_barplot_ig, household_map_mesa))
+image_write(race_maps, path = "education_plot.png", format = "png")
+```
+
+![](education_plot.png){.column-screen}
