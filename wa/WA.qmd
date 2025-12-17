@@ -596,3 +596,129 @@ image_write(race_maps, path = "race_plot.png", format = "png")
 
 # Final Race Plot
 ![race_plot](race_plot.png){.column-screen}
+
+```{r making San Francisco Household Type Map, fig.height= 7.5, fig.width = 7.5}
+cols <- c("#5fa09f", "#8289fe", "#fe8127", "#fedf60")
+sanfrancisco_household_map <- make_sanfrancisco(sanfrancisco_households, sanfrancisco_households$majority, "San Francisco County", "Majority Education level", cols)
+
+ggsave("sanfrancisco_households.png", sanfrancisco_household_map)
+```
+
+```{r Making Mesa Household Map, fig.height=7.5, fig.width=7.5}
+cols <- c("#5fa09f", "#8289fe", "#fe8127", "#fedf60")
+
+mesa_households_map <- make_mesa(mesa_households,mesa_households$majority, "Maricopa County", "Household Type", cols)
+
+ggsave("mesa_households.png", mesa_households_map)
+```
+
+```{r Household bargraph, fig.width= 10, fig.height = 7.5}
+household_barplot <- ggplot(household_data, aes(x = household, y = prop, fill = household)) +
+  geom_col(width = 0.8) +
+  coord_flip() +
+  labs(title="Household Comparision across Two Counties",
+       subtitle = "Measured by Percent of Observed Population",
+         y = "Percent of Population", x = NULL, fill = "Household Type") +
+  theme_void() +
+  scale_fill_manual(values = c(
+  "#fe8127",
+  "#5fa09f",
+  "#8289fe",
+  "#6c31fd",
+  "#fedf60"
+)) +
+  geom_hline(yintercept = 0) + 
+  guides(fill = guide_legend(reverse = TRUE)) +
+  theme(axis.text.y = element_blank(),
+        legend.position = c(0.84,0.47),
+        legend.direction = "vertical",
+        plot.title = element_text(hjust = 0.315, vjust = 3.5, size = 20),
+        plot.subtitle = element_text(hjust=0.265, vjust = 8),
+        plot.margin = margin(1, 1, 1, 1, "cm")) +
+  annotate("text", x= 5.5, y =-30, label = "San Francisco County", size = 5)+
+  annotate("text", x = 5.5, y= 30, label = "Maricopa County", size = 5)+
+
+  annotate("text", x= 5, y = -17.75, label = "35.5%")+
+  annotate("text", x= 4, y = -9.5, label = "3.5%")+
+  annotate("text", x =3, y = -3.85, label = "7.7%")+
+  annotate("text", x= 2, y = -7.6, label = "15.2%")+
+  annotate("text", x= 1, y =-19, label = "38.0%")+
+  
+  annotate("text", x= 5, y = 23.65, label = "47.3%")+
+  annotate("text", x= 4, y = 11.7, label = "5.7%")+
+  annotate("text", x= 3, y = 6, label = "12.0%")+
+  annotate("text", x= 2, y = 4.25, label = "8.5%")+
+  annotate("text", x=1, y = 13.2, label = "26.4%")
+
+ggsave("household_barplot.png", household_barplot)
+```
+
+```{r assembling household plot}
+household_map_sf <- image_read("sanfrancisco_households.png")
+household_map_mesa <- image_read("mesa_households.png")
+household_barplot_ig <- image_border(image_scale(image_read("household_barplot.png"),"x1570"), color = "white", geometry = "0x340")
+race_maps <- image_append(c(household_map_sf,household_barplot_ig, household_map_mesa))
+image_write(race_maps, path = "household_plot.png", format = "png")
+```
+
+# Final Household Plot
+![](household_plot.png){.column-screen}
+
+```{r making sanfrancisco education map, fig.height= 7.5, fig.width = 7.5}
+cols <- c("#5fa09f","#8289fe","#fe8127", "#fedf60")
+
+sf_education_map <- make_sanfrancisco(sanfrancisco_education, sanfrancisco_education$majority, "San Francisco County", "Majority Education level", cols)
+
+ggsave("sanfrancisco_education.png", sf_education_map)
+```
+
+```{r making mesa map for education, fig.width= 7.5, fig.height=7.5}
+cols <- c("#5fa09f","#6c31fd","#8289fe","#fe8127", "#fedf60")
+
+mesa_education_map<-make_mesa(mesa_education, mesa_education$majority,"Maricopa", "Majority Education level", cols)
+
+ggsave("mesa_education.png", mesa_education_map)
+```
+
+```{r education barplot, fig.height= 7.5, fig.width=10}
+ggplot(education_data, aes(x = education, y = prop, fill = education)) +
+  geom_col(width = 0.8) +
+  coord_flip() +
+  labs(title="Education Level across Two Counties",
+       subtitle = "Measured by Percent of Observed Population",
+       y = "Percent of Population", x = NULL, fill = "Highest Education Attained") +
+  theme_void() +
+  geom_hline(yintercept = 0)  +
+  scale_fill_manual(values = c(
+  "#F28E2B",
+  "#FFBE7D",
+  "#8CD17D",
+  "#59A14F",
+  "#A0CBE8",
+  "#4E79A7"
+))  + 
+  guides(fill = guide_legend(reverse = TRUE)) +
+  theme(axis.text.y = element_blank(),
+        legend.position = c(0.23,0.3),
+        legend.direction = "vertical",
+        plot.title = element_text(hjust = 0.315, vjust = 3.5, size = 20),
+        plot.subtitle = element_text(hjust=0.265, vjust = 8),
+        plot.margin = margin(1, 1, 1, 1, "cm")) +
+  annotate("text", x= 6.5, y =-32, label = "San Francisco County", size = 5)+
+  annotate("text", x = 6.5, y= 22, label = "Maricopa County", size = 5)+
+  #
+  annotate("text", x= 6, y = -10.05, label = "20.1%")+
+  annotate("text", x= 5, y = -22.65, label = "45.3%")+
+  annotate("text", x= 4, y = -6, label = "12.0%")+
+  annotate("text", x =3, y = -5.65, label = "11.3%")+
+  annotate("text", x= 2, y = -3.75, label = "7.5%")+
+  annotate("text", x= 1, y =-7.85, label = "3.7%")+
+  
+  annotate("text", x= 6, y = 5.65, label = "11.3%")+
+  annotate("text", x= 5, y = 16.8, label = "33.6%")+
+  annotate("text", x= 4, y = 11.3, label = "22.6%")+
+  annotate("text", x= 3, y = 11.5, label = "22.0%")+
+  annotate("text", x= 2, y = 4.3, label = "8.6%")+
+  annotate("text", x=1, y = 5.9, label = "1.9%")
+```
+
