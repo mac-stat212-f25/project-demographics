@@ -10,6 +10,9 @@ library(tidyverse)
 library(tidycensus)
 library(ggplot2)
 library(dplyr)
+library(tibble)
+library(ggradar)
+library(stringr)
 ```
 
 ```{r}
@@ -379,6 +382,25 @@ ggplot(data4, aes(x = county, y = income)) +
 ```
 
 ```{r fig.width=10, fig.height=7}
+ggplot(data4, aes(x = county, y = income, fill = county)) +
+  geom_col() +
+  theme_minimal() +
+  labs(
+    title = "Average Annual Income in Two Counties",
+    x = "County",
+    y = "Income (thousand)",
+    fill = "County"
+  ) +
+  scale_fill_manual(values = c(
+    "Average U.S County" = "#7F7F7F",
+    "Maricopa" = "#C0392B",
+    "San Francisco" = "#2C7FB8"
+  ))
+
+```
+
+
+```{r fig.width=10, fig.height=7}
 data6 <- data3 %>%
   group_by(county) %>%
   mutate(prop = population/sum(population)*100) %>%
@@ -568,50 +590,97 @@ radar4 <- cbind(radar1, radar2 %>% select(-county), radar3 %>% select(-county))
   
 ```
 
-
 ```{r}
-library(tibble)
-library(ggradar)
+colnames(radar1) <- str_wrap(colnames(radar1), width = 15)
+colnames(radar2) <- str_wrap(colnames(radar2), width = 15)
+colnames(radar3) <- str_wrap(colnames(radar3), width = 15)
+colnames(radar4) <- str_wrap(colnames(radar4), width = 15)
 
-df <- tibble(
-  group = c("A", "B"),
-  Speed = c(7, 5),
-  Power = c(6, 9),
-  Skill = c(8, 4),
-  Stamina = c(5, 7)
-)
+```
 
-ggradar(
-  radar4,
-  grid.min = 0,
-  grid.mid = 25,
-  grid.max = 50,
-  group.colours = c("red", "blue")
-)
 
+```{r fig.width=10, fig.height=7}
 ggradar(
   radar1,
-  grid.min = 0,
-  grid.mid = 25,
-  grid.max = 50,
-  group.colours = c("red", "blue")
-)
+  group.colours = c("#C0392B", "#2C7FB8"),
+  axis.label.size = 4,
+  grid.label.size = 0,
+  axis.label.offset = 1.2
+) +
+  labs(
+    title = "Household Comparision across Two Counties",
+    subtitle = "Measured by Percent of Observed Population"
+) +
+  theme(
+  plot.title    = element_text(size = 14, face = "bold"),
+  plot.subtitle = element_text(size = 10),
+  legend.title = element_text(size = 15),
+  legend.text  = element_text(size = 9)
+) +
+  guides(color = guide_legend(title = "County"))
+```
 
+```{r fig.width=10, fig.height=7}
 ggradar(
   radar2,
-  grid.min = 0,
-  grid.mid = 25,
-  grid.max = 50,
-  group.colours = c("red", "blue")
-)
+  group.colours = c("#C0392B", "#2C7FB8"),
+  axis.label.size = 4,
+  grid.label.size = 0,
+  axis.label.offset = 1.2
+) +
+  labs(
+    title = "Race Comparision across Two Counties",
+    subtitle = "Measured by Percent of Observed Population"
+) +
+  theme(
+  plot.title    = element_text(size = 14, face = "bold"),
+  plot.subtitle = element_text(size = 10),
+  legend.title = element_text(size = 15),
+  legend.text  = element_text(size = 9)
+) +
+  guides(color = guide_legend(title = "County"))
+```
 
+```{r fig.width=10, fig.height=7}
 ggradar(
   radar3,
-  grid.min = 0,
-  grid.mid = 25,
-  grid.max = 50,
-  group.colours = c("red", "blue")
-)
+  group.colours = c("#C0392B", "#2C7FB8"),
+  axis.label.size = 4,
+  grid.label.size = 0,
+  axis.label.offset = 1.2
+) +
+  labs(
+    title = "Education Comparision across Two Counties",
+    subtitle = "Measured by Percent of Observed Population"
+) +
+  theme(
+  plot.title    = element_text(size = 14, face = "bold"),
+  plot.subtitle = element_text(size = 10),
+  legend.title = element_text(size = 15),
+  legend.text  = element_text(size = 9)
+) +
+  guides(color = guide_legend(title = "County"))
+```
 
+
+```{r fig.width=10, fig.height=7}
+ggradar(
+  radar4,
+  group.colours = c("#C0392B", "#2C7FB8"),
+  axis.label.size = 4,
+  grid.label.size = 0,
+  axis.label.offset = 1.2
+) +
+  labs(
+    title = "All Variable Comparision across Two Counties",
+    subtitle = "Measured by Percent of Observed Population"
+) +
+  theme(
+  plot.title    = element_text(size = 14, face = "bold"),
+  plot.subtitle = element_text(size = 10),
+  legend.title = element_text(size = 15),
+  legend.text  = element_text(size = 9)
+) +
+  guides(color = guide_legend(title = "County"))
 ```
 
