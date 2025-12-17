@@ -728,6 +728,7 @@ library(grid) # For mapping inset graphs
 library(classInt) # Making breaks
 library(ggspatial) # For adding map annotations
 library(magick) #for reading pngs
+library(patchwork)
 ```
 
 ```{r making a function for loading our data}
@@ -910,7 +911,6 @@ sanfrancisco_city <- data.frame(lat = 37.7749, long = -122.4194, name = "San Fra
 mesa_city <- data.frame(lat = 33.4152, long = - 111.8315, name = "Mesa")
 ```
 
-
 ```{r making map breaks}
 # For breaks we will use the Jenk's Natural Intervals method. This will help us create more natural intervals where the variance in each interval is minimized while the variance between intervals is maximized.
 
@@ -1014,11 +1014,11 @@ make_sanfrancisco <- function(data, variable, title_text, legend_name, colors){
 
 
 # Testing with San Francisco White Population Map
-cols <- c("#edf8fb", "#b2e2e2","#66c2a4","#2ca25f","#006d2c")
+cols <- c("#8289fe", "#fedf60","#056c6b")
 
-make_sanfrancisco(data = sanfrancisco_race, variable = sanfrancisco_race$majority, title_text =  "San Francisco White Population Density 2021", legend_name = "% of Population that is White", colors = cols)
+sanfrancisco_race_map <- make_sanfrancisco(data = sanfrancisco_race, variable = sanfrancisco_race$majority, title_text =  "San Francisco County Race Distribution", legend_name = "Majority", colors = cols)
 
-
+ggsave("sanfrancisco_race_map.png", sanfrancisco_race_map)
 ```
 
 ```{r making Mesa mapping function, fig.height=7.5, fig.width=7.5}
@@ -1070,7 +1070,9 @@ make_mesa <- function(data, variable, title_text, legend_name, colors){
 }
   
 
-mesa_race_map<- make_mesa(data = mesa_race, mesa_race$majority, "Mesa White Population Density", "% of Population that is White", cols)
+mesa_race_map <-make_mesa(data = mesa_race, mesa_race$majority, "Race Distribution in Maricopa County", "Majority", cols)
+
+ggsave("mesa_race.png", mesa_race_map)
 ```
 
 ```{r, fig.width = 7.5, fig.height=7.5}
@@ -1091,3 +1093,13 @@ make_sanfrancisco(sanfrancisco_households,sanfrancisco_households$majority, "San
 
 make_mesa(mesa_households,mesa_households$majority, "Mesa Households", "Household Type", cols)
 ```
+
+```{r combinging maps}
+# figuring out how to combine graphs
+race_map_sf <- image_read("sanfrancisco_race_map.png")
+race_map_mesa <- image_read("mesa_race.png")
+race_maps <- image_append(c(race_map_sf,race_map_mesa))
+image_write(race_maps, path = "race_maps.png", format = "png")
+```
+
+![race_maps](race_maps.png)
