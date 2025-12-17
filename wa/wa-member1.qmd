@@ -1014,8 +1014,7 @@ make_sanfrancisco <- function(data, variable, title_text, legend_name, colors){
 
 
 # Testing with San Francisco White Population Map
-cols <- c("#8289fe", "#fedf60","#056c6b")
-
+cols <- c("#8289fe", "#fedf60","#056c6b", "#fe8127", "#6c31fd")
 sanfrancisco_race_map <- make_sanfrancisco(data = sanfrancisco_race, variable = sanfrancisco_race$majority, title_text =  "San Francisco County Race Distribution", legend_name = "Majority", colors = cols)
 
 ggsave("sanfrancisco_race_map.png", sanfrancisco_race_map)
