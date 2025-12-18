@@ -21,6 +21,9 @@ jobs:
     #   GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
+    - name: Install system dependencies
+      run: sudo apt-get update && sudo apt-get install -y libmagick++-dev
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
