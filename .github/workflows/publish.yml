@@ -28,8 +28,8 @@ jobs:
 
       - name: Install R packages
         run: |
-              renv::restore()
-            shell: Rscript {0}
+          renv::restore()
+        shell: Rscript {0}
 
       - name: Checkout Repository
         uses: actions/checkout@v4
