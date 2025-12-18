@@ -1946,19 +1946,16 @@
         "testthat (>= 2.1.0)"
       ],
       "Encoding": "UTF-8",
+      "LazyData": "true",
       "RoxygenNote": "7.1.1",
+      "Author": "Ricardo Bion [aut, cre]",
+      "Maintainer": "Ricardo Bion <ricardo.bion@airbnb.com>",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "ggradar",
       "RemoteUsername": "ricardo-bion",
       "RemoteRef": "HEAD",
-      "RemoteSha": "f99517ae4df2903d3dbd4116af91b24009a5ac93",
-      "NeedsCompilation": "no",
-      "Author": "Ricardo Bion [aut, cre]",
-      "Maintainer": "Ricardo Bion <ricardo.bion@airbnb.com>",
-      "Depends": [
-        "R (>= 4.1.0)"
-      ]
+      "RemoteSha": "f99517ae4df2903d3dbd4116af91b24009a5ac93"
     },
     "ggspatial": {
       "Package": "ggspatial",
