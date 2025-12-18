@@ -758,9 +758,9 @@ white_labels <- c()
 for (i in seq_along(white_ni)){
   white_labels <- c(
       white_labels, paste0(
-        round(white_ni[i*100],2),
+        round(white_ni[i],2),
         "% to ",
-        round(white_ni[i+1*100],2), "%"
+        round(white_ni[i+1],2), "%"
       )
   )
 }
@@ -774,7 +774,7 @@ final_map_data$cat <- cut(
   include.lowest = TRUE
 )
 
-colors = c( "#0571b0","#92c5de","white","#f4a582","#ca0020")
+colors = c("#ca0020","#f4a582", "white", "#92c5de","#0571b0")
 
 final_map_data |> 
   ggplot()+
@@ -796,4 +796,5 @@ final_map_data |>
   theme_void()
   
 ```
+
 
