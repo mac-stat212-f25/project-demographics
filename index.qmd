@@ -18,6 +18,7 @@ library(ggspatial) # For adding map annotations
 library(magick) #for reading pngs
 library(patchwork)
 library(ggradar)# For making the radar plots
+
 ```
 # Intro
   Life can be very different depending on what area you live in. For example, price of living, type of household one lives in, as well as how well educated you are, these are all influenced heavily by where you live in the United States. For our project, we wanted to choose two very different counties, comparing and contrasting the differences in the lifestyle of the average person living there.
@@ -177,7 +178,7 @@ median_income <- function(data){
 }
 ```
 
-```{r pulling San Francisco map data}
+```{r pulling San Francisco map data, include=FALSE}
 # Getting all the San Francisco data we need
 # Data for race in San Francisco
 sanfrancisco_race <- get_data("San Francisco", c("B02001_002", "B02001_003", "B02001_004", "B02001_005")) |> 
@@ -200,7 +201,7 @@ sanfrancisco_city <- data.frame(lat = 37.7749, long = -122.4194, name = "San Fra
 
 ```
 
-```{r pulling Mesa map data}
+```{r pulling Mesa map data, include=FALSE}
 # Getting all the data for Mesa
 # Data for race in Mesa
 mesa_race <- get_data("Mesa", c("B02001_002", "B02001_003", "B02001_004", "B02001_005")) |> 
@@ -223,7 +224,7 @@ mesa_city <- data.frame(lat = 33.4152, long = - 111.8315, name = "Mesa")
 
 ```
 
-```{r pulling race data and wrangling for barplot}
+```{r pulling race data and wrangling for barplot, include=FALSE}
 sf_race <- get_acs(
   state = "CA",
   county = "San Francisco",
@@ -388,6 +389,61 @@ education_data <- rbind(sf_ed, ms_ed) %>%
       "Graduate Degree"
     )
   ))
+```
+
+```{r pulling income data}
+# data for maps
+# Data for income in San Francisco
+sanfrancisco_income <- get_data("San Francisco", "B07011_001") |> 
+  median_income()
+
+# Data for income in Mesa
+mesa_income <- get_data("Mesa", "B07011_001") |> 
+  median_income()
+```
+
+
+```{r making map breaks for income maps}
+# For breaks we will use the Jenk's Natural Intervals method. This will help us create more natural intervals where the variance in each interval is minimized while the variance between intervals is maximized.
+
+# Since we want the maps to have the same breaks, we are going to combine our data to better create breaks that can be used across datasets
+
+# Making the breaks for white population maps
+money_data <- rbind(sanfrancisco_income, mesa_income)
+
+income_ni <- classIntervals(money_data$median_income,
+                              n = 5,
+                              style = "jenks"
+                              )$brks
+
+income_labels <- c()
+
+for (i in seq_along(income_ni)){
+  income_labels <- c(
+      income_labels, paste0(
+        "$", income_ni[i],
+        " to $",
+        income_ni[i+1]
+      )
+  )
+}
+
+income_labels <- income_labels[1:length(income_labels)-1]
+
+sanfrancisco_income$cat <- cut(
+  sanfrancisco_income$median_income,
+  breaks = income_ni,
+  labels = income_labels,
+  include.lowest = TRUE
+)
+
+mesa_income$cat <- cut(
+  mesa_income$median_income ,
+  breaks = income_ni,
+  labels = income_labels,
+  include.lowest = TRUE
+)
+
 ```
 
 ```{r pulling households data and wrangling for barplot}
@@ -693,28 +749,69 @@ image_write(race_maps, path = "household_plot.png", format = "png")
   In our plot, we can see that within these two counties, our preconceived notion is that more traditional/family household types are in the area considered the “most conservative” while there are more non-traditional/non-family households in the area considered the most liberal. The bar plot demonstrates that, while both San Francisco and Maricopa County both have a large percentage of their households that fall in the married couple category, Maricopa County has slightly more. The opposite can be said about live alone households, where San Francisco has a larger percentage of their households falling under this category than Maricopa County. 
   The maps also show that these trends are more true around the cities, where most census tracts around San Francisco have the majority of their households that fall within a non-traditional housing category. More of the census tracts that surround Mesa have the majority of their households fall under the married couple category, which backs up our original idea.
 
-
-```{r, fig.width=10, fig.height=7}
-ggradar(
-  radar_total,
-  group.colours = c("#C0392B", "#2C7FB8"),
-  axis.label.size = 4,
-  grid.label.size = 0,
-  axis.label.offset = 1.2
-) +
-  labs(
-    title = "All Variable Comparision across Two Counties",
-    subtitle = "Measured by Percent of Observed Population"
-) +
-  theme(
-  plot.title    = element_text(size = 14, face = "bold"),
-  plot.subtitle = element_text(size = 10),
-  legend.title = element_text(size = 15),
-  legend.text  = element_text(size = 9)
-) +
-  guides(color = guide_legend(title = "County"))
+```{r San Francisco Income map, fig.width = 7.5, fig.height=7.5}
+cols = c("#edf8fb", "#b2e2e2","#66c2a4","#2ca25f","#006d2c")
+make_sanfrancisco(sanfrancisco_income,sanfrancisco_income$cat, "San Francisco County Median Income Distribution", "Median Income",cols)
 ```
 
+```{r Mesa Income Map, fig.width = 7.5, fig.height=7.5}
+cols = c("#edf8fb", "#b2e2e2","#66c2a4","#2ca25f","#006d2c")
+make_mesa(mesa_income, mesa_income$cat,"Maricopa County Median Income Distribution", "Median Income",cols)
+```
+
+```{r Code for income barplot}
+avg_income <- get_acs(
+  geography = "county",
+  variables = c("B07011_001"),
+  year = 2023
+) %>%
+  summarize(income = mean(estimate, na.rm = TRUE)/1000) %>%
+  mutate(county = "Average U.S County")
+
+sf_income <- get_acs(
+  state = "CA",
+  county = "San Francisco",
+  geography = "county",
+  variables = c("B07011_001"),
+  year = 2023
+)
+
+ms_income <- get_acs(
+  state = "AZ",
+  county = "Maricopa",
+  geography = "county",
+  variables = c("B07011_001"),
+  year = 2023
+)
+
+income_data <- rbind(sf_income, ms_income)%>%
+  select(NAME, estimate) %>%
+  rename("county" = "NAME",
+         "income" = "estimate")  %>%
+  mutate(county = case_when(
+    county == "San Francisco County, California" ~ "San Francisco",
+    county == "Maricopa County, Arizona" ~ "Maricopa"),
+    income = income/1000) |> 
+  rbind(avg_income) 
+
+ggplot(income_data, aes(x = county, y = income, fill = county)) +
+  geom_col() +
+  theme_minimal() +
+  labs(
+    title = "Average Annual Income in Two Counties",
+    x = "County",
+    y = "Income (thousand)",
+    fill = "County"
+  ) +
+  scale_fill_manual(values = c(
+    "Average U.S County" = "#7F7F7F",
+    "Maricopa" = "#C0392B",
+    "San Francisco" = "#2C7FB8"
+  ))
+```
+
+#Income
+San Francisco county had a much larger average annual income ($69,000), than Maricopa ($43,000). However, they were both larger than the average U.S county annual income, which was only $35,000.
 
 ```{r making sanfrancisco education map, fig.height= 7.5, fig.width = 7.5}
 cols <- c("#5fa09f","#8289fe","#fe8127", "#fedf60")
@@ -817,7 +914,7 @@ radar_total <- cbind(radar_house, radar_race %>% select(-county), radar_educatio
 
 colnames(radar_house) <- str_wrap(colnames(radar_house), width = 15)
 colnames(radar_race) <- str_wrap(colnames(radar_race), width = 15)
-colnames(radar_eduaction) <- str_wrap(colnames(radar_education), width = 15)
+colnames(radar_education) <- str_wrap(colnames(radar_education), width = 15)
 colnames(radar_total) <- str_wrap(colnames(radar_total), width = 15)
 
 ```
@@ -887,7 +984,31 @@ ggradar(
   guides(color = guide_legend(title = "County"))
 ```
 
-```{r final map, fig.cap= "Plot shows the distribution of the United States White Populaiton by State. Uses ACS 2021 data.", fig.alt= "Map shows the distribution of the United State's White Population. This goes against our suspitions that the trends would continue at a state level."}
+```{r, fig.width=10, fig.height=7}
+ggradar(
+  radar_total,
+  group.colours = c("#C0392B", "#2C7FB8"),
+  axis.label.size = 4,
+  grid.label.size = 0,
+  axis.label.offset = 1.2
+) +
+  labs(
+    title = "All Variable Comparision across Two Counties",
+    subtitle = "Measured by Percent of Observed Population"
+) +
+  theme(
+  plot.title    = element_text(size = 14, face = "bold"),
+  plot.subtitle = element_text(size = 10),
+  legend.title = element_text(size = 15),
+  legend.text  = element_text(size = 9)
+) +
+  guides(color = guide_legend(title = "County"))
+```
+
+# Larger Scale
+  We then decided to determine which variable had the largest discrepancy between San Francisco and Maricopa county. By creating a radar plot, we determined that the white population from the race data was the most different between the two counties.
+
+```{r final map, fig.cap= "Plot shows the distribution of the United States White Populaiton by State. Uses ACS 2021 data.", fig.alt= "Map shows the distribution of the United State's White Population. This goes against our suspitions that the trends would continue at a state level.", include=FALSE}
 final_map_data <- get_acs(geography = "state",
         variables = c("B02001_001","B02001_002"),
         year = 2021,
@@ -950,6 +1071,8 @@ final_map_data |>
   
 ```
 
+  When plotting the percentage of each state that is white who answered the survey, strong trends that we saw in our radar plots were not as strongly reflected, showing that at a larger scale, the states that are more white aren’t necessarily more conservative. We can  see this most clearly with states such as Minnesota and Vermont, both of which run liberal, but also have a high percentage of white people. The opposite can be said for states like Texas and Florida, which both tend to be in the middle when it comes to the percentage of the population that is white, but they tend to run more conservative.
+  This suggests that the trends we observed at the county level might not be able to be more widely applied at the state level.
 
 
 
