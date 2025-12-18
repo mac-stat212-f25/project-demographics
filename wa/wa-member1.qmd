@@ -1,5 +1,1104 @@
 ---
-title: "Member 1 First Name & Last Name Initial"
+title: "Nico T."
 ---
 
-Work area to try code
+```{r eval=FALSE}
+# library(tidyverse)
+# demographics <- read.csv("../data/raw/data1/acs2017_county_data.csv")
+# acs_2023 <-read_csv("..\\data\\raw\\nhgis0004_csv\\nhgis0004_ds266_2023_county.csv")
+```
+
+```{r eval=FALSE}
+# demographics |> 
+#   mutate(most_common_race = case_when(
+#     White > Black & White > Hispanic & White >Native & White >Pacific ~ "White",
+#     Black > White & Black > Hispanic & Black > Native & Black > Pacific ~ "Black",
+#     Hispanic > White & Hispanic > Black & Hispanic > Native & Hispanic > Pacific ~ "Hispanic",
+#     Native > White & Native > Black & Native > Hispanic & Native > Pacific ~ "Native",
+#     Pacific > Black & Pacific > White & Pacific > Hispanic & Pacific > Native ~ "Pacific"
+#   )) |> 
+#   select(FamilyWork, SelfEmployed, PublicWork, PrivateWork, CountyId, most_common_race) |> 
+#   pivot_longer(cols = c(SelfEmployed, PublicWork, PrivateWork, FamilyWork), names_to = "Employment_Category", values_to = "Percentage") |>
+#   group_by(most_common_race, Employment_Category) |> 
+#   summarise(average_percentage = mean(Percentage)) |> 
+#   ggplot(aes(x = Employment_Category, y = average_percentage))+
+#   geom_col()+
+#   facet_wrap(~most_common_race) +
+#   labs(title = "Average Percentage of Population that Work in Different Employment Categories", xlab = "Employment Category", ylab = "Average Percentage")+
+#   theme_minimal()
+#   
+```
+
+```{r eval = FALSE}
+# demographics |> 
+#   mutate(most_common_race = case_when(
+#     White > Black & White > Hispanic & White >Native & White >Pacific ~ "White",
+#     Black > White & Black > Hispanic & Black > Native & Black > Pacific ~ "Black",
+#     Hispanic > White & Hispanic > Black & Hispanic > Native & Hispanic > Pacific ~ "Hispanic",
+#     Native > White & Native > Black & Native > Hispanic & Native > Pacific ~ "Native",
+#     Pacific > Black & Pacific > White & Pacific > Hispanic & Pacific > Native ~ "Pacific"
+#   )) |> 
+#   select(Production, Construction, Office, Service, Professional, CountyId, most_common_race) |> 
+#    pivot_longer(cols = c(Production, Construction, Office, Service, Professional), names_to = "Employment_Category", values_to = "Percentage") |>
+#   group_by(most_common_race, Employment_Category) |>
+#   summarise(average_percentage = mean(Percentage)) |>
+#   ggplot(aes(x = Employment_Category, y = average_percentage))+
+#   geom_col()+
+#   facet_wrap(~most_common_race) +
+#   labs(title = "Average Percentage of Population that Work in Different Employment Categories", xlab = "Employment Category", ylab = "Average Percentage")+
+#   theme_minimal()
+```
+
+```{r eval=FALSE}
+# demographics |> 
+#   mutate(most_common_race = case_when(
+#     White > Black & White > Hispanic & White >Native & White >Pacific ~ "White",
+#     Black > White & Black > Hispanic & Black > Native & Black > Pacific ~ "Black",
+#     Hispanic > White & Hispanic > Black & Hispanic > Native & Hispanic > Pacific ~ "Hispanic",
+#     Native > White & Native > Black & Native > Hispanic & Native > Pacific ~ "Native",
+#     Pacific > Black & Pacific > White & Pacific > Hispanic & Pacific > Native ~ "Pacific"
+#   )) |> 
+#   select(Poverty, CountyId, most_common_race) |> 
+#   group_by(most_common_race) |>
+#   summarise(average_percentage_poverty = mean(Poverty)) |>
+#   ggplot(aes(x = most_common_race, y = average_percentage_poverty))+
+#   geom_col()+
+#   labs(title = "Percentage of Population in Poverty")+
+#   theme_minimal()
+```
+
+```{r eval=FALSE}
+# demographics |> 
+#   mutate(most_common_race = case_when(
+#     White > Black & White > Hispanic & White >Native & White >Pacific ~ "White",
+#     Black > White & Black > Hispanic & Black > Native & Black > Pacific ~ "Black",
+#     Hispanic > White & Hispanic > Black & Hispanic > Native & Hispanic > Pacific ~ "Hispanic",
+#     Native > White & Native > Black & Native > Hispanic & Native > Pacific ~ "Native",
+#     Pacific > Black & Pacific > White & Pacific > Hispanic & Pacific > Native ~ "Pacific"
+#   )) |> 
+#   select(ChildPoverty, CountyId, most_common_race) |> 
+#   group_by(most_common_race) |>
+#   summarise(average_percentage_Child_poverty = mean(ChildPoverty)) |>
+#   ggplot(aes(x = most_common_race, y = average_percentage_Child_poverty))+
+#   geom_col()+
+#   labs(title = "Percentage of Child Population in Poverty")+
+#   theme_minimal()
+```
+
+```{r eval = FALSE}
+# demographics |> 
+#   mutate(most_common_race = case_when(
+#     White > Black & White > Hispanic & White >Native & White >Pacific ~ "White",
+#     Black > White & Black > Hispanic & Black > Native & Black > Pacific ~ "Black",
+#     Hispanic > White & Hispanic > Black & Hispanic > Native & Hispanic > Pacific ~ "Hispanic",
+#     Native > White & Native > Black & Native > Hispanic & Native > Pacific ~ "Native",
+#     Pacific > Black & Pacific > White & Pacific > Hispanic & Pacific > Native ~ "Pacific"
+#   )) |> 
+#   select(Drive, Carpool, Transit, Walk , OtherTransp, CountyId, most_common_race) |> 
+#    pivot_longer(cols = c(Drive, Carpool, Transit, Walk , OtherTransp), names_to = "Transport_Type", values_to = "Percentage") |>
+#   group_by(most_common_race, Transport_Type) |>
+#   summarise(average_percentage = mean(Percentage)) |>
+#   ggplot(aes(x = Transport_Type, y = average_percentage))+
+#   geom_col()+
+#   facet_wrap(~most_common_race) +
+#   labs(title = "Average Percentage of Population that get to Work Through Different Means", xlab = "Employment Category", ylab = "Average Percentage")+
+#   theme_minimal()
+```
+
+```{r eval = FALSE}
+# names(acs_2023)[names(acs_2023) == 'ARKSE001'] <- 'total_population'
+# names(acs_2023)[names(acs_2023) == 'ARKSE002'] <- 'white_population'
+# names(acs_2023)[names(acs_2023) == 'ARKSE003'] <- 'black_aferican_american'
+# names(acs_2023)[names(acs_2023) == 'ARKSE004'] <- 'american_indian_alaska_native'
+# names(acs_2023)[names(acs_2023) == 'ARKSE005'] <- 'asian_population'
+# names(acs_2023)[names(acs_2023) == 'ARKSE006'] <- 'native_hawaiian_pacific_islander'
+# names(acs_2023)[names(acs_2023) == 'ARKSE007'] <- 'other_population'
+# names(acs_2023)[names(acs_2023) == 'ARKSE008'] <- 'two_or_more'
+# names(acs_2023)[names(acs_2023) == 'ARKSE009'] <- 'two_or_more_not_other'
+# names(acs_2023)[names(acs_2023) == 'ARKSE010'] <- 'two_or_more_other'
+# names(acs_2023)[names(acs_2023) == 'ART7E002'] <- 'family_household'
+# names(acs_2023)[names(acs_2023) == 'ART7E003'] <- 'married_couple_family'
+# names(acs_2023)[names(acs_2023) == 'ART7E004'] <- 'other_family'
+# names(acs_2023)[names(acs_2023) == 'ART7E005'] <- 'other_family_male_householder'
+# names(acs_2023)[names(acs_2023) == 'ART7E006'] <- 'other_family_female_householder'
+# names(acs_2023)[names(acs_2023) == 'ART7E007'] <- 'nonfamily_household'
+# names(acs_2023)[names(acs_2023) == 'ART7E008'] <- 'householder_living_alone'
+# names(acs_2023)[names(acs_2023) == 'ART7E009'] <- 'householder_not_alone'
+# names(acs_2023)[names(acs_2023) == 'ART7E001'] <- 'total_households'
+# names(acs_2023)[names(acs_2023) == 'ARXXE002'] <- 'no_schooling'
+# names(acs_2023)[names(acs_2023) == 'ARXXE003'] <- 'nursery_4th'
+# names(acs_2023)[names(acs_2023) == 'ARXXE004'] <- '5th_6th'
+# names(acs_2023)[names(acs_2023) == 'ARXXE005'] <- '7th_8th'
+# names(acs_2023)[names(acs_2023) == 'ARXXE006'] <- '9th_grade'
+# names(acs_2023)[names(acs_2023) == 'ARXXE007'] <- '10th_grade'
+# names(acs_2023)[names(acs_2023) == 'ARXXE008'] <- '11th_grade'
+# names(acs_2023)[names(acs_2023) == 'ARXXE009'] <- '12th_grade_no_diploma'
+# names(acs_2023)[names(acs_2023) == 'ARXXE010'] <- 'highschool_diploma'
+# names(acs_2023)[names(acs_2023) == 'ARXXE011'] <- 'GED_or_alt'
+# names(acs_2023)[names(acs_2023) == 'ARXXE012'] <- 'less_year_college'
+# names(acs_2023)[names(acs_2023) == 'ARXXE013'] <- 'over_year_college_no_degree'
+# names(acs_2023)[names(acs_2023) == 'ARXXE014'] <- 'associates_degree'
+# names(acs_2023)[names(acs_2023) == 'ARXXE015'] <- 'bachelors_degree'
+# names(acs_2023)[names(acs_2023) == 'ARXXE016'] <- 'masters_degree'
+# names(acs_2023)[names(acs_2023) == 'ARXXE017'] <- 'professional_school_degree'
+# names(acs_2023)[names(acs_2023) == 'ARXXE018'] <- 'doctorate_degree'
+# names(acs_2023)[names(acs_2023) == 'ARXXE001'] <- 'total_over_25'
+# names(acs_2023)[names(acs_2023) == 'AR56E001'] <- 'aggregate_yearly_income'
+# names(acs_2023)[names(acs_2023) == 'AR97E001'] <- 'total_employed'
+# names(acs_2023)[names(acs_2023) == 'AR97E002'] <- 'agriculture_forestry_fishing_hunting_mining'
+# names(acs_2023)[names(acs_2023) == 'AR97E003'] <- 'construction'
+# names(acs_2023)[names(acs_2023) == 'AR97E004'] <- 'manufacturing'
+# names(acs_2023)[names(acs_2023) == 'AR97E005'] <- 'wholesale_trade'
+# names(acs_2023)[names(acs_2023) == 'AR97E006'] <- 'retail_trade'
+# names(acs_2023)[names(acs_2023) == 'AR97E007'] <- 'transportation_warehousing_utilities'
+# names(acs_2023)[names(acs_2023) == 'AR97E008'] <- 'information_occupation'
+# names(acs_2023)[names(acs_2023) == 'AR97E009'] <- 'finance_insurance_realestate_rental_leasing'
+# names(acs_2023)[names(acs_2023) == 'AR97E010'] <- 'professional_scientific_management_administrative_wastemanagement'
+# names(acs_2023)[names(acs_2023) == 'AR97E011'] <- 'educational_healthcare_socialassistance'
+# names(acs_2023)[names(acs_2023) == 'AR97E012'] <- 'arts_entertainment_recreation_accommodation_food'
+# names(acs_2023)[names(acs_2023) == 'AR97E013'] <- 'other_services_except_public_administration'
+# names(acs_2023)[names(acs_2023) == 'AR97E014'] <- 'public_administration'
+# names(acs_2023)[names(acs_2023) == 'AR97E015'] <- 'management_business_science_arts_occupations'
+# names(acs_2023)[names(acs_2023) == 'AR97E029'] <- 'service_occupations'
+# names(acs_2023)[names(acs_2023) == 'AR97E043'] <- 'sales_office_occupations'
+# names(acs_2023)[names(acs_2023) == 'AR97E057'] <- 'naturalresources_construction_maintenance_occupations'
+# names(acs_2023)[names(acs_2023) == 'AR97E071'] <- 'production_transportation_materialmoving_occupations'
+# acs_2023 <- acs_2023 |> 
+#   select(contains("_"))
+# 
+# write.csv(acs_2023, "..\\data\\processed\\acs_2023.csv")
+```
+
+```{r eval = FALSE}
+# cleaned <- read.csv("..\\data\\processed\\acs_2023.csv")
+# acs_clean <- cleaned |> 
+# mutate(subregion = tolower(str_remove(str_extract(NAME_E,"((([A-Za-z]?)*\\.?)* ?)*")," County"))) |>
+#   mutate(region =tolower(str_remove(str_extract(NAME_E,"\\, ([A-Za-z]?)*"), ", "))) 
+```
+
+```{r eval = FALSE}
+# library(maps)
+# library(mapdata)
+```
+
+```{r eval=FALSE}
+# us_counties <- map_data("county")
+# us_states<- map_data("state")
+```
+
+```{r eval=FALSE}
+# ggplot(data=acs_counties, aes(x=long, y=lat, fill=white_population, group=group)) + 
+#   geom_polygon() + 
+#   guides(fill=FALSE) + 
+#   theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(),
+#         axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank()) + 
+#   ggtitle('U.S. Map with States') + 
+#   theme_minimal()
+```
+
+```{r eval=FALSE}
+# census_api_key <- readLines("census_api_key.txt")
+# get_acs1 <- function(year,variables,key,include_moe = TRUE){
+#   new_variables <- c()
+#   if(year < 2005 | year > 2022 | year == 2020){
+#   stop("year is not betwwen 2005 and 2022, or your year is  equal to 2022")
+# }
+# else{
+#   Sys.sleep(0.5)
+#     if(include_moe == FALSE){
+#       for (i in seq_along(variables)){
+#         if(str_detect(variables[i],"[0-9]") == TRUE){
+#         new_variables[i] <- variables[i] %>% paste0("E")
+#       }
+#       else{
+#         new_variables[i] <- variables[i]
+#       }
+#       }
+#     }
+#     else{
+#       for(i in seq_along(variables)){
+#         if(str_detect(variables[i],"[0-9]") == TRUE){
+#           new_variables <- c(new_variables,variables[i] %>% paste0("E"))
+#           new_variables <- c(new_variables, variables[i] %>% paste0("M"))
+#         }
+#         else{
+#           new_variables <- c(new_variables, variables[i])
+#         }
+#       }
+#     }
+#     request <- request("https://api.census.gov") |> 
+#     req_url_path_append("data") |> 
+#     req_url_path_append(as.character(year)) |> 
+#     req_url_path_append("acs") |> 
+#     req_url_path_append("acs5") |> 
+#     req_url_query(get = new_variables, `for` = I("county:*"), `in` = I("state:*"), key = key, .multi = "comma")
+#     resp <- req_perform(request)
+#     resp_json_df <- resp |> resp_body_json(simplifyVector = TRUE)
+# 
+# # Data Cleaning
+# resp_json_df <- janitor::row_to_names(resp_json_df, 1) |> # Move 1st row to Names
+#   as.data.frame() |># Convert Matrix to Data Frame
+#   mutate(across(starts_with('B'), as.numeric)) # Convert all variables that start with B to numeric
+# return(resp_json_df)
+# }
+# }
+```
+
+```{r eval =FALSE}
+# library(tidycensus)
+# library(httr2)
+# v17 <- load_variables(2021, "acs5", cache = TRUE)
+# View(v17)
+# test_acs<- get_acs1(2021, c('B02001_002','B02001_001', 'NAME'), key = census_api_key, FALSE) |> 
+#   mutate(subregion = tolower(str_remove(str_extract(NAME,"((([A-Za-z]?)*\\.?)* ?)*")," County"))) |>
+#   mutate(region =tolower(str_remove(str_extract(NAME,"\\, ([A-Za-z]?)*"), ", ")))
+# 
+# names(test_acs)[names(test_acs) == 'B02001_002E'] <- 'white_population'
+
+```
+
+```{r eval=FALSE}
+# acs_counties <- us_counties |> 
+#   left_join(test_acs)
+```
+
+```{r eval=FALSE}
+# ggplot() + 
+#   geom_polygon(data=acs_counties, aes(x=long, y=lat, fill=white_population, group=group))+
+#   geom_polygon(data = us_states, aes(x=long, y = lat, group = group), color = 'white', fill = NA)+
+#   guides(fill=FALSE) + 
+#   theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(),
+#         axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank()) + 
+#   ggtitle('U.S. Map with States') + 
+#   coord_fixed(1.3)+
+#   theme_minimal()
+```
+
+```{r eval=FALSE}
+# library(ggthemes)
+# library(ggspatial)
+# sanfransisco <- get_acs(
+#   state = "CA",
+#   county = "San Francisco",
+#   geography = "tract",
+#   variables = "B02001_002",
+#   geometry = TRUE,
+#   year = 2021
+# ) |>
+#   mutate(white_population = case_when(
+#     estimate < 1000 ~ "< 1000",
+#     estimate >= 1000 & estimate < 2000 ~ "1000 to 1999",
+#     estimate >= 2000 & estimate < 3000 ~ "2000 to 2999",
+#     estimate >= 3000 & estimate <=4000 ~ "3000 to 4000",
+#     estimate > 4000 ~ "> 4000"
+#   )) |> 
+#   mutate(white_population = fct_relevel(white_population, "> 4000", after = Inf))
+# 
+# sanfransisco_city <- data.frame(lat = 37.7749, long = -122.4194, name = "San Fransisco")
+# 
+# mesa_city <- data.frame(lat = 33.4152, long = - 111.8315, name = "Mesa")
+# 
+# Mesa <- get_acs(
+#   state = "AZ",
+#   county = "Maricopa",
+#   geography = "tract",
+#   variables = "B02001_002",
+#   geometry = TRUE,
+#   year = 2021
+# ) |>
+#   mutate(white_population = case_when(
+#     estimate < 1000 ~ "< 1000",
+#     estimate >= 1000 & estimate < 2000 ~ "1000 to 1999",
+#     estimate >= 2000 & estimate < 3000 ~ "2000 to 2999",
+#     estimate >= 3000 & estimate <=4000 ~ "3000 to 4000",
+#     estimate > 4000 ~ "> 4000"
+#   )) |> 
+#   mutate(white_population = fct_relevel(white_population, "> 4000", after = Inf))
+# 
+# mesa_race <- 
+#   get_acs(
+#   state = "AZ",
+#   county = "Maricopa",
+#   geography = "tract",
+#   variables = c("B02001_003", "B02001_004", "B02001_005", "B02001_006","B02001_007","B02001_008"),
+#   geometry = TRUE,
+#   year = 2021
+# ) |> 
+#   group_by(NAME, geometry) |> 
+#   summarize(estimate = sum(estimate)) |>
+#   mutate(minority_population = case_when(
+#     estimate < 1000 ~ "< 1000",
+#     estimate >= 1000 & estimate < 2000 ~ "1000 to 1999",
+#     estimate >= 2000 & estimate < 3000 ~ "2000 to 2999",
+#     estimate >= 3000 & estimate < 4000 ~ "3000 to 3999",
+#     estimate >= 4000 & estimate <= 5000 ~ "4000 to 5000",
+#     estimate > 5000 ~ "> 5000"
+#   )) |> 
+#   mutate(minority_population = fct_relevel(minority_population, "> 5000", after = Inf))
+# 
+# sanfransisco_race <- 
+#   get_acs(
+#   state = "CA",
+#   county = "San Francisco",
+#   geography = "tract",
+#   variables = c("B02001_003", "B02001_004", "B02001_005", "B02001_006","B02001_007","B02001_008"),
+#   geometry = TRUE,
+#   year = 2021
+# ) |> 
+#   group_by(NAME, geometry) |> 
+#   summarize(estimate = sum(estimate)) |>
+#   mutate(minority_population = case_when(
+#     estimate < 1000 ~ "< 1000",
+#     estimate >= 1000 & estimate < 2000 ~ "1000 to 1999",
+#     estimate >= 2000 & estimate < 3000 ~ "2000 to 2999",
+#     estimate >= 3000 & estimate < 4000 ~ "3000 to 3999",
+#     estimate >= 4000 & estimate <= 5000 ~ "4000 to 5000",
+#     estimate > 5000 ~ "> 5000"
+#   )) |> 
+#   mutate(minority_population = fct_relevel(minority_population, "> 5000", after = Inf),
+#          minority_population = fct_relevel(minority_population, "< 1000", after = 0))
+# 
+# sanfransisco_family <- 
+#   get_acs(
+#   state = "CA",
+#   county = "San Francisco",
+#   geography = "tract",
+#   variables = "B11001_007",
+#   geometry = TRUE,
+#   year = 2021
+# ) |>
+#   mutate(non_family_households = case_when(
+#     estimate < 250 ~ "< 250",
+#     estimate >= 250 & estimate < 500 ~ "250 to 499",
+#     estimate >= 500 & estimate < 750 ~ "500 to 749",
+#     estimate >= 750 & estimate < 1000 ~ "750 to 999",
+#     estimate >= 1000 & estimate <= 1500 ~ "1000 to 1499",
+#     estimate >= 1500 & estimate <= 2000 ~ "1500 to 1999",
+#     estimate > 2000 ~ "> 2000"
+#   )) |> 
+#   mutate(non_family_households = fct_relevel(non_family_households, "> 2000", after = Inf),
+#          non_family_households = fct_relevel(non_family_households, "< 250", after = 0),
+#          non_family_households = fct_relevel(non_family_households, "1000 to 1499", after = 5),
+#          non_family_households = fct_relevel(non_family_households, "1500 to 1999", after = 5))
+#   
+#   
+# 
+# mesa_family <- 
+#   get_acs(
+#   state = "AZ",
+#   county = "Maricopa",
+#   geography = "tract",
+#   variables = "B11001_007",
+#   geometry = TRUE,
+#   year = 2021
+# ) |>
+#   mutate(non_family_households = case_when(
+#     estimate < 250 ~ "< 250",
+#     estimate >= 250 & estimate < 500 ~ "250 to 499",
+#     estimate >= 500 & estimate < 750 ~ "500 to 749",
+#     estimate >= 750 & estimate < 1000 ~ "750 to 999",
+#     estimate >= 1000 & estimate <= 1500 ~ "1000 to 1499",
+#     estimate >= 1500 & estimate <= 2000 ~ "1500 to 1999",
+#     estimate > 2000 ~ "> 2000"
+#   )) |> 
+#   mutate(non_family_households = fct_relevel(non_family_households, "> 2000", after = Inf),
+#          non_family_households = fct_relevel(non_family_households, "< 250", after = 0),
+#          non_family_households = fct_relevel(non_family_households, "1000 to 1499", after = 5),
+#          non_family_households = fct_relevel(non_family_households, "1500 to 1999", after = 5))
+# 
+# mesa_family_h <- 
+#   get_acs(
+#   state = "AZ",
+#   county = "Maricopa",
+#   geography = "tract",
+#   variables = "B11001_002",
+#   geometry = TRUE,
+#   year = 2021
+# )|>
+#   mutate(family_households = case_when(
+#     estimate < 250 ~ "< 250",
+#     estimate >= 250 & estimate < 500 ~ "250 to 499",
+#     estimate >= 500 & estimate < 750 ~ "500 to 749",
+#     estimate >= 750 & estimate < 1000 ~ "750 to 999",
+#     estimate >= 1000 & estimate <= 1500 ~ "1000 to 1499",
+#     estimate >= 1500 & estimate <= 2000 ~ "1500 to 1999",
+#     estimate > 2000 ~ "> 2000"
+#   )) |> 
+#   mutate(family_households = fct_relevel(family_households, "> 2000", after = Inf),
+#          family_households = fct_relevel(family_households, "< 250", after = 0),
+#          family_households = fct_relevel(family_households, "1000 to 1499", after = 5),
+#          family_households = fct_relevel(family_households, "1500 to 1999", after = 5))
+# 
+# sanfransisco_family_h <- 
+#   get_acs(
+#   state = "CA",
+#   county = "San Francisco",
+#   geography = "tract",
+#   variables = "B11001_002",
+#   geometry = TRUE,
+#   year = 2021
+# ) |>
+#   mutate(family_households = case_when(
+#     estimate < 250 ~ "< 250",
+#     estimate >= 250 & estimate < 500 ~ "250 to 499",
+#     estimate >= 500 & estimate < 750 ~ "500 to 749",
+#     estimate >= 750 & estimate < 1000 ~ "750 to 999",
+#     estimate >= 1000 & estimate <= 1500 ~ "1000 to 1499",
+#     estimate >= 1500 & estimate <= 2000 ~ "1500 to 1999",
+#     estimate > 2000 ~ "> 2000"
+#   )) |> 
+#   mutate(family_households = fct_relevel(family_households, "> 2000", after = Inf),
+#          family_households = fct_relevel(family_households, "< 250", after = 0),
+#          family_households = fct_relevel(family_households, "1000 to 1499", after = 5),
+#          family_households = fct_relevel(family_households, "1500 to 1999", after = 5))
+# 
+# sanfransisco_income <- 
+#   get_acs(
+#   state = "CA",
+#   county = "San Francisco",
+#   geography = "tract",
+#   variables = "B07011_001",
+#   geometry = TRUE,
+#   year = 2021
+# )
+# 
+# mesa_income <- 
+#   get_acs(
+#   state = "AZ",
+#   county = "Maricopa",
+#   geography = "tract",
+#   variables = "B07011_001",
+#   geometry = TRUE,
+#   year = 2021
+# )
+```
+
+```{r eval=FALSE}
+  # ggplot() + 
+  # geom_sf(data = sanfransisco, aes(fill = white_population), color = NA) +
+  # geom_point(data = sanfransisco_city, aes(x = long, y = lat), color = "white")+
+  # geom_label(data = sanfransisco_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+  # scale_fill_viridis_d(option = "D", name = "White Population") +
+  # scale_x_continuous(limits = c(-122.525, -122.35), expand = c(0, 0))+
+  # scale_y_continuous(limits = c(37.7, 37.84), expand = c(0,0))+
+  # ggtitle("San Fransicso County White Population Distribution")+
+  # theme_map()+
+  # annotation_north_arrow(location = "tr",
+  #                        height = unit(0.8, "cm"),
+  #                        width = unit(0.8, "cm"),
+  #                        style = north_arrow_nautical())+
+  # annotation_scale(plot_unit = "mi")+
+  # theme(legend.position = c(0, 0.745),
+  #       legend.background = element_rect(fill="lightblue",
+  #                                 linewidth =0.5, linetype="solid", 
+  #                                 colour ="darkblue"),
+  #       legend.text = element_text(size = 5),
+  #       legend.title = element_text(size = 7, face = "bold"),
+  #       legend.key.size = unit(0.35, "cm"),
+  #       )
+```
+
+```{r eval=FALSE}
+  # ggplot() + 
+  # geom_sf(data = Mesa, aes(fill = white_population), color = NA) +
+  # scale_fill_viridis_d(option = "D", name = "White Population") +
+  # geom_point(data = mesa_city, aes(x = long, y = lat), color = "white", size = 2.5)+
+  # geom_label(data = mesa_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+  # ggtitle("Maricopa County White Population Distribution")+
+  # theme_map()+
+  # annotation_north_arrow(location = "tr",
+  #                        height = unit(0.8, "cm"),
+  #                        width = unit(0.8, "cm"),
+  #                        style = north_arrow_nautical())+
+  # annotation_scale(plot_unit = "mi",
+  #                  location = "br")+
+  # theme(legend.position = c(0.76, 0.20),
+  #       legend.background = element_rect(fill="lightblue",
+  #                                 linewidth =0.5, linetype="solid", 
+  #                                 colour ="darkblue"),
+  #       legend.text = element_text(size = 5),
+  #       legend.title = element_text(size = 7, face = "bold"),
+  #       legend.key.size = unit(0.35, "cm"),
+  #       )
+```
+
+```{r eval=FALSE}
+# ggplot() + 
+#   geom_sf(data = mesa_race, aes(fill = minority_population), color = NA) +
+#   scale_fill_viridis_d(option = "D", name = "Minority Population") +
+#   geom_point(data = mesa_city, aes(x = long, y = lat), color = "white", size = 2.5)+
+#   geom_label(data = mesa_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = 1.35)+
+#   ggtitle("Maricopa County Minority Population Distribution")+
+#   theme_map()+
+#   annotation_north_arrow(location = "tr",
+#                          height = unit(0.8, "cm"),
+#                          width = unit(0.8, "cm"),
+#                          style = north_arrow_nautical())+
+#   annotation_scale(plot_unit = "mi",
+#                    location = "br")+
+#   theme(legend.position = c(0.76, 0.20),
+#         legend.background = element_rect(fill="lightblue",
+#                                   linewidth =0.5, linetype="solid", 
+#                                   colour ="darkblue"),
+#         legend.text = element_text(size = 5),
+#         legend.title = element_text(size = 7, face = "bold"),
+#         legend.key.size = unit(0.35, "cm"),
+#         )
+```
+
+```{r eval=FALSE}
+  ggplot() + 
+  geom_sf(data = sanfransisco_race, aes(fill = minority_population), color = NA) +
+  geom_point(data = sanfransisco_city, aes(x = long, y = lat), color = "white")+
+  geom_label(data = sanfransisco_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+  scale_fill_viridis_d(option = "D", name = "Minority Population") +
+  scale_x_continuous(limits = c(-122.525, -122.35), expand = c(0, 0))+
+  scale_y_continuous(limits = c(37.7, 37.84), expand = c(0,0))+
+  ggtitle("San Fransicso County Minority Population Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi")+
+  theme(legend.position = c(0, 0.745),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
+```
+
+```{r eval=FALSE}
+ggplot() + 
+  geom_sf(data = sanfransisco_family, aes(fill = non_family_households), color = NA) +
+  geom_point(data = sanfransisco_city, aes(x = long, y = lat), color = "white")+
+  geom_label(data = sanfransisco_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+  scale_fill_viridis_d(option = "D", name = "Non-family Housholds") +
+  scale_x_continuous(limits = c(-122.525, -122.35), expand = c(0, 0))+
+  scale_y_continuous(limits = c(37.7, 37.84), expand = c(0,0))+
+  ggtitle("San Fransicso County Non-family Housholds Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi")+
+  theme(legend.position = c(0, 0.745),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
+```
+
+```{r eval=FALSE}
+ggplot() + 
+  geom_sf(data = mesa_family, aes(fill = non_family_households), color = NA) +
+  scale_fill_viridis_d(option = "D", name = "Non-family Households") +
+  geom_point(data = mesa_city, aes(x = long, y = lat), color = "white", size = 2.5)+
+  geom_label(data = mesa_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = 1.35)+
+  ggtitle("Maricopa County Non-family Households Distribution")+
+  theme_map()+
+  annotation_north_arrow(location = "tr",
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi",
+                   location = "br")+
+  theme(legend.position = c(0.76, 0.20),
+        legend.background = element_rect(fill="lightblue",
+                                  linewidth =0.5, linetype="solid", 
+                                  colour ="darkblue"),
+        legend.text = element_text(size = 5),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.key.size = unit(0.35, "cm"),
+        )
+```
+
+```{r eval=FALSE}
+# ggplot() + 
+#   geom_sf(data = sanfransisco_family_h, aes(fill = family_households), color = NA) +
+#   geom_point(data = sanfransisco_city, aes(x = long, y = lat), color = "white")+
+#   geom_label(data = sanfransisco_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+#   scale_fill_viridis_d(option = "D", name = "Family Housholds") +
+#   scale_x_continuous(limits = c(-122.525, -122.35), expand = c(0, 0))+
+#   scale_y_continuous(limits = c(37.7, 37.84), expand = c(0,0))+
+#   ggtitle("San Fransicso County Family Housholds Distribution")+
+#   theme_map()+
+#   annotation_north_arrow(location = "tr",
+#                          height = unit(0.8, "cm"),
+#                          width = unit(0.8, "cm"),
+#                          style = north_arrow_nautical())+
+#   annotation_scale(plot_unit = "mi")+
+#   theme(legend.position = c(0, 0.745),
+#         legend.background = element_rect(fill="lightblue",
+#                                   linewidth =0.5, linetype="solid", 
+#                                   colour ="darkblue"),
+#         legend.text = element_text(size = 5),
+#         legend.title = element_text(size = 7, face = "bold"),
+#         legend.key.size = unit(0.35, "cm"),
+#         )
+```
+
+```{r eval=FALSE}
+# ggplot() + 
+#   geom_sf(data = mesa_family_h, aes(fill = family_households), color = NA) +
+#   scale_fill_viridis_d(option = "D", name = "Family Households") +
+#   geom_point(data = mesa_city, aes(x = long, y = lat), color = "white", size = 2.5)+
+#   geom_label(data = mesa_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = 1.35)+
+#   ggtitle("Maricopa County Family Households Distribution")+
+#   theme_map()+
+#   annotation_north_arrow(location = "tr",
+#                          height = unit(0.8, "cm"),
+#                          width = unit(0.8, "cm"),
+#                          style = north_arrow_nautical())+
+#   annotation_scale(plot_unit = "mi",
+#                    location = "br")+
+#   theme(legend.position = c(0.76, 0.20),
+#         legend.background = element_rect(fill="lightblue",
+#                                   linewidth =0.5, linetype="solid", 
+#                                   colour ="darkblue"),
+#         legend.text = element_text(size = 5),
+#         legend.title = element_text(size = 7, face = "bold"),
+#         legend.key.size = unit(0.35, "cm"),
+#         )
+```
+
+```{r eval=FALSE}
+# ggplot() + 
+#   geom_sf(data = mesa_income, aes(fill = estimate), color = NA) +
+#   scale_fill_viridis_c(option = "D", name = "Median Income") +
+#   geom_point(data = mesa_city, aes(x = long, y = lat), color = "white", size = 2.5)+
+#   geom_label(data = mesa_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = 1.35)+
+#   ggtitle("Maricopa County Median Income Distribution")+
+#   theme_map()+
+#   annotation_north_arrow(location = "tr",
+#                          height = unit(0.8, "cm"),
+#                          width = unit(0.8, "cm"),
+#                          style = north_arrow_nautical())+
+#   annotation_scale(plot_unit = "mi",
+#                    location = "br")+
+#   theme(legend.position = c(0.76, 0.20),
+#         legend.background = element_rect(fill="lightblue",
+#                                   linewidth =0.5, linetype="solid", 
+#                                   colour ="darkblue"),
+#         legend.text = element_text(size = 5),
+#         legend.title = element_text(size = 7, face = "bold"),
+#         legend.key.size = unit(0.35, "cm"),
+#         )
+```
+
+```{r eval = FALSE}
+# ggplot() + 
+#   geom_sf(data = sanfransisco_income, aes(fill = estimate), color = NA) +
+#   geom_point(data = sanfransisco_city, aes(x = long, y = lat), color = "white")+
+#   geom_label(data = sanfransisco_city, aes(x = long, y = lat, label = name), hjust = -0.04, vjust = -0.25)+
+#   scale_fill_viridis_c(option = "D", name = "Median Income") +
+#   scale_x_continuous(limits = c(-122.525, -122.35), expand = c(0, 0))+
+#   scale_y_continuous(limits = c(37.7, 37.84), expand = c(0,0))+
+#   ggtitle("San Fransicso County Median Income Distribution")+
+#   theme_map()+
+#   annotation_north_arrow(location = "tr",
+#                          height = unit(0.8, "cm"),
+#                          width = unit(0.8, "cm"),
+#                          style = north_arrow_nautical())+
+#   annotation_scale(plot_unit = "mi")+
+#   theme(legend.position = c(0, 0.745),
+#         legend.background = element_rect(fill="lightblue",
+#                                   linewidth =0.5, linetype="solid", 
+#                                   colour ="darkblue"),
+#         legend.text = element_text(size = 5),
+#         legend.title = element_text(size = 7, face = "bold"),
+#         legend.key.size = unit(0.35, "cm"),
+#         )
+```
+
+```{r loading packages}
+# loading libraries
+library(tidyverse)
+library(ggplot2)
+library(tidycensus) # Getting our data
+library(ggthemes)
+library(grid) # For mapping inset graphs
+library(classInt) # Making breaks
+library(ggspatial) # For adding map annotations
+library(magick) #for reading pngs
+library(patchwork)
+```
+
+```{r making a function for loading our data}
+# Getting our data
+# We are making a function to streamline our data collection from tidy census
+
+get_data <- function(city, variable_list){
+  if(city == "San Francisco"){
+    return(get_acs(
+      state = "CA",
+      county = "San Francisco",
+      geography = "tract",
+      variables = variable_list,
+      geometry = TRUE,
+      year = 2021
+    )
+    )
+  }
+  else{
+    return(get_acs(
+      state = "AZ",
+      county = "Maricopa",
+      geography = "tract",
+      variables = variable_list,
+      geometry = TRUE,
+      year = 2021
+    )
+    )
+  }
+}
+
+```
+
+```{r making functions for data wrangling}
+# Since we are going to be making two identical data sets for each variable we are looking at, it is useful to make a function to reduce clutter and chances or error
+
+# This function helps us turn or single value lists into a double
+convert_to_numeric <- function(value){
+  as.numeric(paste(value))
+}
+
+# This function helps us do the wrangling for the race data
+wrangling_race <- function(data){
+  data |> 
+    select(geometry,variable,estimate) |> 
+    mutate(variable = case_when(variable == "B02001_002" ~ "white_population",
+                                variable == "B02001_003" ~ "black_african_american",
+                                variable == "B02001_004" ~ "native_american",
+                                variable == "B02001_005" ~ "asian")) |>
+    pivot_wider(names_from = variable, values_from = estimate) |> 
+    mutate(white_population = convert_to_numeric(white_population),
+           black_african_american = convert_to_numeric(black_african_american),
+           native_american = convert_to_numeric(native_american),
+           asian = convert_to_numeric(asian)) |> 
+    mutate(majority = case_when(white_population > black_african_american & white_population > native_american & white_population > asian ~ "White",
+                                black_african_american > white_population & black_african_american > native_american & black_african_american > asian ~ "Black/African American",
+                                native_american > white_population & native_american > black_african_american & native_american > asian ~ "Native American",
+                                asian > white_population & asian > black_african_american & asian > native_american ~ "Asian"))
+}
+
+# This function helps us wrangle the education data
+wrangling_education <- function(data){
+  data |>
+    select(geometry,variable,estimate) |> 
+    mutate(variable = case_when(variable == "B15003_002" ~ "none",
+                              variable == "B15003_003" ~ "pre_highschool",
+                              variable == "B15003_004" ~ "pre_highschool",
+                              variable == "B15003_005" ~ "pre_highschool",
+                              variable == "B15003_006" ~ "pre_highschool",
+                              variable == "B15003_007" ~ "pre_highschool",
+                              variable == "B15003_008" ~ "pre_highschool",
+                              variable == "B15003_009" ~ "pre_highschool",
+                              variable == "B15003_009" ~ "pre_highschool",
+                              variable == "B15003_010" ~ "pre_highschool",
+                              variable == "B15003_011" ~ "pre_highschool",
+                              variable == "B15003_012" ~ "pre_highschool",
+                              variable == "B15003_013" ~ "pre_highschool",
+                              variable == "B15003_014" ~ "pre_highschool",
+                              variable == "B15003_015" ~ "pre_highschool",
+                              variable == "B15003_016" ~ "pre_highschool",
+                              variable == "B15003_017" ~ "highschool_or_equivalent",
+                              variable == "B15003_018" ~ "highschool_or_equivalent",
+                              variable == "B15003_019" ~ "some_college",
+                              variable == "B15003_020" ~ "some_college",
+                              variable == "B15003_021" ~ "undergraduate",
+                              variable == "B15003_022" ~ "undergraduate",
+                              variable == "B15003_023" ~ "undergraduate",
+                              variable == "B15003_024" ~ "graduate",
+                              variable == "B15003_025" ~ "graduate")) |> 
+    pivot_wider(names_from = variable, values_from = estimate) |> 
+    mutate(none = convert_to_numeric(none),
+         pre_highschool = convert_to_numeric(lapply(pre_highschool, sum)),
+         highschool_or_equivalent = convert_to_numeric(lapply(highschool_or_equivalent, sum)),
+         some_college = convert_to_numeric(lapply(some_college, sum)),
+         undergraduate = convert_to_numeric(lapply(undergraduate, sum)),
+         graduate = convert_to_numeric(lapply(graduate, sum))) |> 
+    mutate(majority = case_when(none > pre_highschool & none > highschool_or_equivalent & none > some_college & none > undergraduate & none > graduate ~ "None",
+                                       pre_highschool > none & pre_highschool > highschool_or_equivalent & pre_highschool > some_college & pre_highschool > undergraduate & pre_highschool >graduate ~ "Pre-highschool",
+                                       highschool_or_equivalent > none & highschool_or_equivalent > pre_highschool & highschool_or_equivalent > some_college & highschool_or_equivalent > undergraduate & highschool_or_equivalent > graduate ~ "Highschool or Equivalent",
+                                       some_college > none & some_college > pre_highschool & some_college > highschool_or_equivalent & some_college > undergraduate & some_college > graduate ~ "Some College",
+                                       undergraduate > none & undergraduate > pre_highschool & undergraduate > highschool_or_equivalent & undergraduate > some_college & undergraduate > graduate ~ "Undergraduate Degree",
+                                       graduate > none & graduate > pre_highschool & graduate > highschool_or_equivalent & graduate > some_college & graduate > undergraduate ~ "graduate"))
+}
+
+# Function for wrangling the household data
+wrangling_households <- function(data){
+  data |> 
+    select(geometry,variable,estimate) |> 
+    mutate(variable = case_when(variable == "B11001_003" ~ "married_couple",
+                                variable == "B11001_005" ~ "male_householder",
+                                variable == "B11001_006" ~ "female_householder",
+                                variable == "B11001_008" ~ "lives_alone",
+                                variable == "B11001_009" ~ "not_alone")) |> 
+    pivot_wider(names_from = variable, values_from = estimate) |> 
+    mutate(married_couple = convert_to_numeric(married_couple),
+           male_householder = convert_to_numeric(male_householder),
+           female_householder = convert_to_numeric(female_householder),
+           lives_alone = convert_to_numeric(lives_alone),
+           not_alone = convert_to_numeric(not_alone)) |> 
+    mutate(majority = case_when(married_couple > male_householder & married_couple > female_householder & married_couple > lives_alone & married_couple > not_alone ~ "Married couple (family)",
+                                male_householder > married_couple & male_householder > female_householder & male_householder > lives_alone & male_householder > not_alone ~ "Male householder, no spouse (family)",
+                                female_householder > married_couple & female_householder > male_householder & female_householder > lives_alone & female_householder > not_alone ~ "Female householder, no spouse (family)",
+                                lives_alone > married_couple & lives_alone > male_householder & lives_alone > female_householder & lives_alone > not_alone ~ "Lives alone (non-family)",
+                                not_alone > married_couple & not_alone > male_householder & not_alone > female_householder & not_alone > lives_alone ~ "Does not live alone (non-family)"))
+}
+
+# This function helps us clean the data for median income
+median_income <- function(data){
+  data |> 
+    select(geometry,variable,estimate) |> 
+    mutate(variable = case_when(
+                              variable == "B07011_001" ~ "median_income"
+                              )
+    ) |> 
+    pivot_wider(names_from = variable, values_from = estimate) |> 
+    mutate(median_income = as.numeric(paste(median_income)))
+}
+```
+
+
+```{r extracting data for San Francisco}
+# Getting all the San Francisco data we need
+# Data for race in San Francisco
+sanfrancisco_race <- get_data("San Francisco", c("B02001_002", "B02001_003", "B02001_004", "B02001_005")) |> 
+  wrangling_race()
+
+# Data for households in San Francisco
+sanfrancisco_households <- get_data("San Francisco", c("B11001_003", "B11001_005", "B11001_006", "B11001_008","B11001_009")) |> 
+  wrangling_households()
+
+# Data for income in San Francisco
+sanfrancisco_income <- get_data("San Francisco", "B07011_001") |> 
+  median_income()
+
+# Data for education in San Francisco
+sanfrancisco_education <- get_data("San Francisco", c("B15003_002", "B15003_003", "B15003_004", "B15003_005", "B15003_006", "B15003_007", "B15003_008", "B15003_009", "B15003_010", "B15003_011", "B15003_012", "B15003_013", "B15003_014", "B15003_015", "B15003_016", "B15003_017", "B15003_018", "B15003_019", "B15003_020", "B15003_021", "B15003_022", "B15003_023", "B15003_024", "B15003_025")) |> 
+  wrangling_education()
+
+
+# Getting all the data for Mesa
+# Data for race in Mesa
+mesa_race <- get_data("Mesa", c("B02001_002", "B02001_003", "B02001_004", "B02001_005")) |> 
+  wrangling_race()
+
+# Data for households in Mesa
+mesa_households <- get_data("Mesa", c("B11001_003", "B11001_005", "B11001_006", "B11001_008","B11001_009")) |> 
+  wrangling_households()
+
+# Data for income in Mesa
+mesa_income <- get_data("Mesa", "B07011_001") |> 
+  median_income()
+
+# Data for education in Mesa
+mesa_education <- get_data("Mesa", c("B15003_002", "B15003_003", "B15003_004", "B15003_005", "B15003_006", "B15003_007", "B15003_008", "B15003_009", "B15003_010", "B15003_011", "B15003_012", "B15003_013", "B15003_014", "B15003_015", "B15003_016", "B15003_017", "B15003_018", "B15003_019", "B15003_020", "B15003_021", "B15003_022", "B15003_023", "B15003_024", "B15003_025")) |> 
+  wrangling_education()
+
+# City Locations 
+sanfrancisco_city <- data.frame(lat = 37.7749, long = -122.4194, name = "San Fransisco")
+
+mesa_city <- data.frame(lat = 33.4152, long = - 111.8315, name = "Mesa")
+```
+
+```{r making map breaks}
+# For breaks we will use the Jenk's Natural Intervals method. This will help us create more natural intervals where the variance in each interval is minimized while the variance between intervals is maximized.
+
+# Since we want the maps to have the same breaks, we are going to combine our data to better create breaks that can be used across datasets
+
+# Making the breaks for white population maps
+money_data <- rbind(sanfrancisco_income, mesa_income)
+
+income_ni <- classIntervals(money_data$median_income,
+                              n = 5,
+                              style = "jenks"
+                              )$brks
+
+income_labels <- c()
+
+for (i in seq_along(income_ni)){
+  income_labels <- c(
+      income_labels, paste0(
+        "$", income_ni[i],
+        " to $",
+        income_ni[i+1]
+      )
+  )
+}
+
+income_labels <- income_labels[1:length(income_labels)-1]
+
+sanfrancisco_income$cat <- cut(
+  sanfrancisco_income$median_income,
+  breaks = income_ni,
+  labels = income_labels,
+  include.lowest = TRUE
+)
+
+mesa_income$cat <- cut(
+  mesa_income$median_income ,
+  breaks = income_ni,
+  labels = income_labels,
+  include.lowest = TRUE
+)
+
+```
+
+```{r making San Francisco Maping Function, fig.width = 7.5, fig.height=7.5}
+# Making a function to make maps of San Francisco
+make_sanfrancisco <- function(data, variable, title_text, legend_name, colors){
+  ggplot()+
+  geom_sf(data = data,
+          aes(fill = variable),
+          color = "black",
+          size = 0.5
+          )+
+  scale_x_continuous(limits = c(-122.5, -122.4), 
+                     expand = c(0, 0)
+                     )+
+  scale_y_continuous(limits = c(37.7, 37.84), 
+                     expand = c(0,0)
+                     )+
+  scale_fill_manual(
+    name = legend_name,
+    values = colors
+  )+
+  guides(
+    fill = guide_legend(
+      direction = "horizontal",
+      keyheight = unit(2, "mm"),
+      keywidth = unit(13, "mm"),
+      title.position = "top",
+      label.position = "bottom",
+      title.hjust = 0.5,
+      label.hjust = 0.5,
+      nrow = 1,
+      byrow = TRUE,
+    )
+  )+
+  labs(
+    title = title_text
+  )+
+  theme_void()+
+  annotation_north_arrow(location = "tl",
+                         pad_x = unit(0, "cm"),
+                         pad_y = unit(3.25, "cm"),
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi",
+                   location = "br",
+                   pad_x = unit(-4, "cm"),
+                   pad_y = unit(6.5, "cm"))+
+  coord_sf(clip = "off")+
+  theme(
+    legend.position = c(0.65,-0.023),
+    plot.title = element_text(
+                              size = 15.75,
+                              vjust = -12,
+                              hjust = 0.5
+                              ),
+    plot.margin = margin(1, 1, 3, 1, "cm")
+  )
+}
+
+
+# Testing with San Francisco White Population Map
+cols <- c("#8289fe", "#fedf60","#056c6b", "#fe8127", "#6c31fd")
+sanfrancisco_race_map <- make_sanfrancisco(data = sanfrancisco_race, variable = sanfrancisco_race$majority, title_text =  "San Francisco County Race Distribution", legend_name = "Majority", colors = cols)
+
+ggsave("sanfrancisco_race_map.png", sanfrancisco_race_map)
+```
+
+```{r making Mesa mapping function, fig.height=7.5, fig.width=7.5}
+# Making a function that makes maps of Maricopa Country
+make_mesa <- function(data, variable, title_text, legend_name, colors){
+  ggplot()+
+  geom_sf(data = data,
+          aes(fill = variable),
+          color = "black",
+          size = 0.5)+
+  scale_fill_manual(
+    name = legend_name,
+    values = colors)+
+  guides(
+    fill = guide_legend(
+      direction = "horizontal",
+      keyheight = unit(2, "mm"),
+      keywidth = unit(13, "mm"),
+      title.position = "top",
+      label.position = "bottom",
+      title.hjust = 0.5,
+      label.hjust = 0.5,
+      nrow = 1,
+      byrow = TRUE))+
+  labs(
+    title = title_text
+  )+
+  theme_void()+
+  annotation_north_arrow(location = "tr",
+                         pad_x = unit(1.5, "cm"),
+                         pad_y = unit(1.5, "cm"),
+                         height = unit(0.8, "cm"),
+                         width = unit(0.8, "cm"),
+                         style = north_arrow_nautical())+
+  annotation_scale(plot_unit = "mi",
+                   location = "br",
+                   pad_x = unit(2.5, "cm"),
+                   pad_y = unit(5.5, "cm"))+
+  coord_sf(clip = "off")+
+  theme(
+    legend.position = c(0.5,-0.023),
+    plot.title = element_text(
+                              size = 15.75,
+                              vjust = 0,
+                              hjust = 0.5
+                              ),
+    plot.margin = margin(1, 1, 3, 1, "cm")
+  )
+}
+  
+
+mesa_race_map <-make_mesa(data = mesa_race, mesa_race$majority, "Race Distribution in Maricopa County", "Majority", cols)
+
+ggsave("mesa_race.png", mesa_race_map)
+```
+
+```{r, fig.width = 7.5, fig.height=7.5}
+# Making the rest of the maps
+# Income Maps
+make_sanfrancisco(sanfrancisco_income,sanfrancisco_income$cat, "San Francisco Median Income", "Median Income",cols)
+make_mesa(mesa_income, mesa_income$cat,"Mesa Median Income", "Median Income",cols)
+
+# Education Maps
+cols = c("#edf8fb", "#b2e2e2","#66c2a4","#2ca25f","#006d2c", "red")
+
+make_sanfrancisco(sanfrancisco_education, sanfrancisco_education$majority, "San Francisco Education", "Majority Education level", cols)
+
+make_mesa(mesa_education, mesa_education$majority,"Mesa Education", "Majority Education level", cols)
+
+# House Holds
+make_sanfrancisco(sanfrancisco_households,sanfrancisco_households$majority, "San Francisco Households", "Household Type", cols)
+
+make_mesa(mesa_households,mesa_households$majority, "Mesa Households", "Household Type", cols)
+```
+
+```{r combinging maps}
+# figuring out how to combine graphs
+race_map_sf <- image_read("sanfrancisco_race_map.png")
+race_map_mesa <- image_read("mesa_race.png")
+race_maps <- image_append(c(race_map_sf,race_map_mesa))
+image_write(race_maps, path = "race_maps.png", format = "png")
+```
+
+![race_maps](race_maps.png)
